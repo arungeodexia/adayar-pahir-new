@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "693785287044",
+    "project_id": "pahirnewtest",
+    "storage_bucket": "pahirnewtest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693785287044:android:9976d45d8fdffa7442e5d1",
+        "android_client_info": {
+          "package_name": "com.geodexia.pahirnewtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693785287044-mk6qbpaa7d4kmaan4n4eplk1udopl7ec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbg09RE-63vaOR8twGj4LuiieCjP7qYnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "693785287044-mk6qbpaa7d4kmaan4n4eplk1udopl7ec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
