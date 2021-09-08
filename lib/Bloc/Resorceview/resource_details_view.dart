@@ -145,9 +145,9 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
         print(resourceDetailsResponse['profilePicture']);
         userImage = resourceDetailsResponse['profilePicture'];
 
-        if (!userImage.contains("https")) {
-          userImage = "https://d1rtv5ttcyt7b.cloudfront.net/" + userImage;
-        }
+        // if (!userImage.contains("https")) {
+        //   userImage = "https://d1rtv5ttcyt7b.cloudfront.net/" + userImage;
+        // }
       });
 
       FirebaseController.instanace

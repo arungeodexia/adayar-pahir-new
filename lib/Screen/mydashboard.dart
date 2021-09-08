@@ -1,12 +1,30 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pahir/Model/create_edit_profile_model.dart';
+import 'package:pahir/Screen/BGVideoPlayerView.dart';
 import 'package:pahir/Screen/myhomepage.dart';
 import 'package:pahir/data/globals.dart';
+import 'package:pahir/data/sp/shared_keys.dart';
+import 'package:pahir/main.dart';
+import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
+import 'package:pahir/unreadchat/Controllers/utils.dart';
 import 'package:pahir/unreadchat/chatlist.dart';
+import 'package:pahir/unreadchat/chatroom.dart';
+import 'package:pahir/unreadchat/chatroom_Group.dart';
+import 'package:pahir/unreadchat/fullphoto.dart';
 import 'package:pahir/utils/Drawer.dart';
+import 'package:pahir/utils/PdfViewer.dart';
 import 'package:pahir/utils/values/app_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'add_resorce.dart';
 import 'favourites_page.dart';
@@ -17,6 +35,7 @@ class Mydashboard extends StatefulWidget {
   @override
   _MydashboardState createState() => _MydashboardState();
 }
+
 class AppPropertiesBloc {
   StreamController<String> _title = StreamController<String>();
   StreamController<String> _chats = StreamController<String>();
@@ -44,12 +63,13 @@ class _MydashboardState extends State<Mydashboard> {
 
   final appBloc = AppPropertiesBloc();
 
-
   var list;
-  String unreads = '';
   String _message = '';
 
-  late DateTime currentBackPressTime;
+  DateTime? currentBackPressTime;
+ late CreateEditProfileModel createEditProfileModel;
+
+
   void onTabTapped(int index) {
     if (index == 0)
       appBloc.updateTitle('Home');
@@ -60,88 +80,484 @@ class _MydashboardState extends State<Mydashboard> {
     else if (index == 3) appBloc.updateTitle('Info');
     setState(() {
       _currentIndex = index;
+      if (unreads=="1") {
+        unreads="";
+      }
+    });
+  }
+
+  Future<bool> onWillPop() async {
+    //print("_currentIndex :==>"+_currentIndex.toString());
+
+    if (_currentIndex != 0) {
+      setState(() {
+        _currentIndex = 0;
+      });
+    } else {
+      DateTime now = DateTime.now();
+      if (currentBackPressTime == null ||
+          now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+        currentBackPressTime = now;
+        Fluttertoast.showToast(msg: "Press Again to exit");
+        return Future.value(false);
+      }
+      return Future.value(true);
+      // SystemNavigator.pop();
+    }
+    return false;
+  }
+  _takeUserInformationFromFBDB() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var resourceDetailsResponse = await json
+        .decode(prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString());
+    createEditProfileModel =
+        CreateEditProfileModel.fromJson(resourceDetailsResponse);
+
+
+    FirebaseController.instanace
+        .saveUserDataToFirebaseDatabase(
+        randomIdWithName(globalPhoneNo),
+        createEditProfileModel.firstName,
+        createEditProfileModel.countryCode,
+        createEditProfileModel.profilePicture)
+        .then((data) {});
+    FirebaseController.instanace
+        .takeUserInformationFromFBDB()
+        .then((documents) {
+      if (documents.length > 0) {}
+    });
+  }
+  Future<void> _moveTochatRoom(selectedUserToken, selectedUserID,
+      selectedUserName, selectedUserThumbnail,countrycode) async {
+    try {
+      String username="", userImage="";
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final resourceDetailsResponse = await json
+          .decode(prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString());
+
+      setState(() {
+        username = resourceDetailsResponse['firstName'];
+        print(resourceDetailsResponse['profilePicture']);
+        userImage = resourceDetailsResponse['profilePicture'];
+
+      });
+
+      FirebaseController.instanace
+          .saveUserDataToFirebaseDatabase(randomIdWithName(selectedUserID),
+          selectedUserName, countrycode, selectedUserThumbnail)
+          .then((data) {});
+
+      String chatID = makeChatId(globalPhoneNo, selectedUserID);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatRoom(
+                  globalPhoneNo,
+                  username.toString(),
+                  selectedUserToken,
+                  selectedUserID,
+                  chatID,
+                  selectedUserName,
+                  selectedUserThumbnail,countrycode)));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _takeUserInformationFromFBDB();
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) async {
+      print("msg init" + message.toString());
+
+
+      if (message != null) {
+        if (message.data['title'].toString().contains('You got a message')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          String name = prefs.getString('name2') ?? '';
+
+          if (name != msgObject['timezone'].toString()) {
+            Map<String, dynamic> row = {
+            };
+
+            if (msgObject['peercode'].toString() =="grp") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChatroomGroup(
+                        globalPhoneNo,
+                        createEditProfileModel.firstName.toString(),
+                        'selectedUserToken',
+                        msgObject['id'].toString(),
+                        msgObject['id'].toString(),
+                        msgObject['peername'].toString().replaceAll("+", " "),
+                        msgObject['peerurl'].toString(),
+                        msgObject['peercode'].toString(),)));
+            }  else{
+              _moveTochatRoom(
+                '',
+                msgObject['peerid'].toString(),
+                msgObject['peername'].toString(),
+                msgObject['peerurl'].toString(),
+                msgObject['peercode'].toString(),
+              );
+            }
+
+          } else {}
+        } else {
+          if (Platform.isIOS) {
+            // _navigateToItemDetailIOS(context, message, false);
+            // messageHdlrForIOS(message);
+          } else {
+            messageHdlrForAndroid(message.data, false);
+            // if (!globalAndroidIsOnMsgExecuted) {
+            //   //showAndroidNotificationAlert(context, message).show();
+            //
+            //   globalAndroidIsOnMsgExecuted = true;
+            // }
+          }
+        }
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+      print("msg listen" + message.data.toString());
+
+      if (message != null) {
+        if (message.data['title'].toString().contains('You got a message')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          String name = prefs.getString('name2') ?? '';
+
+          if (name != msgObject['timezone'].toString()) {
+            setState(() {
+              unreads = '1';
+            });
+            Map<String, dynamic> row = {
+            };
+
+            // if (msgObject['peercode'].toString() =="grp") {
+            //   Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => ChatroomGroup(
+            //             globalPhoneNo,
+            //             createEditProfileModel.firstName.toString(),
+            //             'selectedUserToken',
+            //             msgObject['id'].toString(),
+            //             msgObject['id'].toString(),
+            //             msgObject['peername'].toString().replaceAll("+", " "),
+            //             msgObject['peerurl'].toString(),
+            //             msgObject['peercode'].toString(),)));
+            // }  else{
+            //   _moveTochatRoom(
+            //     '',
+            //     msgObject['peerid'].toString(),
+            //     msgObject['peername'].toString(),
+            //     msgObject['peerurl'].toString(),
+            //     msgObject['peercode'].toString(),
+            //   );
+            // }
+
+
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => ChatScreen(
+            //               peerId: msgObject['peerid'].toString(),
+            //               peerName: msgObject['peername'].toString(),
+            //               peerAvatar: msgObject['peerurl'].toString(),
+            //               peergcm: '',
+            //               userid: '',
+            //             )));
+
+            // getchat();
+          } else {}
+        } else {
+          if (Platform.isIOS) {
+            // _navigateToItemDetailIOS(context, message, false);
+            // messageHdlrForIOS(message);
+          } else {
+            messageHdlrForAndroid(message.data, false);
+            // if (!globalAndroidIsOnMsgExecuted) {
+            //   //showAndroidNotificationAlert(context, message).show();
+            //
+            //   globalAndroidIsOnMsgExecuted = true;
+            // }
+          }
+        }
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async{
+      print("msg open" + message.data.toString());
+
+      if (message != null) {
+        if (message.data['title'].toString().contains('You got a message')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          String name = prefs.getString('name2') ?? '';
+
+          if (name != msgObject['timezone'].toString()) {
+            Map<String, dynamic> row = {
+            };
+
+            if (msgObject['peercode'].toString() =="grp") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChatroomGroup(
+                        globalPhoneNo,
+                        createEditProfileModel.firstName.toString(),
+                        'selectedUserToken',
+                        msgObject['id'].toString(),
+                        msgObject['id'].toString(),
+                        msgObject['peername'].toString().replaceAll("+", " "),
+                        msgObject['peerurl'].toString(),
+                        msgObject['peercode'].toString(),)));
+            }  else{
+              _moveTochatRoom(
+                '',
+                msgObject['peerid'].toString(),
+                msgObject['peername'].toString(),
+                msgObject['peerurl'].toString(),
+                msgObject['peercode'].toString(),
+              );
+            }
+
+          } else {}
+        } else {
+          if (Platform.isIOS) {
+            // _navigateToItemDetailIOS(context, message, false);
+            // messageHdlrForIOS(message);
+          } else {
+            messageHdlrForAndroid(message.data, false);
+            // if (!globalAndroidIsOnMsgExecuted) {
+            //   //showAndroidNotificationAlert(context, message).show();
+            //
+            //   globalAndroidIsOnMsgExecuted = true;
+            // }
+          }
+        }
+      }
+
+      print('A new onMessageOpenedApp event was published!');
+      // Navigator.pushNamed(context, '/message',
+      //     arguments: MessageArguments(message, true));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: StreamBuilder<Object>(
-            stream: appBloc.titleStream,
-            initialData: "Home",
-            builder: (context, snapshot) {
-              return Text(snapshot.data.toString());
-            }),
-        centerTitle: true,
-        actions: <Widget>[
-          GestureDetector(
-            child: Padding(
-                padding: EdgeInsets.only(right: 18),
-                child: CircleAvatar(
-                  child: Icon(
-                    Icons.notifications
-                  ),
-                  radius: 12,
-                  backgroundColor: AppColors.APP_LIGHT_BLUE_30,
-                  foregroundColor: AppColors.APP_BLUE,
-                )
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: StreamBuilder<Object>(
+              stream: appBloc.titleStream,
+              initialData: "Home",
+              builder: (context, snapshot) {
+                return Text(snapshot.data.toString());
+              }),
+          centerTitle: true,
+          actions: <Widget>[
+            GestureDetector(
+              child: Padding(
+                  padding: EdgeInsets.only(right: 18),
+                  child: CircleAvatar(
+                    child: Icon(Icons.notifications),
+                    radius: 12,
+                    backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+                    foregroundColor: AppColors.APP_BLUE,
+                  )),
+              onTap: () {},
             ),
-            onTap: () {
-            },
-          ),
-          GestureDetector(
-            child: Padding(
-                padding: EdgeInsets.only(right: 13),
-                child: CircleAvatar(
-                  child: Icon(
-                    Icons.add,
-                    size: 18,
-                  ),
-                  radius: 12,
-                  backgroundColor: AppColors.APP_LIGHT_BLUE_30,
-                  foregroundColor: AppColors.APP_BLUE,
-                )),
-            onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => AddResorce()),(Route<dynamic> route) => false,);
-            },
-          )
-        ],
-      ),
-
-      drawer: IShareAppDrawer(),
+            GestureDetector(
+              child: Padding(
+                  padding: EdgeInsets.only(right: 13),
+                  child: CircleAvatar(
+                    child: Icon(
+                      Icons.add,
+                      size: 18,
+                    ),
+                    radius: 12,
+                    backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+                    foregroundColor: AppColors.APP_BLUE,
+                  )),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => AddResorce()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            )
+          ],
+        ),
+        drawer: IShareAppDrawer(),
         bottomNavigationBar: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           // this will be set when a new tab is tapped
           items: [
             BottomNavigationBarItem(
-              icon: new Icon(Icons.home_outlined, color: AppColors.APP_LIGHT_GREY,),
-              activeIcon: new Icon(Icons.home, color: AppColors.APP_BLUE,),
-              title: new Text('Home',style: TextStyle(color: AppColors.APP_BLUE),),
+              icon: new Icon(
+                Icons.home_outlined,
+                color: AppColors.APP_LIGHT_GREY,
+              ),
+              activeIcon: new Icon(
+                Icons.home,
+                color: AppColors.APP_BLUE,
+              ),
+              title: new Text(
+                'Home',
+                style: TextStyle(color: AppColors.APP_BLUE),
+              ),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.favorite_border,color: AppColors.APP_LIGHT_GREY,),
-              activeIcon: new Icon(Icons.favorite,color: AppColors.APP_BLUE,),
-              title: new Text('Favourites',style: TextStyle(color: AppColors.APP_BLUE)),
+              icon: new Icon(
+                Icons.favorite_border,
+                color: AppColors.APP_LIGHT_GREY,
+              ),
+              activeIcon: new Icon(
+                Icons.favorite,
+                color: AppColors.APP_BLUE,
+              ),
+              title: new Text('Favourites',
+                  style: TextStyle(color: AppColors.APP_BLUE)),
             ),
-
             BottomNavigationBarItem(
-              icon: new Icon(Icons.chat_bubble_outline, color: AppColors.APP_LIGHT_GREY,),
-              activeIcon: new Icon(Icons.chat_bubble, color: AppColors.APP_BLUE,),
-              title: new Text('Chat',style: TextStyle(color: AppColors.APP_BLUE)),
+              icon: unreads == '1'
+                  ? new Stack(children: <Widget>[
+                      new Icon(Icons.message),
+                      new Positioned(
+                        // draw a red marble
+                        top: 0.0,
+                        right: 0.0,
+                        child: new Icon(Icons.brightness_1,
+                            size: 12.0, color: Colors.redAccent),
+                      )
+                    ])
+                  : new Icon(Icons.message),
+              title: new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
             )
+            // BottomNavigationBarItem(
+            //   icon: new Icon(
+            //     Icons.chat_bubble_outline,
+            //     color: unreads==""?Colors.red:AppColors.APP_LIGHT_GREY,
+            //   ),
+            //   activeIcon: new Icon(
+            //     Icons.chat_bubble,
+            //     color: AppColors.APP_BLUE,
+            //   ),
+            //   title: new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
+            //   label:  "test",
+            // )
           ],
         ),
         body: SafeArea(child: _children[_currentIndex]),
+      ),
     );
-
   }
+
   final List<Widget> _children = [
     Myhomepage(),
     FavouritesPage(),
     ChatList(globalPhoneNo, 'name'),
-
   ];
+
+  void messageHdlrForAndroid(Map<String, dynamic> message, bool bool) async {
+    final dynamic msgBodyData = Uri.decodeFull(message['body'].toString());
+    print("msgBodyDataaaa :==>" + msgBodyData);
+    Map<String, dynamic> msgObject = json.decode(msgBodyData);
+    print("msgObject :==>" + msgObject.toString());
+
+    if (msgObject.containsKey('contentType')) {
+      String contentType = msgObject['contentType'];
+      //print("contentType :==>"+contentType);
+
+      String messageTitle = msgObject['contentTitle'];
+      String msgData = msgObject['message'];
+      String orgName = msgObject['orgName'];
+      String orgChannelName = msgObject['channelName'];
+      String orgLogo = msgObject['orgLogo'];
+      String messageSent = msgObject['messageSent'];
+      try {
+        orgName = orgName.replaceAll('+', " ");
+        messageTitle = messageTitle.replaceAll('+', " ");
+        orgChannelName = orgChannelName.replaceAll('+', " ");
+      } catch (e) {}
+
+      //{orgName: The+RISE+USA, orgLogo: https://d1rtv5ttcyt7b.cloudfront.net/app/1596688715903_rise.png,
+      //print("msgData :==>"+msgData);
+
+      //print("contentURI :==>"+contentURI);
+      print("globalISPNPageOpened :==>" + globalISPNPageOpened.toString());
+      if (globalISPNPageOpened) Navigator.of(context).pop();
+
+      if (contentType == "pdf") {
+        msgData= orgChannelName + "  Has sent a PDF.Do you want to open?  ";
+      } else if (contentType == "video") {
+        msgData= orgChannelName + "  Has sent a Video.Do you want to open?  ";
+      } else if (contentType == "url") {
+        msgData= orgChannelName + "  Has sent a Url.Do you want to open?  ";
+      } else if (contentType == "image") {
+        msgData= orgChannelName + "  Has sent a Image.Do you want to open?  ";
+      } else {}
+
+
+      CoolAlert.show(
+          context: context,
+          type: CoolAlertType.confirm,
+          text: msgData,
+          title: messageTitle,
+          confirmBtnText: "Proceed",
+          loopAnimation: true,
+          onConfirmBtnTap: () async {
+            Navigator.of(context).pop();
+            if (contentType == "pdf") {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PdfViewerNew(
+                      title: messageTitle, pdfUrl: msgObject['contentURI'])));
+            } else if (contentType == "video") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BGVideoPlayerView(
+                            videoUrl: msgObject["contentURI"],
+                            title: messageTitle,
+                            local: 'false',
+                          )));
+            } else if (contentType == "url") {
+              if (await canLaunch(msgObject['contentURI'])) {
+                await launch(msgObject['contentURI']);
+              } else {
+                String url = msgObject['contentURI'];
+                throw 'Could not launch $url';
+              }
+            } else if (contentType == "image") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FullPhoto(
+                            url: msgObject['contentURI'],
+                            title: messageTitle,
+                          )));
+            } else {}
+          });
+    } else {
+      print("no contentType :==>");
+    }
+  }
 }

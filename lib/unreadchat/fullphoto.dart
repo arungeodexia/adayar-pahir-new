@@ -4,8 +4,9 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 class FullPhoto extends StatefulWidget {
   final String url;
+  final String? title;
 
-  FullPhoto({Key? key,required this.url}) : super(key: key);
+  FullPhoto({Key? key,required this.url, this.title}) : super(key: key);
   @override State createState() => new _FullPhoto();
 }
 
@@ -13,6 +14,9 @@ class _FullPhoto extends State<FullPhoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: widget.title!=null?Text(widget.title!):Container(),
+      ),
       body: GestureDetector(
         child: Container(
             decoration: BoxDecoration(

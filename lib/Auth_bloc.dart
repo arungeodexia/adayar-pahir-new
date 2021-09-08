@@ -12,23 +12,23 @@ import 'data/api/repository/LoginRepo.dart';
 import 'data/sp/shared_keys.dart';
 
 
-part 'weather_event.dart';
+part 'Auth_event.dart';
 
-part 'weather_state.dart';
+part 'Auth_state.dart';
 
-class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  WeatherBloc() : super(WeatherInitial());
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(AuthInitial());
   var dio = Dio();
 
   Future<Response> fetchAlbum() {
     return dio.post('${AppStrings.BASE_URL}api/v1/user/+91/8667236028/otp/958106');
   }
   @override
-  Stream<WeatherState> mapEventToState(
-    WeatherEvent event,
+  Stream<AuthState> mapEventToState(
+    AuthEvent event,
   ) async* {
-    if (event is WeatherRequested) {
-      yield WeatherLoadInProgress();
+    if (event is AuthRequested) {
+      yield AuthLoadInProgress();
       try {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? accesstoken=await prefs.getString("accessToken");
@@ -46,16 +46,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           print(requestHeaders);
           globalCountryCode=await prefs.getString(USER_COUNTRY_CODE)??"";
           globalPhoneNo=await prefs.getString(USER_MOBILE_NUMBER)??"";
-          yield WeatherLoadSuccess(weather: true);
+          yield AuthLoadSuccess(AuthCheck: true);
         } else {
-          yield WeatherLoadSuccess(weather: false);
+          yield AuthLoadSuccess(AuthCheck: false);
 
         }
 
 
 
       } catch (_) {
-        yield WeatherLoadFailure();
+        yield AuthLoadFailure();
       }
     }
   }

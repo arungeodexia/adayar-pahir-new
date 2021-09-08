@@ -9,6 +9,7 @@ import 'package:pahir/Bloc/Profilepage/profile_bloc.dart';
 import 'package:pahir/Bloc/Resorceview/resource_details_view.dart';
 import 'package:pahir/Model/add_resource_model.dart';
 import 'package:pahir/Model/resources.dart';
+import 'package:pahir/Screen/search_page.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
@@ -40,6 +41,8 @@ class _MyhomepageState extends State<Myhomepage> {
   getuserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String res = prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString();
+    // prefs.setBool(IS_LOGGED_IN, false);
+
     var encoded = utf8.encode(res);
     final resourceDetailsResponse = json.decode(utf8.decode(encoded));
     //debugPrint("resourceDetailsResponse:==>" + resourceDetailsResponse.toString());
@@ -131,6 +134,12 @@ class _MyhomepageState extends State<Myhomepage> {
                   controller: searchEditingController,
                   onSubmitted: (text) {
                     globalSearchData = text.trim();
+                    FocusScope.of(context).requestFocus(new FocusNode());
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchPage()));
                     // homeBloc.add(LoadSearchData(text.toString().trim(), 20, 0));
 
 //                    Navigator.pushNamed(
@@ -149,7 +158,12 @@ class _MyhomepageState extends State<Myhomepage> {
                         onPressed: () {
                           globalSearchData =
                               searchEditingController.text.toString().trim();
+                          FocusScope.of(context).requestFocus(new FocusNode());
 
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchPage()));
 //                          Navigator.pushNamed(
 //                              context, AppRoutes.APP_ROUTE_RESOURCE_SEARCH);
 //                           _goResourceSearch();

@@ -2,8 +2,11 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pahir/Bloc/Myhomepage/myhomepage_bloc.dart';
 import 'package:pahir/Bloc/Myhomepage/myhomepage_bloc.dart';
@@ -22,16 +25,55 @@ import 'package:pahir/Screen/login_init_view.dart';
 import 'package:pahir/Screen/mydashboard.dart';
 import 'package:pahir/Screen/splash_view.dart';
 import 'package:pahir/SimpleBlocObserver.dart';
-import 'package:pahir/weather_bloc.dart';
+import 'package:pahir/Auth_bloc.dart';
 
-import 'homenew_bloc.dart';
-import 'new_weather.dart';
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+}
 
+/// Create a [AndroidNotificationChannel] for heads up notifications
+AndroidNotificationChannel channel;
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+/// Initialize the [FlutterLocalNotificationsPlugin] package.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer=SimpleBlocObserver();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  if (!kIsWeb) {
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      'This channel is used for important notifications.', // description
+      importance: Importance.high,
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    /// Create an Android Notification Channel.
+    ///
+    /// We use this channel in the `AndroidManifest.xml` file to override the
+    /// default FCM channel to enable heads up notifications.
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    /// Update the iOS foreground notification presentation options to allow
+    /// heads up notifications.
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
   runApp(MyApp());
 }
 
@@ -47,7 +89,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
           providers: _multiBlocProviders(), child: MaterialApp(
         title: 'Pahir',
-        home: Weather(),
+        home: Auth(),
       )),
     );
   }
@@ -55,7 +97,7 @@ class MyApp extends StatelessWidget {
   List<BlocProvider<Bloc>> _multiBlocProviders() {
     UserRepository userRepository=UserRepository();
     return [
-      BlocProvider<WeatherBloc>(create: (context) => WeatherBloc()),
+      BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
       BlocProvider<AuthenticationBloc>(create: (context) => AuthenticationBloc(userRepository: userRepository)),
       BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
@@ -67,30 +109,30 @@ class MyApp extends StatelessWidget {
 }
 
 
-class Weather extends StatelessWidget {
+class Auth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BlocBuilder<WeatherBloc, WeatherState>(
+        child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            if (state is WeatherInitial) {
-              BlocProvider.of<WeatherBloc>(context).add(WeatherRequested(city: "cityname"));
+            if (state is AuthInitial) {
+              BlocProvider.of<AuthBloc>(context).add(AuthRequested(city: "cityname"));
               return SplashView();
             }
-            if (state is WeatherLoadInProgress) {
+            if (state is AuthLoadInProgress) {
               return SplashView();
               return Center(child: CircularProgressIndicator());
             }
-            if (state is WeatherLoadSuccess) {
-              final weather = state.weather;
+            if (state is AuthLoadSuccess) {
+              final weather = state.AuthCheck;
               if (weather) {
                 return Mydashboard();
               }  else{
                 return LoginInitView();
               }
             }
-            if (state is WeatherLoadFailure) {
+            if (state is AuthLoadFailure) {
               return Text(
                 'Something went wrong!',
                 style: TextStyle(color: Colors.red),

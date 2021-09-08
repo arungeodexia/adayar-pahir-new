@@ -39,6 +39,7 @@ dependencies:
   equatable: ^2.0.3
   carousel_slider: ^4.0.0
   pin_code_text_field: ^1.8.0
+  pin_code_fields: ^7.3.0
   flutter_country_picker: ^0.1.6
   flutter_svg: ^0.22.0
 
@@ -81,6 +82,7 @@ dependencies:
   add_2_calendar: ^2.1.0
   visibility_detector: ^0.2.0
   open_file: ^3.2.1
+  flutter_local_notifications: ^8.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

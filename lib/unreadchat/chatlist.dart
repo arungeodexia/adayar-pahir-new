@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:pahir/Model/GroupsModelChat.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
+import 'package:pahir/data/api/repository/ChatRepo.dart';
 import 'package:pahir/data/api/repository/ResourceRepo.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
@@ -59,6 +61,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'chatroom_Group.dart';
+
 class ChatList extends StatefulWidget {
   ChatList(this.myID, this.myName);
 
@@ -72,8 +76,7 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
   CreateEditProfileModel? createEditProfileModel;
   String? _groupName;
-  static final ResourceRepo resourceRepository = new ResourceRepo();
-
+  static final ChatRepo resourceRepository = new ChatRepo();
 
   @override
   void initState() {
@@ -92,7 +95,8 @@ class _ChatListState extends State<ChatList> {
         .decode(prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString());
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
-    FirebaseMessaging.instance.getToken().then((token){
+    // resourceRepository.getorgid("grpid");
+    FirebaseMessaging.instance.getToken().then((token) {
       print(token);
     });
     setState(() {});
@@ -109,10 +113,9 @@ class _ChatListState extends State<ChatList> {
       child: Text("Create"),
       onPressed: () async {
         DateTime now = DateTime.now();
-        var grpid=_groupName!.replaceAll(" ", "");
-        grpid=grpid+DateTime.now().millisecondsSinceEpoch.toString();
+        var grpid = _groupName!.replaceAll(" ", "");
+        grpid = grpid + DateTime.now().millisecondsSinceEpoch.toString();
         if (_groupName != null) {
-
           FirebaseController.instanace
               .saveUserDataToFirebaseDatabase(
                   grpid,
@@ -126,17 +129,21 @@ class _ChatListState extends State<ChatList> {
                 .collection('chatlist')
                 .doc(grpid)
                 .set({
-              'chatID':  grpid,
+              'chatID': grpid,
               'chatWith': grpid,
               'lastChat': 'New Group',
               'isGroup': '0',
               'timestamp': DateTime.now().millisecondsSinceEpoch
             });
-            GroupsModelChat chatmode=new GroupsModelChat();
-            chatmode.groupId=grpid;
-            chatmode.id=createEditProfileModel!.id.toString();
-            chatmode.message=grpid;
-            // resourceRepository.creategroupsinchat(chatmode, createEditProfileModel, grpid,createEditProfileModel.id.toString());
+            GroupsModelChat chatmode = new GroupsModelChat();
+            chatmode.groupId = grpid;
+            chatmode.id = createEditProfileModel!.id.toString();
+            chatmode.message = grpid;
+            resourceRepository.creategroupsinchat(
+                chatmode,
+                createEditProfileModel!,
+                grpid,
+                createEditProfileModel!.id.toString());
           });
           Navigator.of(context).pop();
         }
@@ -200,14 +207,16 @@ class _ChatListState extends State<ChatList> {
         //     //       ),
         //   ],
         // ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     _popupDialog(context);
-        //   },
-        //   child: Icon(Icons.add, color: Colors.white, size: 30.0),
-        //   backgroundColor: Colors.grey[700],
-        //   elevation: 0.0,
-        // ),
+        floatingActionButton: FloatingActionButton.extended(
+          isExtended: true,
+          onPressed: () {
+            _popupDialog(context);
+          },
+          icon: Icon(Icons.add, color: Colors.white, size: 30.0),
+          label: Text("Create Group"),
+          backgroundColor: Colors.grey[700],
+          elevation: 0.0,
+        ),
         body: VisibilityDetector(
           key: Key("1"),
           onVisibilityChanged: ((visibility) {
@@ -223,7 +232,7 @@ class _ChatListState extends State<ChatList> {
                   .orderBy('createdAt', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
-                 if (!snapshot.hasData)
+                if (!snapshot.hasData)
                   return Container(
                     child: Center(
                       child: CircularProgressIndicator(),
@@ -237,7 +246,7 @@ class _ChatListState extends State<ChatList> {
                         if (data['userId'] == widget.myID) {
                           return Container();
                         } else {
-                          return StreamBuilder<QuerySnapshot?>(
+                          return StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(widget.myID)
@@ -245,12 +254,15 @@ class _ChatListState extends State<ChatList> {
                                   .where('chatWith', isEqualTo: data['userId'])
                                   .snapshots(),
                               builder: (context, chatListSnapshot) {
-
                                 try {
+                                  if (chatListSnapshot.hasData) {
+                                    print(chatListSnapshot.data);
+                                    print(chatListSnapshot.data!.docs.length);
+                                    // print(chatListSnapshot.data!.docs[0]["lastChat"]);
+                                  }
 
                                   if ((chatListSnapshot.hasData &&
-                                      chatListSnapshot.data!.docs.length >
-                                          0)) {
+                                      chatListSnapshot.data!.docs.length > 0)) {
                                     return Card(
                                       elevation: 8.0,
                                       shape: RoundedRectangleBorder(
@@ -273,16 +285,17 @@ class _ChatListState extends State<ChatList> {
                                         decoration: new BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color:             (chatListSnapshot.hasData &&
-                                              chatListSnapshot
-                                                  .data!
-                                                  .docs
-                                                  .length >
-                                                  0)
+                                          color: (chatListSnapshot.hasData &&
+                                                  chatListSnapshot
+                                                          .data!.docs.length >
+                                                      0)
                                               ? chatListSnapshot.data!.docs[0]
-                                              .data()
-                                              .toString().contains("isGroup")
-                                              ?   Colors.blueGrey:AppColors.APP_LIGHT_BLUE_20:AppColors.APP_LISTVIEW_BACK,
+                                                      .data()
+                                                      .toString()
+                                                      .contains("isGroup")
+                                                  ? Colors.blueGrey
+                                                  : AppColors.APP_LIGHT_BLUE_20
+                                              : AppColors.APP_LISTVIEW_BACK,
                                           // color: AppColors.APP_LISTVIEW_BACK,
                                           // radius of 10
                                           // gradient: new LinearGradient(
@@ -298,8 +311,7 @@ class _ChatListState extends State<ChatList> {
                                           //     tileMode: TileMode.repeated),
                                         ),
                                         child: ListTile(
-                                          leading: data['userImageUrl'].toString() ==
-                                                  "null"
+                                          leading: data['userImageUrl'].toString() == "null"
                                               ? CircleAvatar(
                                                   onBackgroundImageError:
                                                       (context, url) =>
@@ -316,13 +328,13 @@ class _ChatListState extends State<ChatList> {
                                                   radius: 20.0,
                                                   backgroundColor:
                                                       const Color(0xFF777899),
-                                                  backgroundImage:
-                                                      ((data['userImageUrl'] != "" ||
-                                                              data['userImageUrl'] !=
-                                                                  null)
-                                                          ? NetworkImage(
-                                                              data['userImageUrl'])
-                                                          : AssetImage("images/photo_avatar.png") as ImageProvider)),
+                                                  backgroundImage: ((data['userImageUrl'] != "" ||
+                                                          data['userImageUrl'] !=
+                                                              null)
+                                                      ? NetworkImage(
+                                                          data['userImageUrl'])
+                                                      : AssetImage("images/photo_avatar.png")
+                                                          as ImageProvider)),
                                           title: Text(
                                             data['name'],
                                             style: Theme.of(context)
@@ -334,32 +346,63 @@ class _ChatListState extends State<ChatList> {
                                             maxLines: 1,
                                           ),
                                           subtitle: (chatListSnapshot.hasData &&
-                                                  chatListSnapshot.data!
-                                                          .docs.length >
+                                                  chatListSnapshot
+                                                          .data!.docs.length >
                                                       0)
-                                              ? chatListSnapshot.data!.docs[0].data().toString().contains("isGroup")
-                                                  ?
-                                          StreamBuilder<
+                                              ? chatListSnapshot.data!.docs[0]
+                                                      .data()
+                                                      .toString()
+                                                      .contains("isGroup")
+                                                  ? StreamBuilder<
                                                           DocumentSnapshot>(
-                                                      stream: FirebaseFirestore.instance
-                                                          .collection(
-                                                              'users')
+                                                      stream: FirebaseFirestore
+                                                          .instance
+                                                          .collection('users')
                                                           .doc(data['userId'])
                                                           .snapshots(),
                                                       builder: (context, msg) {
-                                                        return Text(msg
-                                                                .hasData
-                                                            ? msg.data!.data().toString().contains("lastmsg")?msg.data!["lastmsg"].toString(): "":"",
-                                                          style: Theme.of(context)
-                                                              .textTheme
-                                                              .subtitle1!
-                                                              .apply(
-                                                            color: AppColors
-                                                                .APP_LIGHTWHITE,
-                                                          ),);
+                                                        return Text(
+                                                          msg.hasData
+                                                              ? msg.data!
+                                                                      .data()
+                                                                      .toString()
+                                                                      .contains(
+                                                                          "lastmsg")
+                                                                  ? msg.data![
+                                                                          "lastmsg"]
+                                                                      .toString()
+                                                                  : ""
+                                                              : "",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .subtitle1!
+                                                                  .apply(
+                                                                    color: AppColors
+                                                                        .APP_LIGHTWHITE,
+                                                                  ),
+                                                        );
                                                       })
                                                   : Text(
-                                                      (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0) ? chatListSnapshot.data!.docs[0].data().toString().contains("isGroup") ? "" : chatListSnapshot.data!.docs[0]["lastChat"] : data['intro'],
+                                                      (chatListSnapshot
+                                                                  .hasData &&
+                                                              chatListSnapshot
+                                                                      .data!
+                                                                      .docs
+                                                                      .length >
+                                                                  0)
+                                                          ? chatListSnapshot
+                                                                  .data!.docs[0]
+                                                                  .data()
+                                                                  .toString()
+                                                                  .contains(
+                                                                      "isGroup")
+                                                              ? ""
+                                                              : chatListSnapshot
+                                                                      .data!
+                                                                      .docs[0]
+                                                                  ["lastChat"]
+                                                          : data['intro'],
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .subtitle1!
@@ -371,159 +414,139 @@ class _ChatListState extends State<ChatList> {
                                                     )
                                               : Container(),
                                           trailing: Padding(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  0, 8, 4, 4),
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 8, 4, 4),
                                               child:
                                                   (chatListSnapshot.hasData &&
-                                                          chatListSnapshot
-                                                                  .data!
-                                                                  .docs
-                                                                  .length >
+                                                          chatListSnapshot.data!
+                                                                  .docs.length >
                                                               0)
-                                                      ? chatListSnapshot.data!.docs[0]
-                                                      .data().toString().contains("isGroup")
-
-                                                      ?StreamBuilder<
-                                                      DocumentSnapshot>(
-                                                      stream: FirebaseFirestore.instance
-                                                          .collection(
-                                                          'users')
-                                                          .doc(data['userId'])
-                                                          .snapshots(),
-                                                      builder: (context, timestampmsg) {
-
-                                                        return Container(
-                                                          width: 60,
-                                                          height: 50,
-                                                          child: Column(
-                                                            children: [
-                                                              Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .check,
-                                                                    size:
-                                                                    15,
-                                                                    color: AppColors
-                                                                        .APP_LIGHTWHITE,
-                                                                  ),
-
-                                                                  Text(timestampmsg
-                                                                      .hasData
-                                                                      ? timestampmsg.data!.data().toString().contains("createdAt")?readTimestamp(timestampmsg.data!["createdAt"]).toString(): "":"",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                        AppColors.APP_LIGHTWHITE,
-                                                                        fontSize: 12),),
-                                                                ],
-                                                              ),
-                                                              Padding(
-                                                                  padding:
-                                                                  const EdgeInsets.fromLTRB(
-                                                                      0,
-                                                                      5,
-                                                                      0,
-                                                                      0),
-                                                                  child:
-                                                                  CircleAvatar(
-                                                                    radius:
-                                                                    9,
-                                                                    child:
-                                                                    Text(
-                                                                      (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0)
-                                                                          ? timestampmsg.data!["createdAt"].toString()==chatListSnapshot.data!.docs[0]['timestamp'].toString()?"":"n"
-                                                                          : '',
-                                                                      style:
-                                                                      TextStyle(fontSize: 10),
-                                                                    ),
-                                                                    backgroundColor:  timestampmsg.data!["createdAt"].toString()==chatListSnapshot.data!.docs[0]['timestamp'].toString()?Colors.transparent:Colors.red,
-                                                                    foregroundColor:
-                                                                    Colors.white,
-                                                                  )),
-
-                                                            ],
-                                                          ),
-                                                        );
-                                                      }):StreamBuilder<
-                                                              QuerySnapshot>(
-                                                          stream: FirebaseFirestore.instance
-                                                              .collection(
-                                                                  'chatroom')
-                                                              .doc(chatListSnapshot
-                                                                      .data!
-                                                                      .docs[0]
-                                                                  ['chatID'])
-                                                              .collection(chatListSnapshot
-                                                                      .data!
-                                                                      .docs[0]
-                                                                  ['chatID'])
-                                                              .where('idTo', isEqualTo: widget.myID)
-                                                              .where('isread', isEqualTo: false)
-                                                              .snapshots(),
-                                                          builder: (context, notReadMSGSnapshot) {
-                                                            return Container(
-                                                              width: 120,
-                                                              height: 50,
-                                                              child: Column(
-                                                                children: <
-                                                                    Widget>[
-                                                                  Row(
-                                                                    mainAxisSize: MainAxisSize.min,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Icon(
-                                                                        Icons
-                                                                            .check,
-                                                                        size:
-                                                                            15,
-                                                                        color: AppColors
-                                                                            .APP_LIGHTWHITE,
-                                                                      ),
-                                                                      Text(
-                                                                        (chatListSnapshot.hasData &&
-                                                                                chatListSnapshot.data!.docs.length > 0)
-                                                                            ? readTimestamp(chatListSnapshot.data!.docs[0]['timestamp'])
-                                                                            : '',
-                                                                        overflow: TextOverflow.fade,
-                                                                        style: TextStyle(
+                                                      ? chatListSnapshot
+                                                              .data!.docs[0]
+                                                              .data()
+                                                              .toString()
+                                                              .contains(
+                                                                  "isGroup")
+                                                          ? StreamBuilder<
+                                                                  DocumentSnapshot>(
+                                                              stream: FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'users')
+                                                                  .doc(data[
+                                                                      'userId'])
+                                                                  .snapshots(),
+                                                              builder: (context,
+                                                                  timestampmsg) {
+                                                                return Container(
+                                                                  width: 63,
+                                                                  height: 50,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          Icon(
+                                                                            Icons.check,
+                                                                            size:
+                                                                                15,
                                                                             color:
                                                                                 AppColors.APP_LIGHTWHITE,
-                                                                            fontSize: 12),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.fromLTRB(
+                                                                          ),
+                                                                          Text(
+                                                                            timestampmsg.hasData
+                                                                                ? timestampmsg.data!.data().toString().contains("createdAt")
+                                                                                    ? readTimestamp(timestampmsg.data!["createdAt"]).toString()
+                                                                                    : ""
+                                                                                : "",
+                                                                            style:
+                                                                                TextStyle(color: AppColors.APP_LIGHTWHITE, fontSize: 12),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Padding(
+                                                                          padding: const EdgeInsets.fromLTRB(
                                                                               0,
                                                                               5,
                                                                               0,
                                                                               0),
-                                                                      child:
-                                                                          CircleAvatar(
-                                                                        radius:
-                                                                            9,
-                                                                        child:
-                                                                            Text(
-                                                                          (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0)
-                                                                              ? ((notReadMSGSnapshot.hasData && notReadMSGSnapshot.data!.docs.length > 0) ? '${notReadMSGSnapshot.data!.docs.length}' : '')
-                                                                              : '',
-                                                                          style:
-                                                                              TextStyle(fontSize: 10),
-                                                                        ),
-                                                                        backgroundColor: (notReadMSGSnapshot.hasData &&
-                                                                                notReadMSGSnapshot.data!.docs.length > 0 &&
-                                                                                notReadMSGSnapshot.hasData &&
-                                                                                notReadMSGSnapshot.data!.docs.length > 0)
-                                                                            ? Colors.red[400]
-                                                                            : Colors.transparent,
-                                                                        foregroundColor:
-                                                                            Colors.white,
-                                                                      )),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          })
+                                                                          child:
+                                                                          (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0 && timestampmsg.data != null)
+                                                                              ? timestampmsg.data!["createdAt"].toString() == chatListSnapshot.data!.docs[0]['timestamp'].toString()?CircleAvatar(
+                                                                            radius:
+                                                                                9,
+                                                                            child:
+                                                                                Text(
+                                                                              (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0 && timestampmsg.data != null)
+                                                                                  ? timestampmsg.data!["createdAt"].toString() == chatListSnapshot.data!.docs[0]['timestamp'].toString()
+                                                                                      ? "n"
+                                                                                      : ""
+                                                                                  : '',
+                                                                              style: TextStyle(fontSize: 10),
+                                                                            ),
+                                                                            backgroundColor: timestampmsg.data != null
+                                                                                ? timestampmsg.data!["createdAt"] == chatListSnapshot.data!.docs[0]['timestamp'].toString()
+                                                                                    ? Colors.transparent
+                                                                                    : Colors.red
+                                                                                : Colors.transparent,
+                                                                            foregroundColor:
+                                                                                Colors.white,
+                                                                          ):Container():Container()),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              })
+                                                          : StreamBuilder<QuerySnapshot>(
+                                                              stream: FirebaseFirestore.instance.collection('chatroom').doc(chatListSnapshot.data!.docs[0]['chatID']).collection(chatListSnapshot.data!.docs[0]['chatID']).where('idTo', isEqualTo: widget.myID).where('isread', isEqualTo: false).snapshots(),
+                                                              builder: (context, notReadMSGSnapshot) {
+                                                                return Container(
+                                                                  width: 63,
+                                                                  height: 50,
+                                                                  child: Column(
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: <
+                                                                            Widget>[
+                                                                          Icon(Icons.check, size: 15, color: AppColors.APP_LIGHTWHITE,),
+                                                                          Text(
+                                                                            (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0)
+                                                                                ? readTimestamp(chatListSnapshot.data!.docs[0]['timestamp'])
+                                                                                : '',
+                                                                            overflow:
+                                                                                TextOverflow.fade,
+                                                                            style:
+                                                                                TextStyle(color: AppColors.APP_LIGHTWHITE, fontSize: 12),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                      Padding(
+                                                                          padding: const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              5,
+                                                                              0,
+                                                                              0),
+                                                                          child:
+                                                                              CircleAvatar(
+                                                                            radius:
+                                                                                9,
+                                                                            child:
+                                                                                Text(
+                                                                              (chatListSnapshot.hasData && chatListSnapshot.data!.docs.length > 0) ? ((notReadMSGSnapshot.hasData && notReadMSGSnapshot.data!.docs.length > 0) ? '${notReadMSGSnapshot.data!.docs.length}' : '') : '',
+                                                                              style: TextStyle(fontSize: 10),
+                                                                            ),
+                                                                            backgroundColor: (notReadMSGSnapshot.hasData && notReadMSGSnapshot.data!.docs.length > 0 && notReadMSGSnapshot.hasData && notReadMSGSnapshot.data!.docs.length > 0)
+                                                                                ? Colors.red[400]
+                                                                                : Colors.transparent,
+                                                                            foregroundColor:
+                                                                                Colors.white,
+                                                                          )),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              })
                                                       : Text('')),
                                           onTap: () {
                                             try {
@@ -533,8 +556,8 @@ class _ChatListState extends State<ChatList> {
                                                 data['name'],
                                                 data['userImageUrl'],
                                                 data['intro'],
-                                                chatListSnapshot.data!
-                                                    .docs[0]['isGroup']
+                                                chatListSnapshot
+                                                    .data!.docs[0]['isGroup']
                                                     .toString(),
                                               );
                                             } catch (e) {
@@ -549,6 +572,120 @@ class _ChatListState extends State<ChatList> {
                                               );
                                             }
                                           },
+                                            onLongPress: () {
+                                              CoolAlert.show(
+                                                  context: context,
+                                                  type: CoolAlertType
+                                                      .confirm,
+                                                  text:
+                                                  "Do you want to Delete This Chat?",
+                                                  title: "Delete Chat",
+                                                  onConfirmBtnTap: () {
+                                                    Navigator.of(context)
+                                                        .pop();
+                                                    try {
+                                                      if (chatListSnapshot
+                                                          .data!
+                                                          .docs[
+                                                      0][
+                                                      'isGroup']
+                                                          .toString() ==
+                                                          "0") {
+                                                        if (data[
+                                                        'intro'] ==
+                                                            widget.myID) {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                              'users')
+                                                              .doc(data[
+                                                          'userId'])
+                                                              .delete()
+                                                              .then((_) {
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                'chatroom')
+                                                                .doc(data[
+                                                            'userId'])
+                                                                .delete()
+                                                                .then(
+                                                                    (dtat) {
+                                                                  // Navigator.of(context).pop();
+                                                                  // Navigator.pop(context, "delete");
+                                                                });
+                                                          });
+                                                        } else {
+                                                          resourceRepository.deletegroupsinchat(
+                                                              createEditProfileModel!, data[
+                                                          'userId'],
+                                                              widget.myID
+                                                                  .toString());
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                              'users')
+                                                              .doc(widget
+                                                              .myID)
+                                                              .collection(
+                                                              'chatlist')
+                                                              .doc(data[
+                                                          'userId'])
+                                                              .delete()
+                                                              .then((_) {
+                                                            print(
+                                                                "delete");
+                                                            // Navigator.pop(context);
+                                                            // onBackPress();
+                                                          });
+                                                        }
+                                                      } else {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                            'users')
+                                                            .doc(data[
+                                                        'userId'])
+                                                            .delete()
+                                                            .then((_) {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                              'chatroom')
+                                                              .doc(data[
+                                                          'userId'])
+                                                              .delete()
+                                                              .then(
+                                                                  (dtat) {
+                                                                // Navigator.of(context).pop();
+                                                                // Navigator.pop(context, "delete");
+                                                              });
+                                                        });
+                                                      }
+                                                    } catch (e) {
+                                                      FirebaseFirestore
+                                                          .instance
+                                                          .collection(
+                                                          'users')
+                                                          .doc(data[
+                                                      'userId'])
+                                                          .delete()
+                                                          .then((_) {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                            'chatroom')
+                                                            .doc(data[
+                                                        'userId'])
+                                                            .delete()
+                                                            .then((dtat) {
+                                                          // Navigator.of(context).pop();
+                                                          // Navigator.pop(context, "delete");
+                                                        });
+                                                      });
+                                                    }
+                                                  });
+                                            },
                                         ),
                                       ),
                                     );
@@ -556,6 +693,7 @@ class _ChatListState extends State<ChatList> {
                                     return Container();
                                   }
                                 } catch (e) {
+                                  print(e);
                                   return Container();
                                 }
                               });
@@ -593,18 +731,18 @@ class _ChatListState extends State<ChatList> {
       String chatID = "";
       if (isGroup == "0") {
         chatID = selectedUserID;
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ChatroomGroup(
-        //             widget.myID,
-        //             widget.myName,
-        //             selectedUserToken,
-        //             selectedUserID,
-        //             chatID,
-        //             selectedUserName,
-        //             selectedUserThumbnail,
-        //             countrycode)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatroomGroup(
+                    widget.myID,
+                    widget.myName,
+                    selectedUserToken,
+                    selectedUserID,
+                    chatID,
+                    selectedUserName,
+                    selectedUserThumbnail,
+                    countrycode)));
       } else {
         chatID = makeChatId(widget.myID, selectedUserID);
         Navigator.push(

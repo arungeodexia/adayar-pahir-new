@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
+import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/resources.dart';
 import 'package:pahir/Model/skill_item.dart';
 import 'package:pahir/data/globals.dart';
@@ -14,6 +15,7 @@ import 'package:pahir/utils/values/app_strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
+
 
 class ResourceRepo {
   final storage = new FlutterSecureStorage();
@@ -236,4 +238,70 @@ class ResourceRepo {
       return null;
     }
   }
+
+
+  Future<ResourceSearchNew> getSearchData2(
+      String searchString, int start, int limit) async {
+    List<SearchResults> searchResultList;
+    late ResourceSearchNew searchResultResModel;
+
+
+
+    try {
+      final response = await http.get(
+        //'${AppStrings.BASE_URL}api/v2/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start',
+        //Old Url
+        // '${AppStrings.BASE_URL}api/v2.2/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start',
+
+        //New Url
+        Uri.parse('${AppStrings.BASE_URL}api/v2.4/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start'),
+        //'https://api.pahir.com/api/v2.3/user/+91/9994081073/resources/search?limit=10&searchString=Electrician&start=0',
+        headers: requestHeaders,
+      );
+
+      print("getSearchData1 request.url body:==>"+response.request!.url.toString());
+
+      print("getSearchData1 body:==>"+response.body.toString());
+
+      searchResultResModel = ResourceSearchNew.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      if(searchResultResModel != null){
+
+        /////sharedDetails data or Referrer name data start///
+        if(searchResultResModel.searchResults != null) {
+          for (int arrIndx = 0; arrIndx <searchResultResModel.searchResults!.length; arrIndx++) {
+            List<ResourceResults> resourceResults = searchResultResModel.searchResults![arrIndx].resourceResults!;
+            if(resourceResults != null){
+              // for (int itemIndx = 0; itemIndx <resourceResults.length; itemIndx++) {
+              //
+              //   List<ResourceSearchNew.SharedDetails> sharedDetails  = resourceResults![itemIndx].sharedDetails!;
+              //   String referrerNames = "";
+              //   if(sharedDetails != null){
+              //     for (int innerItemIndx = 0; innerItemIndx <sharedDetails.length; innerItemIndx++) {
+              //       if(referrerNames != ""){
+              //         referrerNames =  referrerNames +","+ resourceResults![itemIndx].sharedDetails![innerItemIndx].firstName!;
+              //       }else{
+              //         referrerNames =  resourceResults[itemIndx].sharedDetails![innerItemIndx].firstName!;
+              //       }
+              //     }
+              //   }
+              //   print("Referrer Name in res_repos :==>"+referrerNames);
+              //   resourceResults[itemIndx].manualAddedReferrerName = referrerNames;
+              //
+              // }
+            }
+
+          }
+        }
+        //////////sharedDetails data or Referrer name data start//////
+
+        searchResultList = searchResultResModel.searchResults!;
+      }
+
+    } on Exception catch (e) {
+      print("Exception :==>"+e.toString());
+      // TODO
+    }
+    return searchResultResModel;
+  }
+
 }

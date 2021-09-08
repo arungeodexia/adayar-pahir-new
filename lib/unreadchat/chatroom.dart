@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,8 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:http/http.dart';
 import 'package:path/path.dart' as p;
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom(
@@ -224,6 +227,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   void initState() {
+    initializeDateFormatting();
 
     getdata();
     focusNode.addListener(onFocusChange);
@@ -292,6 +296,44 @@ class _ChatRoomState extends State<ChatRoom> {
 
             appBar: AppBar(
               actions: [
+
+                Container(
+                  width: 35,
+                  height: 35,
+                  margin: EdgeInsets.only(right: 10),
+                  child: RawMaterialButton(
+                    fillColor: Colors.white,
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(5),
+                    onPressed: () async {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.confirm,
+                          text: "Do you want to Delete This Chat?",
+                          title: "Delete Chat",
+                          onConfirmBtnTap: (){
+                            FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(widget.selectedUserID)
+                                .delete().then((_)  {
+                              FirebaseFirestore.instance
+                                  .collection('chatroom')
+                                  .doc(widget.selectedUserID)
+                                  .delete().then((dtat) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                // Navigator.pop(context, "delete");
+                              });
+
+                            });
+
+                          }
+                      );
+
+                    },
+                    child: Icon(Icons.exit_to_app,color: Colors.red,),
+                  ),
+                )
                 // createEditProfileModel == null
                 //     ? Container()
                 //     : Padding(
@@ -328,13 +370,17 @@ class _ChatRoomState extends State<ChatRoom> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          widget.selectedUserName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1!
-                              .copyWith(color: Colors.white, fontSize: 20),
-                          overflow: TextOverflow.clip,
+                        Container(
+                          width: MediaQuery.of(context).size.width-210,
+
+                          child: Text(
+                            widget.selectedUserName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(color: Colors.white, fontSize: 20),
+                            overflow: TextOverflow.clip,
+                          ),
                         ),
                         // Text(
                         //   "Online",
@@ -1152,7 +1198,7 @@ class _ChatRoomState extends State<ChatRoom> {
     Client client = InterceptedClient.build(interceptors: [
       ApiInterceptor(),
     ]);
-    String userImage = createEditProfileModel!.profilePicture!;
+    String userImage = createEditProfileModel!.profilePicture.toString();
     String peerId = widget.selectedUserID;
     String username = createEditProfileModel!.firstName!;
     String countrycode = widget.countrycode;
@@ -1168,6 +1214,8 @@ class _ChatRoomState extends State<ChatRoom> {
         '{"message":"$msg","id":"$id","peerurl":"$userImage","timezone":"$time","peerid":"$globalPhoneNo","peername":"$username","peercode":"$countrycode"}';
     // make POST request
     var response = await client.post(Uri.parse(url), headers: headers, body: json);
+    print(response.body.toString());
+    print(response.statusCode.toString());
     // check the status code for the result
     int statusCode = response.statusCode;
     // this API passes back the id of the new item added to the body

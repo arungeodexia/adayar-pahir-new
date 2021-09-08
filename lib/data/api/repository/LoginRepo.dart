@@ -45,7 +45,7 @@ class LoginRepo{
         headers: requestHeaders,
         body: '{}');
     // var res=dio.post('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/$otp');
-    // print(res.toString());
+    print(response.body.toString());
 
     int value=0;
 
