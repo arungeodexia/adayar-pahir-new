@@ -758,6 +758,7 @@ class _SearchPageState extends State<SearchPage> {
                                                                             ResourceDetailsView(
                                                                               isRedirectFrom: "resource_search_list",
                                                                               resoruceid: resourceItem.id.toString(),
+                                                                                resorucetype: resourceItem.resourceType.toString()
                                                                             )));
                                                           },
                                                         ),

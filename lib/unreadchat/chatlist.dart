@@ -212,7 +212,7 @@ class _ChatListState extends State<ChatList> {
           onPressed: () {
             _popupDialog(context);
           },
-          icon: Icon(Icons.add, color: Colors.white, size: 30.0),
+          icon: Icon(Icons.group_add, color: Colors.white, size: 30.0),
           label: Text("Create Group"),
           backgroundColor: Colors.grey[700],
           elevation: 0.0,
@@ -618,9 +618,7 @@ class _ChatListState extends State<ChatList> {
                                                         } else {
                                                           resourceRepository.deletegroupsinchat(
                                                               createEditProfileModel!, data[
-                                                          'userId'],
-                                                              widget.myID
-                                                                  .toString());
+                                                          'userId'],createEditProfileModel!.id.toString());
                                                           FirebaseFirestore
                                                               .instance
                                                               .collection(
@@ -663,25 +661,29 @@ class _ChatListState extends State<ChatList> {
                                                         });
                                                       }
                                                     } catch (e) {
+                                                      String chatID = makeChatId(widget.myID, data[
+                                                      'userId']);
+                                                      print(chatID);
+
                                                       FirebaseFirestore
                                                           .instance
                                                           .collection(
                                                           'users')
-                                                          .doc(data[
-                                                      'userId'])
+                                                          .doc(widget.myID)
+                                                          .collection('chatlist').doc(chatID)
                                                           .delete()
                                                           .then((_) {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                            'chatroom')
-                                                            .doc(data[
-                                                        'userId'])
-                                                            .delete()
-                                                            .then((dtat) {
-                                                          // Navigator.of(context).pop();
-                                                          // Navigator.pop(context, "delete");
-                                                        });
+                                                        // FirebaseFirestore
+                                                        //     .instance
+                                                        //     .collection(
+                                                        //     'chatroom')
+                                                        //     .doc(chatID)
+                                                        //     .delete()
+                                                        //     .then(
+                                                        //         (dtat) {
+                                                        //       // Navigator.of(context).pop();
+                                                        //       // Navigator.pop(context, "delete");
+                                                        //     });
                                                       });
                                                     }
                                                   });

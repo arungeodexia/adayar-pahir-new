@@ -9,6 +9,7 @@ import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/drawer_item.dart';
 import 'package:pahir/Screen/Webview.dart';
 import 'package:pahir/Screen/edit_profile_view.dart';
+import 'package:pahir/Screen/help_view.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -105,8 +106,10 @@ class IShareAppDrawer extends StatelessWidget {
             Navigator.pop(context);
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => EditProfileView(edit: "edit",)));
-          }   else if (d.title == AppStrings.CONTACT_SYNC_TITLE) {
-
+          }   else if (d.title == "Help") {
+            Navigator.pop(context);
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => HelpView()));
             // Navigator.of(context).push(
             //     MaterialPageRoute(builder: (context) => ContactsPage()));
 

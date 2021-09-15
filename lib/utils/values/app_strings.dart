@@ -367,21 +367,20 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String APP_HELP_TITLE = "Help";
 
-  static const String APP_HELP_SUB_TITLE_ONE = "What does QCare do?";
-  static const String APP_HELP_SUB_CONTENT_ONE = "QCare helps to find  the medical needs of  patients such as vacant hospital beds, vaccination centers, plasma donors, ambulances, and more. More importantly it finds them by location  and by availabilities.";
+  static const String APP_HELP_SUB_TITLE_ONE = "What does Pahir do?";
+  static const String APP_HELP_SUB_CONTENT_ONE = "Pahir helps friends and families share information about their resources, selectively and instantly. Once you installed and registered the mobile application you will start seeing the resources that your friends and families share with you.";
 
-  static const String APP_HELP_SUB_TITLE_TWO = "How do I find vacant beds?";
-  static const String APP_HELP_SUB_CONTENT_TWO = "Select the State and optionally the City where you are looking for vacant beds and select “Beds” to see the list of hospital facilities that have vacant beds. The data is updated in near real time. Alternatively you can register your needs in the home page and get notified automatically when there is a bed available.";
+  static const String APP_HELP_SUB_TITLE_TWO = "How do I find resources?";
+  static const String APP_HELP_SUB_CONTENT_TWO = "Once registered you will be taken to the home page where there is an option to enter what you are looking for. You can search for resource by skill or by name. For example \"Carpenter\" will get the list of all carpenters that your close networks recommend to you. Searching for \"Joe\" will get the list of resources with \"joe\" appearing anywhere in their name, and recommended by your friends and families.";
 
-  static const String APP_HELP_SUB_TITLE_THREE = "Can I reserve beds through QCare?";
-  static const String APP_HELP_SUB_CONTENT_THREE = "Not at this time. We are working to make reserving the beds easy for you. Meanwhile you can call the number provided with a simple touch.";
+  static const String APP_HELP_SUB_TITLE_THREE = "How do I recommend resources that I used?";
+  static const String APP_HELP_SUB_CONTENT_THREE = "Press the \"+\" icon at the top right corner of your mobile application home page. You can either enter a totally new resource or you can click the \"add from my contacts\" to add one from your phonebook list.";
 
-  static const String APP_HELP_SUB_TITLE_FOUR = "How do I become a volunteer for QCare?";
-  static const String APP_HELP_SUB_CONTENT_FOUR = "Thanks for your interest to become a volunteer for QCare. Please email volunteers@geodexia.com with your name and  contact information. We will call you back as needed.";
+  static const String APP_HELP_SUB_TITLE_FOUR = "How do I contact the resource?";
+  static const String APP_HELP_SUB_CONTENT_FOUR = "Tap the resource to get their details. Here you will have options to call, text, email or whatsapp them directly.";
 
   static const String APP_HELP_SUB_TITLE_FIVE = "Can I find who recommended the resource?";
   static const String APP_HELP_SUB_CONTENT_FIVE = "Yes, of course. In the resource details page tap the \"shared by\" link to get the list of your contacts who referred that particular resource along with their rating for that resource.";
-
 
 
 

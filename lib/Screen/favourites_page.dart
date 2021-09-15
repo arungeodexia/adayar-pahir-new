@@ -238,6 +238,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                                       resoruceid: resources[index]
                                           .id
                                           .toString(),
+                                        resorucetype: resources[index].resourceType.toString()
                                     )),)
                                         .then((val)=>val?_getRequests():null);
                                   },

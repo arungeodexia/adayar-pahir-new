@@ -93,6 +93,53 @@ class ResourceRepo {
       return null;
     }
   }
+  Future<http.Response?> addreviewresource(ResourceResults resourceModel, String filePath,
+      AddUpdateReviewModel addUpdateReviewModel) async {
+    try {
+      String resource_id = "";
+      Resources resourceDetail;
+      final response = await http.post(
+          Uri.parse(
+              '${AppStrings.BASE_URL}api/v1/user/$globalCountryCode/$globalPhoneNo/resources'),
+          headers: requestHeaders,
+          body: jsonEncode(resourceModel));
+      print(response.body);
+      print(response.statusCode);
+      print(response.request!.url.toString());
+      if (response.statusCode == 200) {
+        // print("Add Resource response :==>"+response.body.toString());
+
+        final resourceCreationResponse =
+            json.decode(utf8.decode(response.bodyBytes));
+
+        resource_id = resourceCreationResponse['id'];
+        if (filePath.length > 0) {
+          String res = await fileuploadresource(
+              filePath: filePath, resource_id1: resource_id);
+          print(res);
+        }
+
+        try {
+          resourceDetail =
+              Resources.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+
+          if (resourceDetail != null) {
+            //print("resourceDetail.id ==>"+resourceDetail.id);
+            var res = await addORUpdateReview(
+                addUpdateReviewModel, resourceDetail.id);
+          }
+        } on Exception catch (e) {
+          //print("Exception :==>"+e.toString());
+          return response;
+        }
+        return response;
+      } else {
+        return response;
+      }
+    } on SocketException {
+      return null;
+    }
+  }
 
   Future<AddUpdtReviewRespModel?> addORUpdateReview(
       AddUpdateReviewModel addUpdateReviewModel, String? resourceId) async {

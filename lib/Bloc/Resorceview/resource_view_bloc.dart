@@ -18,15 +18,20 @@ class ResourceViewBloc extends Bloc<ResourceViewEvent, ResourceViewState> {
   ) async* {
     if (event is FetchResourceDetails) {
       yield ResourceLoading();
-      ResourceRepo resourceRepo=ResourceRepo();
-      http.Response? response = await resourceRepo.fetchResourceData1(event.resourceId,event.resourceType);
+     try{
+       ResourceRepo resourceRepo=ResourceRepo();
+       http.Response? response = await resourceRepo.fetchResourceData1(event.resourceId,event.resourceType);
+       print(response!.body.toString());
 
-      if (response!.statusCode==200) {
-        ResourceResults resourceDetail = ResourceResults.fromJson(json.decode(utf8.decode(response.bodyBytes)));
-        yield ResourceFetched(resourceDetail);
-      }else{
-        yield ResourceFetchingFailed();
-      }
+       if (response!.statusCode==200) {
+         ResourceResults resourceDetail = ResourceResults.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+         yield ResourceFetched(resourceDetail);
+       }else{
+         yield ResourceFetchingFailed();
+       }
+     }catch(e){
+       yield ResourceFetchingFailed();
+     }
     } else if (event is UpdateResourceDetails) {
       // yield ResourceLoading();
       ResourceRepo resourceRepo=ResourceRepo();

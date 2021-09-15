@@ -51,6 +51,7 @@ class _MyhomepageState extends State<Myhomepage> {
       globalCurrentUserMobileNo = resourceDetailsResponse['mobile'];
       globalCurrentUserId = resourceDetailsResponse['id'];
       userImage = resourceDetailsResponse['profilePicture'];
+      userImage = resourceDetailsResponse['profilePicture'];
       print(userImage);
     });
   }
@@ -112,7 +113,7 @@ class _MyhomepageState extends State<Myhomepage> {
                     new CircleAvatar(
                         radius: 25.0,
                         backgroundColor: const Color(0xFF778899),
-                        backgroundImage: userImage != ""
+                        backgroundImage: userImage.toString()!="null"&&userImage != ""
                             ? NetworkImage(userImage.toString())
                             : AssetImage("images/photo_avatar.png") as ImageProvider),
 
@@ -239,8 +240,8 @@ class _MyhomepageState extends State<Myhomepage> {
                                 actionPane: SlidableDrawerActionPane(),
                                 child: new ListTile(
                                   onTap: (){
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: resources[index].isMyResource.toString(),resoruceid: resources[index].id.toString(),)),(Route<dynamic> route) => false,);
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: resources[index].isMyResource.toString(),resoruceid: resources[index].id.toString(),resorucetype: resources[index].resourceType.toString(),)),(Route<dynamic> route) => false,);
                                   },
                                   title: Text(
                                     resources[index].firstName!,

@@ -10,12 +10,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:pahir/Bloc/Resorceview/resource_view_bloc.dart';
+import 'package:pahir/Bloc/addresource/add_resouce_bloc.dart';
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/ReviewsListResponse.dart';
 import 'package:pahir/Model/add_resource_model.dart';
 import 'package:pahir/Screen/add_resorce.dart';
 import 'package:pahir/Screen/mydashboard.dart';
+import 'package:pahir/data/api/repository/ResourceRepo.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
@@ -32,8 +34,9 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 class ResourceDetailsView extends StatefulWidget {
   final String isRedirectFrom;
   final String resoruceid;
+  final String resorucetype;
 
-  ResourceDetailsView({required this.isRedirectFrom, required this.resoruceid});
+  ResourceDetailsView({required this.isRedirectFrom, required this.resoruceid, required this.resorucetype});
 
   @override
   State<StatefulWidget> createState() => ResourceDetailsState();
@@ -116,7 +119,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
     //toastMessage("Fetch Reviews List method :==>");
     //print("Fetch Reviews List method :==>");
     // gReviews = await resourceRepository.fetchReviewsList(globalResourceId);
-    BlocProvider.of<ResourceViewBloc>(context).add(FetchResourceDetails(widget.resoruceid,""));
+    BlocProvider.of<ResourceViewBloc>(context).add(FetchResourceDetails(widget.resoruceid,widget.resorucetype));
 
     ////Fetch resource details////
   }
@@ -247,7 +250,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
               } else if (state is ResourceLoading) {
                 return buildLoading();
               }else if (state is ResourceFetchingFailed) {
-                return Text("data");
+                return Center(child: Text("No Resource Found"));
               }
               return Container();
             },
@@ -361,21 +364,13 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                               new AddUpdateReviewModel();
                                           addUpdateReviewModel.review = "";
                                           addUpdateReviewModel.rating = 0;
-
+                                          ResourceRepo repo=ResourceRepo();
+                                          repo.addreviewresource(addResource, "", addUpdateReviewModel);
+                                          resourceDetail.isMyResource=true;
                                           setState(() {
                                             try {
-                                              //print("resourceType bfr update :==>"+globalAddResourceModel.resourceType.toString());
-                                              //print("isMyResource bfr update :==>"+globalAddResourceModel.isMyResource.toString());
 
-                                              /*   globalAddResourceModel.resourceType = AppStrings.RESOURCE_LIST_RESOURCE_TYPE_INTERNAL;
-                                          globalAddResourceModel.isMyResource = true;*/
-
-                                              //globalSearchResourceModel.resourceType = AppStrings.RESOURCE_LIST_RESOURCE_TYPE_INTERNAL;
-
-                                              //print("resourceType Afr update :==>"+globalAddResourceModel.resourceType.toString());
-                                              //print("isMyResource Afr update :==>"+globalAddResourceModel.isMyResource.toString());
                                             } on Exception catch (exception) {
-                                              //print("Exception :==>"+exception.toString());
                                             }
                                           });
                                         },
@@ -715,7 +710,15 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                         SizedBox(
                           height: 3,
                         ),
-
+                        Text(
+                          (resourceDetail.review != null)
+                              ? resourceDetail.review!
+                              : "",
+                          style: TextStyle(
+                              color: AppColors.APP_BLACK_10,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 11),
+                        ),
                       ]),
                 ),
               ),
