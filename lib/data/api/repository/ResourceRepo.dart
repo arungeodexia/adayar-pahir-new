@@ -6,8 +6,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
+import 'package:pahir/Model/PrivacyModel.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
+import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/resources.dart';
 import 'package:pahir/Model/skill_item.dart';
 import 'package:pahir/data/globals.dart';
@@ -285,7 +287,49 @@ class ResourceRepo {
       return null;
     }
   }
+  Future<PrivacyModel> getprivacy(
+      CreateEditProfileModel createEditProfileModel) async {
+    PrivacyModel resourceList=PrivacyModel();
+    try {
+      final response = await http.get(
+        Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
+        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+      );
 
+      print("getHomeData request :==>" + response.request!.url.toString());
+      print("getHomeData response :==>" + response.body.toString());
+
+      if (response.statusCode == 200) {
+        resourceList =
+            PrivacyModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      }
+    } on Exception catch (e) {
+      throw e;
+    }
+    return resourceList;
+  }
+
+  Future<PrivacyModel> setprivacy(CreateEditProfileModel createEditProfileModel,
+      PrivacyModel privacyModel) async {
+    PrivacyModel resourceList=PrivacyModel();
+    try {
+      final response = await http.post(
+          Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+          body: jsonEncode(privacyModel));
+
+      print("getHomeData request :==>" + response.request!.url.toString());
+      print("getHomeData response :==>" + response.body.toString());
+
+      if (response.statusCode == 200) {
+        resourceList =
+            PrivacyModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      }
+    } on Exception catch (e) {
+      throw e;
+    }
+    return resourceList;
+  }
 
   Future<ResourceSearchNew> getSearchData2(
       String searchString, int start, int limit) async {

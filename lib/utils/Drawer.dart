@@ -10,6 +10,7 @@ import 'package:pahir/Model/drawer_item.dart';
 import 'package:pahir/Screen/Webview.dart';
 import 'package:pahir/Screen/edit_profile_view.dart';
 import 'package:pahir/Screen/help_view.dart';
+import 'package:pahir/Screen/privacy_control.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -29,6 +30,8 @@ class IShareAppDrawer extends StatelessWidget {
         Icons.account_circle, "/updateprofile"),
     /*new DrawerItem("Change Number",
         IconData(59504, fontFamily: 'MaterialIcons'), "/updatemobile"),*/
+    new DrawerItem(
+        "Set Privacy", Icons.settings, "/privacy"),
     new DrawerItem("Privacy & Security",
         Icons.insert_drive_file, "/mydashboard"),
     new DrawerItem(
@@ -114,7 +117,15 @@ class IShareAppDrawer extends StatelessWidget {
             //     MaterialPageRoute(builder: (context) => ContactsPage()));
 
 
-          } else
+          } else if (d.title == "Set Privacy"){
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Privacy_Control(name: "pricay",)),
+            );
+          }
+
+            else
             Navigator.pop(context);
 
           /* if (d.title != "Invite a friend")
