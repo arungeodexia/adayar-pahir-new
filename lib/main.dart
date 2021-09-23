@@ -17,6 +17,7 @@ import 'package:pahir/Bloc/addresource/add_resouce_bloc.dart';
 import 'package:pahir/Bloc/login/login_bloc.dart';
 import 'package:pahir/Bloc/login/login_bloc.dart';
 import 'package:pahir/Bloc/login/signin_mobile_view.dart';
+import 'package:pahir/Bloc/message/app_messages_bloc.dart';
 import 'package:pahir/Bloc/user/auth.dart';
 import 'package:pahir/Bloc/user/auth.dart';
 import 'package:pahir/Bloc/user/user_repository.dart';
@@ -104,6 +105,7 @@ class MyApp extends StatelessWidget {
       BlocProvider<MyhomepageBloc>(create: (context) => MyhomepageBloc()),
       BlocProvider<AddResouceBloc>(create: (context) => AddResouceBloc()),
       BlocProvider<ResourceViewBloc>(create: (context) => ResourceViewBloc()),
+      BlocProvider<AppMessagesBloc>(create: (context) => AppMessagesBloc()),
     ];
   }
 }

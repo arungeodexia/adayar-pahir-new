@@ -118,7 +118,15 @@ class ResourceResults {
   bool? isMyResource;
   String? skillTags;
   String? resourceType;
-
+  bool? allowCall;
+  bool? allowSms;
+  bool? allowWhatsapp;
+  bool? allowEmail;
+  bool? allowCalendar;
+  bool? allowChat;
+  bool? displayPhoneNumber;
+  bool? allowClass;
+  bool? allowGroup;
 
   //Manually added end
   String? manualAddedReferrerName;
@@ -156,7 +164,15 @@ class ResourceResults {
         this.businessDetails,
         this.isMyResource,
         this.skillTags,
-        this.resourceType});
+        this.resourceType,
+        this.allowCall,
+        this.allowSms,
+        this.allowWhatsapp,
+        this.allowEmail,
+        this.allowCalendar,
+        this.allowChat,
+        this.allowClass,
+        this.allowGroup});
 
   ResourceResults.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -182,6 +198,15 @@ class ResourceResults {
     review = json['review'];
     ratingDate = json['rating_date'];
     notes = json['notes'];
+    allowSms= json["allowSMS"];
+    allowCall= json["allowCall"];
+    allowGroup= json["allowGroup"];
+    allowClass= json["allowClass"];
+    allowWhatsapp= json["allowWhatsapp"];
+    allowEmail= json["allowEmail"];
+    allowCalendar= json["allowCalendar"];
+    allowChat= json["allowChat"];
+    displayPhoneNumber= json["displayPhoneNumber"];
     notesDate = json['notes_date'];
     if (json['sharedDetails'] != null) {
       sharedDetails = <SharedDetails>[];
@@ -231,7 +256,17 @@ class ResourceResults {
     data['review'] = this.review;
     data['rating_date'] = this.ratingDate;
     data['notes'] = this.notes;
+    data['allowCall'] = this.allowCall;
+    data['allowSms'] = this.allowSms;
+    data['allowGroup'] = this.allowGroup;
+    data['allowClass'] = this.allowClass;
+    data['allowWhatsapp'] = this.allowWhatsapp;
+    data['allowEmail'] = this.allowEmail;
+    data['allowCalendar'] = this.allowCalendar;
+    data['allowChat'] = this.allowChat;
+    data['displayPhoneNumber'] = this.displayPhoneNumber;
     data['notes_date'] = this.notesDate;
+
     if (this.sharedDetails != null) {
       data['sharedDetails'] =
           this.sharedDetails!.map((v) => v.toJson()).toList();

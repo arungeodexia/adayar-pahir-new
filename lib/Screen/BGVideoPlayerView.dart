@@ -93,8 +93,8 @@ class _BackgroundVideoState extends State<BGVideoPlayerView> {
                           //height: size.height -10.0 ?? 0,
                           // width: (size.width - 10.0) ?? 0,
 
-                          height: _controller.value.size.height ?? 0,
-                          width: (_controller.value.size.width) ?? 0,
+                          height: _controller.value.size.height,
+                          width: (_controller.value.size.width),
                           child: VideoPlayer(_controller),
                         ),
                       ),

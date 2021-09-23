@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pahir/Bloc/message/app_messages_view.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Screen/BGVideoPlayerView.dart';
 import 'package:pahir/Screen/myhomepage.dart';
@@ -382,7 +383,10 @@ class _MydashboardState extends State<Mydashboard> {
                     backgroundColor: AppColors.APP_LIGHT_BLUE_30,
                     foregroundColor: AppColors.APP_BLUE,
                   )),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AppMessagesView()));
+              },
             ),
             GestureDetector(
               child: Padding(

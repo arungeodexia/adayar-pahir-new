@@ -647,7 +647,7 @@ class _SearchPageState extends State<SearchPage> {
                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                 children: <Widget>[
                                                                                   Text(
-                                                                                    (resourceItem!.firstName != null) ? resourceItem!.firstName! : "",
+                                                                                    (resourceItem.firstName != null) ? resourceItem.firstName! : "",
                                                                                     overflow: TextOverflow.fade,
                                                                                     softWrap: false,
                                                                                     maxLines: 1,
@@ -667,7 +667,7 @@ class _SearchPageState extends State<SearchPage> {
                                                                                             overflow: TextOverflow.ellipsis,
                                                                                             maxLines: 1,
                                                                                             strutStyle: StrutStyle(fontSize: 6.0),
-                                                                                            text: TextSpan(style: TextStyle(color: Colors.black), text: (resourceItem != null && resourceItem.manualAddedReferrerName != null && resourceItem.manualAddedReferrerName != "") ? ("Ref : " + resourceItem!.manualAddedReferrerName!) : ""
+                                                                                            text: TextSpan(style: TextStyle(color: Colors.black), text: (resourceItem != null && resourceItem.manualAddedReferrerName != null && resourceItem.manualAddedReferrerName != "") ? ("Ref : " + resourceItem.manualAddedReferrerName!) : ""
                                                                                                 //text: "Ref : Test"
                                                                                                 ),
                                                                                           ),
@@ -701,7 +701,7 @@ class _SearchPageState extends State<SearchPage> {
                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                     children: <Widget>[
                                                                                       Text(
-                                                                                        (resourceItem!.skill != null) ? resourceItem!.skill! : "",
+                                                                                        (resourceItem.skill != null) ? resourceItem.skill! : "",
                                                                                         //"skill",
                                                                                         style: TextStyle(
                                                                                             color: AppColors.APP_LIGHT_BLUE_20,

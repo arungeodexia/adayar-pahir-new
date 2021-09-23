@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pahir/Bloc/message/message_model_class.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
@@ -293,7 +294,7 @@ class ResourceRepo {
     try {
       final response = await http.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+        headers: requestHeaders,
       );
 
       print("getHomeData request :==>" + response.request!.url.toString());
@@ -315,7 +316,7 @@ class ResourceRepo {
     try {
       final response = await http.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
-          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+          headers: requestHeaders,
           body: jsonEncode(privacyModel));
 
       print("getHomeData request :==>" + response.request!.url.toString());
@@ -393,6 +394,117 @@ class ResourceRepo {
       // TODO
     }
     return searchResultResModel;
+  }
+  Future<MessagesModel> fetchMessages(
+      String mobileNumber, String countryCode) async {
+    MessagesModel? messageResponse;
+    try {
+      final response = await http.get(
+          Uri.parse('${AppStrings.BASE_URL}api/v1/message/$mobileNumber/$countryCode'),
+          headers: requestHeaders);
+      log(response.body.toString());
+      log("GetReviewResponse request :==>"+response.request!.url.toString());
+      if (response.statusCode == 200) {
+        print("GetReviewResponse response :==>" + response.body.toString());
+        messageResponse = MessagesModel.fromJson(
+            json.decode(utf8.decode(response.bodyBytes)));
+        if (messageResponse != null) {
+          //print("GetReviewResponse response Username,userid,Review,rating :==>"+reviewResponse.reviews[0].userName+","+reviewResponse.reviews[0].userId.toString()+","+reviewResponse.reviews[0].review+","+reviewResponse.reviews[0].rating.toString());
+          globalMessagesResponse = messageResponse;
+
+          // if(messageResponse != null && messageResponse.messages != null && messageResponse.messages.length > 0) {
+          //   for(int i = 0; i < messageResponse.messages.length; i++) {
+          //     //2020-09-17T05:13:45
+          //     DateTime sendTimeFromResponse =
+          //     DateFormat("yyyy-MM-ddTHH:mm:ss").parse(messageResponse.messages[i].sentDate);
+          //     Duration duration = DateTime.now().difference(sendTimeFromResponse);
+          //     String ago = "";
+          //     if(duration.inDays > 0) {
+          //       int remainingHours = (duration.inHours % 24).toInt();
+          //       if(remainingHours > 0) {
+          //         ago = '${duration.inDays}day ${remainingHours}h ago';
+          //       } else {
+          //         ago = '${duration.inDays}day ago';
+          //       }
+          //     } else if (duration.inHours > 0) {
+          //       int remainingMinutes = (duration.inMinutes % 60).toInt();
+          //       if (remainingMinutes > 0) {
+          //         ago = '${duration.inHours}h ${remainingMinutes}m ago';
+          //       } else {
+          //         ago = '${duration.inHours}h ago';
+          //       }
+          //     } else {
+          //       ago = '${duration.inMinutes}m ago';
+          //     }
+          //
+          //     messageResponse.messages[i].messageBody.messageSent = ago;
+          //
+          //
+          //   }
+          // }
+        }
+      } else {
+        messageResponse = null;
+        globalReviewResponse = null;
+      }
+    } on Exception catch (e) {
+      print(e.toString());
+      messageResponse = null;
+      globalReviewResponse = null;
+    }
+    return messageResponse!;
+  }
+  Future<String> getlike(
+      String orgmemberid,
+      String messageid,
+      String reaction,
+      String reactionid,
+      ) async {
+    String resourceList = "";
+    try {
+      final response = await http.post(
+          Uri.parse('${AppStrings.BASE_URL}api/v1/message/member/$orgmemberid/message/$messageid/$reaction/$reactionid'),
+          headers: requestHeaders);
+      log(response.request!.url.toString());
+      log(response.body.toString());
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        var jsonMap = json.decode(jsonString);
+        resourceList = "200";
+
+        return resourceList;
+      } else {
+        return resourceList;
+      }
+    } on Exception catch (e) {
+      return resourceList;
+    }
+  }
+  Future<String> shareApi(
+      String orgmemberid,
+      String messageid,
+      String reaction,
+      String reactionid,
+      ) async {
+    String resourceList = "";
+    try {
+      final response = await http.post(
+          Uri.parse('${AppStrings.BASE_URL}api/v1/message/member/$orgmemberid/message/$messageid/$reaction/$reactionid'),
+          headers: requestHeaders);
+      log(response.request!.url.toString());
+      log(response.body.toString());
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        var jsonMap = json.decode(jsonString);
+        resourceList = "200";
+
+        return resourceList;
+      } else {
+        return resourceList;
+      }
+    } on Exception catch (e) {
+      return resourceList;
+    }
   }
 
 }

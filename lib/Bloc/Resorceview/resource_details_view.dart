@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:pahir/Bloc/Resorceview/resource_view_bloc.dart';
-import 'package:pahir/Bloc/addresource/add_resouce_bloc.dart';
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/ReviewsListResponse.dart';
-import 'package:pahir/Model/add_resource_model.dart';
 import 'package:pahir/Screen/add_resorce.dart';
 import 'package:pahir/Screen/mydashboard.dart';
 import 'package:pahir/data/api/repository/ResourceRepo.dart';
@@ -238,6 +236,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
             if (state is ResourceFetched) {
               resourceResults=state.resourceDetail;
               ismyres=state.resourceDetail.isMyResource!;
+              print(state.resourceDetail);
               setState(() {
 
               });
@@ -267,6 +266,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
   //Widget showResourceData(BuildContext context, AddResourceModel resourceDetail) {
   Widget showResourceData(
       BuildContext context, ResourceResults resourceDetail) {
+    print(resourceDetail);
     if (resourceDetail != null) {
       if (resourceDetail.channelDetails != null &&
           resourceDetail.channelDetails!.showRating != null) {
@@ -556,7 +556,8 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
               SizedBox(
                 height: 4,
               ),
-              Text(
+              resourceDetail.displayPhoneNumber!.toString()=="false"
+                  ? Container(): Text(
                 "${(resourceDetail.countryCode == null && resourceDetail.mobile == null) ? "" : " Mobile : ${resourceDetail.countryCode.toString()}" " ${resourceDetail.mobile.toString()}"}",
                 style: TextStyle(
                     color: AppColors.APP_BLACK_10,
@@ -581,7 +582,8 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                 SizedBox(
                                   width: 12,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowCall!.toString()=="false"
+                                    ? Container(): GestureDetector(
                                   child: Image(
                                       image: AssetImage(
                                           'images/icon_call_new1.png'),
@@ -590,10 +592,12 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                   onTap: () =>
                                       contactOptions("phone", resourceDetail),
                                 ),
-                                SizedBox(
+                                resourceDetail.allowSms!.toString()=="false"
+                                    ? Container(): SizedBox(
                                   width: 20,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowSms!.toString()=="false"
+                                    ? Container():GestureDetector(
                                   child: Image(
                                     image:
                                         AssetImage('images/icon_sms_new.png'),
@@ -603,20 +607,24 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                   onTap: () =>
                                       contactOptions("sms", resourceDetail),
                                 ),
-                                SizedBox(
+                                resourceDetail.allowChat!.toString()=="false"
+                                    ? Container():SizedBox(
                                   width: 20,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowChat!.toString()=="false"
+                                    ? Container():GestureDetector(
                                   child: CircleAvatar(
                                     child: Icon(Icons.message),
                                   ),
                                   onTap: () =>
                                       contactOptions("chat", resourceDetail),
                                 ),
-                                SizedBox(
+                                resourceDetail.allowEmail!.toString()=="false"
+                                    ? Container():SizedBox(
                                   width: 20,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowEmail!.toString()=="false"
+                                    ? Container():GestureDetector(
                                   child: Image(
                                     image: (gresourceDetail != null &&
                                             gresourceDetail.email != null &&
@@ -630,10 +638,12 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                   onTap: () =>
                                       contactOptions("mail", resourceDetail),
                                 ),
-                                SizedBox(
+                                resourceDetail.allowWhatsapp!.toString()=="false"
+                                    ? Container(): SizedBox(
                                   width: 20,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowWhatsapp!.toString()=="false"
+                                    ? Container(): GestureDetector(
                                   child: Image(
                                     image: AssetImage(
                                         'images/icon_whatsapp_new2.png'),
@@ -643,10 +653,12 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                   onTap: () => contactOptions(
                                       "whatsApp", resourceDetail),
                                 ),
-                                SizedBox(
-                                  width: 18,
+                                resourceDetail.allowCalendar!.toString()=="false"
+                                    ? Container():SizedBox(
+                                  width: 20,
                                 ),
-                                GestureDetector(
+                                resourceDetail.allowCalendar!.toString()=="false"
+                                    ? Container():GestureDetector(
                                   child: Image(
                                     image:
                                         AssetImage('images/icon_calendar.png'),

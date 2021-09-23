@@ -23,7 +23,7 @@ class ResourceViewBloc extends Bloc<ResourceViewEvent, ResourceViewState> {
        http.Response? response = await resourceRepo.fetchResourceData1(event.resourceId,event.resourceType);
        print(response!.body.toString());
 
-       if (response!.statusCode==200) {
+       if (response.statusCode==200) {
          ResourceResults resourceDetail = ResourceResults.fromJson(json.decode(utf8.decode(response.bodyBytes)));
          yield ResourceFetched(resourceDetail);
        }else{

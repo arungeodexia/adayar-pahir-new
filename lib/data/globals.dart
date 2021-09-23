@@ -1,5 +1,6 @@
 library ishare.globals;
 
+import 'package:pahir/Bloc/message/message_model_class.dart';
 import 'package:pahir/Model/GetReviewResponse.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/add_resource_model.dart';
@@ -31,6 +32,7 @@ AddResourceModel? globalAddResourceModel;
 //SearchResultDetailsModel globalSearchResourceModel;
 ResourceResults? globalSearchResourceModel;
 GetReviewResponse? globalReviewResponse;
+MessagesModel? globalMessagesResponse;
 /// 加法事件
 const actionIncrement = 'actionIncrement';
 
