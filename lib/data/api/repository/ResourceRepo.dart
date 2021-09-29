@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pahir/Bloc/message/message_model_class.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
@@ -18,10 +17,10 @@ import 'package:pahir/utils/values/app_strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ResourceRepo {
-  final storage = new FlutterSecureStorage();
 
   Future<http.Response?> gethomedata() async {
     try {
@@ -175,7 +174,7 @@ class ResourceRepo {
     String? resource_id1,
   }) async {
     try{
-      final storage = new FlutterSecureStorage();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       String resource_id = '';
       if (filePath!.length > 0) {
         var postUri = Uri.parse(
@@ -197,9 +196,8 @@ class ResourceRepo {
         request.files.add(multipartFile);
 
         // send
-
-        var at = await storage.read(key: "accessToken");
-        var uph = await storage.read(key: "userFingerprintHash");
+        var at =  prefs.getString( "accessToken");
+        var uph =  prefs.getString( "userFingerprintHash");
         if (at != null) {
           request.headers["Authorization"] = "Bearer " + at;
           request.headers["userFingerprintHash"] = uph!;

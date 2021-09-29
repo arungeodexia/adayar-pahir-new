@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
@@ -23,7 +22,6 @@ import 'package:async/async.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRepo {
-  final storage = new FlutterSecureStorage();
 
   Future<http.Response?> gethomedata() async {
     try {

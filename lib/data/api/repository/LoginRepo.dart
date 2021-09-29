@@ -5,14 +5,12 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pahir/Bloc/user/user_repository.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/device_info_model.dart';
-import 'package:pahir/data/api/api_intercepter.dart';
 import 'package:pahir/data/api/repository/ProfileRepo.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
@@ -24,12 +22,7 @@ import '../../device_info.dart';
 
 class LoginRepo{
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  final storage = new FlutterSecureStorage();
   var dio = Dio();
-
-  Client client = InterceptedClient.build(interceptors: [
-    ApiInterceptor(),
-  ]);
   String fcmToken = "";
   Future<int> askForOTP(
       {required String countryCode, required String phoneNo}) async {
@@ -67,8 +60,6 @@ class LoginRepo{
           json.decode(utf8.decode(response.bodyBytes)));
       await prefs.setString( "accessToken",createEditProfileModel.accessToken!);
       await prefs.setString("userFingerprintHash", createEditProfileModel.userFingerprintHash!);
-      await storage.write(key: "accessToken",value: createEditProfileModel.accessToken);
-      await storage.write(key: "userFingerprintHash", value: createEditProfileModel.userFingerprintHash);
 
 
       //print("verifyOtp UserRepos request :==>"+response.request.toString());
@@ -125,19 +116,7 @@ class LoginRepo{
             fcmToken = prefs2.getString(FCM_KEY) ?? "";
           }
           print(fcmToken);
-          DeviceInfoModel deviceInfoModel=new DeviceInfoModel(accessToken: createEditProfileModel.accessToken.toString().trim(), appId: "", appName: packageInfo.appName.toString(), appVersion: packageInfo.version.toString(), buildNumber: packageInfo.buildNumber.toString(), deviceToken: fcmToken, imeiNumber: "imeiNumber", osName: Platform.operatingSystem.toString().trim(), osVersion: Platform.operatingSystemVersion.toString().trim(), userFingerprintHash: createEditProfileModel.userFingerprintHash.toString().trim());
-
-          SharedPreferences prefs1 = await SharedPreferences.getInstance();
-          String prefAppName = prefs1.getString(APP_NAME) ?? "";
-          String prefAppVersion = prefs1.getString(APP_VERSION) ?? "";
-          String prefBuildNumber = prefs1.getString(BUILD_NUMBER) ?? "";
-          String prefOSName = prefs1.getString(OS_NAME) ?? "";
-          String prefOSVersion = prefs1.getString(OS_VERSION) ?? "";
-          String prefDeviceToken = prefs.getString(FCM_TOKEN) ?? "";
-
-          // print("Pref Details In USER REPOS :==>"+prefAppName+","+prefAppVersion+","+prefBuildNumber+","+prefOSName+","+prefOSVersion+","+prefDeviceToken);
-          //toastMessage("Pref Details USER REPOS :==>"+prefAppName+","+prefAppVersion+","+prefBuildNumber+","+prefOSName+","+prefOSVersion+","+prefDeviceToken);
-
+          DeviceInfoModel deviceInfoModel=new DeviceInfoModel(accessToken: createEditProfileModel.accessToken.toString().trim(), appId: "", appName: packageInfo.appName.toString(), appVersion: packageInfo.version.toString(), buildNumber: packageInfo.buildNumber.toString(), deviceToken: fcmToken, imeiNumber: "imeiNumber", osName: !kIsWeb?Platform.operatingSystem.toString().trim():"Web", osVersion: !kIsWeb?Platform.operatingSystemVersion.toString().trim():"Web", userFingerprintHash: createEditProfileModel.userFingerprintHash.toString().trim());
           final bool isDeviceInfoSent = await sendDeviceInfo(deviceInfoModel,createEditProfileModel.accessToken,createEditProfileModel.userFingerprintHash);
 
 

@@ -1,21 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/http.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/phone_contact_model.dart';
-import 'package:pahir/data/api/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
-Client client = InterceptedClient.build(interceptors: [
-  ApiInterceptor(),
-]);
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<int> uploadContactsnew(
     {List<PhoneContactModel>? phoneContactList}) async {
@@ -31,7 +26,7 @@ Future<int> uploadContactsnew(
   //  showToastMessage("Uploading contact value:==> "+"Country code: "+phoneContactList[arrIndx].countryCode+"Mobile no :==>"+phoneContactList[arrIndx].mobileNumber);
   // }
 
-  final response = await client.post(
+  final response = await http.post(
       Uri.parse('${AppStrings.BASE_URL}api/v1/user/${globalUserId}/contacts'),
       headers: {HttpHeaders.contentTypeHeader: 'application/json'},
       body: jsonArray);
@@ -52,8 +47,9 @@ Future<int> uploadContactsnew(
 Future<String> fileuploadchat({
   String? filePath,
 }) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
   String resource_id = "";
-  final storage = new FlutterSecureStorage();
 
   if (filePath!.length > 0) {
     var postUri = Uri.parse(
@@ -75,9 +71,8 @@ Future<String> fileuploadchat({
     request.files.add(multipartFile);
 
     // send
-
-    var at = await storage.read(key: "accessToken");
-    var uph = await storage.read(key: "userFingerprintHash");
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
@@ -105,8 +100,8 @@ Future<String> fileuploadchat({
 Future<String> fileimageupload({
   String? filePath,
 }) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   String resource_id = "";
-  final storage = new FlutterSecureStorage();
 
   if (filePath!.length > 0) {
 
@@ -129,9 +124,8 @@ Future<String> fileimageupload({
     request.files.add(multipartFile);
 
     // send
-
-    var at = await storage.read(key: "accessToken");
-    var uph = await storage.read(key: "userFingerprintHash");
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
@@ -160,8 +154,8 @@ Future<String> fileuploadgroup(
     {String? filePath,
     CreateEditProfileModel? createEditProfileModel,
     String? groupid}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   String? resource_id = "";
-  final storage = new FlutterSecureStorage();
 
   if (filePath!.length > 0) {
     // var postUri = Uri.parse(
@@ -186,9 +180,8 @@ Future<String> fileuploadgroup(
     request.files.add(multipartFile);
 
     // send
-
-    var at = await storage.read(key: "accessToken");
-    var uph = await storage.read(key: "userFingerprintHash");
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
@@ -221,7 +214,7 @@ Future<String> fileuploadresource({
   String? filePath,
   String? resource_id1,
 }) async {
-  final storage = new FlutterSecureStorage();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   String resource_id = '';
 
   if (filePath!.length > 0) {
@@ -244,9 +237,8 @@ Future<String> fileuploadresource({
     request.files.add(multipartFile);
 
     // send
-
-    var at = await storage.read(key: "accessToken");
-    var uph = await storage.read(key: "userFingerprintHash");
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;

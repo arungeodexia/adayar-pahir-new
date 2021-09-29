@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cool_alert/cool_alert.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pahir/Bloc/Profilepage/profile_bloc.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/skill_item.dart';
@@ -148,9 +149,9 @@ class EditProfileState extends State<EditProfileView> {
     createEditProfileModel.appName = packageInfo.appName.toString();
     createEditProfileModel.appVersion = packageInfo.version.toString();
     createEditProfileModel.buildNumber = packageInfo.buildNumber.toString();
-    createEditProfileModel.osName = Platform.operatingSystem.toString().trim();
+    createEditProfileModel.osName = kIsWeb?"Web":Platform.operatingSystem.toString().trim();
     createEditProfileModel.osVersion =
-        Platform.operatingSystemVersion.toString().trim();
+    kIsWeb?"Web":Platform.operatingSystemVersion.toString().trim();
     createEditProfileModel.deviceToken = fcm_key; //Fcm key should be added
     createEditProfileModel.imeiNumber = deviceimei;
     createEditProfileModel.userFingerprintHash = "";
@@ -486,7 +487,7 @@ class EditProfileState extends State<EditProfileView> {
                                   padding:
                                       EdgeInsets.only(right: 20, bottom: 3),
                                   child: CircleAvatar(
-                                    backgroundImage: FileImage(_image),
+                                    backgroundImage: kIsWeb?NetworkImage(_image.path):FileImage(_image) as ImageProvider,
                                     radius: 40.0,
                                     foregroundColor: AppColors.APP_WHITE,
                                     backgroundColor: AppColors.APP_BLACK_10,

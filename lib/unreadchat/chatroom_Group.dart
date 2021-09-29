@@ -40,6 +40,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:http/http.dart' as http;
+
 
 class ChatroomGroup extends StatefulWidget {
   ChatroomGroup(
@@ -736,7 +738,7 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
                             time,
                             style: Theme.of(context)
                                 .textTheme
-                                .body2!
+                                .bodyText2!
                                 .apply(color: Colors.grey),
                           ),
                         ),
@@ -773,7 +775,7 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
             child: Text(time,
                 style: Theme.of(context)
                     .textTheme
-                    .body2!
+                    .bodyText2!
                     .apply(color: Colors.grey)),
           ),
           Row(
@@ -974,7 +976,7 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
     String json =
         '{"message":"$msg","id":"$id","peerurl":"${imageUrl}","timezone":"$time","peerid":"$globalPhoneNo","peername":"${widget.selectedUserName}","peercode":"grp"}';
     // make POST request
-    var response = await client.post(Uri.parse(url), headers: requestHeaders, body: json);
+    var response = await http.post(Uri.parse(url), headers: requestHeaders, body: json);
     // check the status code for the result
     int statusCode = response.statusCode;
     // this API passes back the id of the new item added to the body

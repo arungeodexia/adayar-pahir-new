@@ -24,7 +24,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
@@ -339,7 +338,7 @@ class _ChatListState extends State<ChatList> {
                                             data['name'],
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .title!
+                                                .subtitle1!
                                                 .apply(
                                                   color: AppColors.APP_WHITE,
                                                 ),

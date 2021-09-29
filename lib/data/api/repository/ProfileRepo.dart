@@ -5,12 +5,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/device_info_model.dart';
-import 'package:pahir/data/api/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -22,7 +20,6 @@ import 'dart:io';
 import '../../device_info.dart';
 
 class ProfileRepo {
-  final storage = new FlutterSecureStorage();
 
   Future<http.Response?> createProfile(String filePath,
       {required CreateEditProfileModel createEditProfileModel}) async {
@@ -51,8 +48,9 @@ class ProfileRepo {
 
         // send
 
-        var at = await storage.read(key: "accessToken");
-        var uph = await storage.read(key: "userFingerprintHash");
+        var at =  prefs.getString( "accessToken");
+        var uph =  prefs.getString( "userFingerprintHash");
+
         if (at != null) {
           request.headers["Authorization"] = "Bearer " + at;
           request.headers["userFingerprintHash"] = uph!;

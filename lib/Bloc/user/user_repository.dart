@@ -3,13 +3,11 @@ import 'dart:io';
 //import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/http.dart';
 import 'package:meta/meta.dart';
-import 'package:pahir/data/api/api_intercepter.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,11 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
   // Create storage
-  final storage = new FlutterSecureStorage();
   String fcmToken = "";
-  Client client = InterceptedClient.build(interceptors: [
-    ApiInterceptor(),
-  ]);
+
 
   Future<String> authenticate({required String token}) async {
     await Future.delayed(Duration(seconds: 1));
@@ -43,7 +38,7 @@ class UserRepository {
   Future<bool> hasToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getBool(IS_LOGGED_IN) ?? false) {
-      final response = await client.get(
+      final response = await http.get(
           Uri.parse('${AppStrings.BASE_URL}api/v1/user/${prefs.getString(USER_COUNTRY_CODE) ?? ""}/${prefs.getString(USER_MOBILE_NUMBER) ?? ""}'),
           headers: {HttpHeaders.contentTypeHeader: 'application/json'});
       if (response.statusCode == 200)
@@ -68,7 +63,7 @@ class UserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (prefs.getBool(IS_MOBILE_NO_VERIFIED) ?? false) {
-      final response = await client.get(
+      final response = await http.get(
           Uri.parse('${AppStrings.BASE_URL}api/v1/user/${prefs.getString(USER_COUNTRY_CODE) ?? ""}/${prefs.getString(USER_MOBILE_NUMBER) ?? ""}'),
           headers: {HttpHeaders.contentTypeHeader: 'application/json'});
       if (response.statusCode == 200)
