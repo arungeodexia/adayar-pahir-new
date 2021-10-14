@@ -172,6 +172,7 @@ class _ChatListState extends State<ChatList> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
         // appBar: AppBar(
         //   centerTitle: true, // this is all you need

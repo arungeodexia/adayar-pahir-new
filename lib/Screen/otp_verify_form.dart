@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pahir/Bloc/login/login_bloc.dart';
 import 'package:pahir/Screen/edit_profile_view.dart';
 import 'package:pahir/Screen/mydashboard.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -87,6 +90,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
       backgroundColor: AppColors.APP_LIGHT_BLUE_20,
       body: GestureDetector(

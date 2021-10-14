@@ -77,6 +77,7 @@ class _PdfViewerState extends State<PdfViewerNew> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

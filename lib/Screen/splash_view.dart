@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:pahir/utils/values/app_styles.dart';
@@ -82,6 +83,7 @@ class SplashState extends State<SplashView>
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
     backgroundColor: Theme.of(context).primaryColorDark,
     body: Stack(

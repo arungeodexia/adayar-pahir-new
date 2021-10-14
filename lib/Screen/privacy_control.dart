@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pahir/Model/PrivacyModel.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -95,6 +96,7 @@ class privacycontrolstate extends State<Privacy_Control> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
         backgroundColor: AppColors.APP_LIGHT_GREY_10,
         resizeToAvoidBottomInset: true,

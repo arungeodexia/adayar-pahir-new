@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -13,6 +14,7 @@ class FullPhoto extends StatefulWidget {
 class _FullPhoto extends State<FullPhoto> {
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
       appBar: AppBar(
         title: widget.title!=null?Text(widget.title!):Container(),

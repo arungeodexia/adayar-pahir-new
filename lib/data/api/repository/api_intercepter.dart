@@ -41,12 +41,6 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    print(data.request!.headers.toString());
-    print(data.body.toString());
-    if (data.request!.url.toString()=="https://api.pahir.com/api/v1/message/+91/8667236028") {
-      Navigator.pushAndRemoveUntil(
-          globalcontext!, _dashBoardRoute, (Route<dynamic> r) => false);
-    }
    if (kIsWeb) {
      if (data.statusCode==200) {
       try{

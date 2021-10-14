@@ -277,6 +277,7 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Theme.of(context)

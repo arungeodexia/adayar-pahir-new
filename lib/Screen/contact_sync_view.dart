@@ -157,6 +157,8 @@ class ContactSyncState extends State<ContactSyncView> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
+
     bool isSearching = searchController.text.isNotEmpty;
 
     return new WillPopScope(

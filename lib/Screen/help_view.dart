@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,7 @@ class HelpState extends State<HelpView>
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Container(
       child: Scaffold(
         appBar: AppBar(

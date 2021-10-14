@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pahir/Bloc/login/signin_mobile_view.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 
@@ -49,6 +50,7 @@ class LoginInitViewState extends State<LoginInitView> {
   //endregion
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
 
 
 

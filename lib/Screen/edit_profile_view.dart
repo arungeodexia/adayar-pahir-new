@@ -372,6 +372,7 @@ class EditProfileState extends State<EditProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return new WillPopScope(
         onWillPop: backPressed,
         child: Scaffold(

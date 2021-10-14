@@ -14,6 +14,7 @@ import 'package:pahir/Screen/edit_profile_view.dart';
 import 'package:pahir/Screen/help_view.dart';
 import 'package:pahir/Screen/login_init_view.dart';
 import 'package:pahir/Screen/privacy_control.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -193,6 +194,7 @@ class IShareAppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return new Drawer(
       child: new Column(
         children: <Widget>[

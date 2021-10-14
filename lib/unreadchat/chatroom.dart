@@ -291,6 +291,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Theme.of(context)
           .primaryColorDark, //or set color with: Color(0xFF0000FF)

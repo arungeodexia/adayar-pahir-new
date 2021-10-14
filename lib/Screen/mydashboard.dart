@@ -362,6 +362,7 @@ class _MydashboardState extends State<Mydashboard> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(

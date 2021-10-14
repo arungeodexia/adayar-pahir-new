@@ -57,6 +57,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
       body: FutureBuilder<http.Response?>(
         future: resourceRepo.gethomedata(),

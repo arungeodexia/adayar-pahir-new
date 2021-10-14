@@ -58,6 +58,8 @@ class _MyhomepageState extends State<Myhomepage> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
+
     return BlocListener<MyhomepageBloc, MyhomepageState>(
       listener: (context, state) {
         if (state is MyhomepageDeleteSuccess) {

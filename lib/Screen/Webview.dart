@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
+import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -39,6 +40,7 @@ class _WebViewExampleState extends State<WebViewExample> {
   }
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
       appBar: AppBar(
         title:  Text("Privacy And Security"),
