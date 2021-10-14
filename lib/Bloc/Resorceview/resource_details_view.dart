@@ -186,6 +186,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     initPlatformState();
 
     return new WillPopScope(

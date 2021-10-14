@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/device_info_model.dart';
@@ -18,9 +19,12 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'dart:io';
 import '../../device_info.dart';
+import 'api_intercepter.dart';
 
 class ProfileRepo {
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   Future<http.Response?> createProfile(String filePath,
       {required CreateEditProfileModel createEditProfileModel}) async {
     try {
@@ -70,10 +74,10 @@ class ProfileRepo {
           prefs.setString(USER_PROFILE_IMAGE_64, base64Image);
         }
         try {
-          http.Response responseold = await http.get(
+          http.Response responseold = await client.get(
               Uri.parse(
                   '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}'),
-              headers: requestHeaders);
+               );
           log(responseold.body);
           CreateEditProfileModel profileModel = CreateEditProfileModel.fromJson(
               json.decode(utf8.decode(responseold.bodyBytes)));
@@ -84,9 +88,9 @@ class ProfileRepo {
         }
       }
 
-      http.Response response1 = await http.put(
+      http.Response response1 = await client.put(
           Uri.parse('${AppStrings.BASE_URL}api/v1/user'),
-          headers: requestHeaders,
+
           body: jsonEncode(createEditProfileModel));
       log(response1.body);
       if (response1.statusCode == 200) await prefs.setBool(IS_LOGGED_IN, true);
@@ -103,11 +107,13 @@ class ProfileRepo {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      http.Response response = await http.get(
+      http.Response response = await client.get(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v2/user/${globalCountryCode}/${globalPhoneNo}'),
-          headers: requestHeaders);
-      log(response.body);
+           );
+      print(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());
       CreateEditProfileModel profileModel = CreateEditProfileModel.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
       if (response.statusCode == 200) {

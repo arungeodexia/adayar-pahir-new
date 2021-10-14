@@ -50,7 +50,7 @@ dependencies:
   contacts_service: ^0.6.1
   fluttertoast: ^8.0.7
   permission_handler: ^8.1.2
-  http_interceptor: any
+  http_interceptor: ^1.0.2
   flutter_html: ^2.1.0
   path_provider: ^2.0.2
   connectivity: ^3.0.6

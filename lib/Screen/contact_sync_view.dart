@@ -8,8 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:pahir/Model/phone_contact_model.dart';
 import 'package:pahir/Screen/mydashboard.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -40,7 +42,9 @@ class ContactSyncState extends State<ContactSyncView> {
 
   bool selectall = false;
   TextEditingController searchController = new TextEditingController();
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   getContactsFromMobile() async {
     try {
       var status = await Permission.contacts.status;
@@ -546,10 +550,13 @@ uploadContactsnew(List<PhoneContactModel> phoneContactList) async {
   // for(int arrIndx = 0;arrIndx < phoneContactList.length;arrIndx++){
   //  showToastMessage("Uploading contact value:==> "+"Country code: "+phoneContactList[arrIndx].countryCode+"Mobile no :==>"+phoneContactList[arrIndx].mobileNumber);
   // }
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
 
-  final response = await http.post(
+  final response = await client.post(
       Uri.parse('${AppStrings.BASE_URL}api/v1/user/${globalUserId}/contacts'),
-      headers: requestHeaders,
+
       body: jsonArray);
 
   //   var endTimeNow = new DateTime.now();

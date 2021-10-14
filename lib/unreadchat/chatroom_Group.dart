@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:pahir/Model/GroupchatMembersModel.dart';
 import 'package:pahir/Model/GroupsModelChat.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
@@ -14,6 +15,7 @@ import 'package:pahir/Screen/AddnewChatGroup.dart';
 import 'package:pahir/Screen/ChatProfile.dart';
 import 'package:pahir/data/api/repository/ChatRepo.dart';
 import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/Uploadchat.dart';
@@ -89,7 +91,9 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
   static final ChatRepo resourceRepository = new ChatRepo();
   var timestamp;
   GroupchatMembersModel? addedGroupsModelnew;
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
@@ -976,7 +980,7 @@ class _ChatRoomState extends State<ChatroomGroup> with WidgetsBindingObserver {
     String json =
         '{"message":"$msg","id":"$id","peerurl":"${imageUrl}","timezone":"$time","peerid":"$globalPhoneNo","peername":"${widget.selectedUserName}","peercode":"grp"}';
     // make POST request
-    var response = await http.post(Uri.parse(url), headers: requestHeaders, body: json);
+    var response = await client.post(Uri.parse(url),   body: json);
     // check the status code for the result
     int statusCode = response.statusCode;
     // this API passes back the id of the new item added to the body

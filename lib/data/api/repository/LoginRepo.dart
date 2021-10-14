@@ -19,26 +19,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../device_info.dart';
+import 'api_intercepter.dart';
 
 class LoginRepo{
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  var dio = Dio();
+  var _dio = Dio();
   String fcmToken = "";
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   Future<int> askForOTP(
       {required String countryCode, required String phoneNo}) async {
-    http.Response res =await  http.post(Uri.parse('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/?authKey='+'Rrw4-fZkfFa-C9GvfA-cmZheX-PaCRzA-Lz7a'),headers: requestHeaders, body: "{\"app_uuid\":\"asdasdasd\"}");
+    http.Response res =await  client.post(Uri.parse('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/?authKey='+'Rrw4-fZkfFa-C9GvfA-cmZheX-PaCRzA-Lz7a'),  body: "{\"app_uuid\":\"asdasdasd\"}");
     print(res.body.toString());
     // final ress=dio.post('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/?authKey='+'Rrw4-fZkfFa-C9GvfA-cmZheX-PaCRzA-Lz7a');
     // print(ress.toString());
     return 200;
   }
   Future<int> verifyOTP({required String countryCode, required String phoneNo, required String otp}) async {
-    final response = await http.post(
+
+
+    final response = await client.post(
         Uri.parse('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/$otp'),
-        headers: requestHeaders,
         body: '{}');
+
+
     // var res=dio.post('${AppStrings.BASE_URL}api/v1/user/$countryCode/$phoneNo/otp/$otp');
-    print(response.body.toString());
+    // print(response.body.toString());
+    print(response.headers);
+    log(response.headers.toString());
 
     int value=0;
 
@@ -68,10 +77,12 @@ class LoginRepo{
       print("verifyOtp UserRepos Response accessToken :==>"+createEditProfileModel.userFingerprintHash.toString());
 
       requestHeaders = {
-        'Content-type': 'application/json',
+        'Content-type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
+        "Access-Control-Expose-Headers": "*",
         'appcode': '100000',
         'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',
+
         'Authorization': "Bearer " +createEditProfileModel.accessToken!,
         'userFingerprintHash': createEditProfileModel.userFingerprintHash!
       };
@@ -135,8 +146,8 @@ class LoginRepo{
     String countryCode = prefs.getString(USER_COUNTRY_CODE) ?? "";
     String mobileNo = prefs.getString(USER_MOBILE_NUMBER) ?? "";
 
-    final response = await http.post(Uri.parse('${AppStrings.BASE_URL}api/v1/user/device/${countryCode}/${mobileNo}'),
-        headers: requestHeaders,
+    final response = await client.post(Uri.parse('${AppStrings.BASE_URL}api/v1/user/device/${countryCode}/${mobileNo}'),
+
         body: jsonEncode(deviceInfoModel));
     // final res=dio.post('${AppStrings.BASE_URL}api/v1/user/device/${countryCode}/${mobileNo}',data: requestHeadersnew);
     // print(res.toString());

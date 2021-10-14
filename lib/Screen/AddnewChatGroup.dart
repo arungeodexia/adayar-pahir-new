@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pahir/Model/AddchatnewModel.dart';
 import 'package:pahir/Model/GroupsModelChat.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/data/api/repository/ChatRepo.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
@@ -51,7 +53,9 @@ class _AddnewChatGroupState extends State<AddnewChatGroup> {
       limit = 10;
   String currenttext="";
   final ScrollController _scrollController = ScrollController();
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
 
   @override
   void initState() {
@@ -512,7 +516,7 @@ class _AddnewChatGroupState extends State<AddnewChatGroup> {
         '${AppStrings
         .BASE_URL}api/v1/chat/group/notification/org/${createEditProfileModel!
         .universityId}/group/$peerId/user/${createEditProfileModel!.id}';
-    Map<String, String> headers = {"Content-type": "application/json"};
+    Map<String, String> headers = {"Content-type": "application/json; charset=UTF-8"};
     String time = DateTime
         .now()
         .millisecondsSinceEpoch
@@ -523,7 +527,7 @@ class _AddnewChatGroupState extends State<AddnewChatGroup> {
         .img}","timezone":"$time","peerid":"$globalPhoneNo","peername":"${widget
         .groupid}","peercode":"grp"}';
     // make POST request
-    var response = await http.post(Uri.parse(url), headers: headers, body: json);
+    var response = await client.post(Uri.parse(url), headers: headers, body: json);
     // check the status code for the result
     int statusCode = response.statusCode;
     // this API passes back the id of the new item added to the body

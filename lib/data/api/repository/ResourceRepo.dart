@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:pahir/Bloc/message/message_model_class.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
@@ -12,23 +14,26 @@ import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/resources.dart';
 import 'package:pahir/Model/skill_item.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart';
 
 class ResourceRepo {
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   Future<http.Response?> gethomedata() async {
     try {
-      http.Response response = await http.get(
+      http.Response response = await client.get(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}/resources'),
-          headers: requestHeaders);
-      log(response.body);
+           );
+      print(response.request!.headers.toString());
       return response;
     } on SocketException {
       return null;
@@ -39,10 +44,10 @@ class ResourceRepo {
 
   Future<http.Response?> removeResource(Resources resourceModel) async {
     try {
-      final response = await http.delete(
+      final response = await client.delete(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/$globalCountryCode/$globalPhoneNo/resource/${resourceModel.id}'),
-          headers: requestHeaders);
+           );
       print(response);
       return response;
     } on SocketException {
@@ -55,10 +60,10 @@ class ResourceRepo {
     try {
       String resource_id = "";
       Resources resourceDetail;
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/$globalCountryCode/$globalPhoneNo/resources'),
-          headers: requestHeaders,
+
           body: jsonEncode(resourceModel));
       print(response.body);
       if (response.statusCode == 200) {
@@ -100,10 +105,10 @@ class ResourceRepo {
     try {
       String resource_id = "";
       Resources resourceDetail;
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/$globalCountryCode/$globalPhoneNo/resources'),
-          headers: requestHeaders,
+
           body: jsonEncode(resourceModel));
       print(response.body);
       print(response.statusCode);
@@ -147,10 +152,10 @@ class ResourceRepo {
       AddUpdateReviewModel addUpdateReviewModel, String? resourceId) async {
     AddUpdtReviewRespModel? addUpdtReviewRespModel;
     ////api/v1/review/{resourceId}/{userId}
-    final response = await http.put(
+    final response = await client.put(
         Uri.parse(
             '${AppStrings.BASE_URL}api/v1/review/$resourceId/$globalUserId'),
-        headers: requestHeaders,
+
         body: jsonEncode(addUpdateReviewModel));
     // print("AddUpdateReviewModel request :==>"+response.request.url.toString());
     print(response.body);
@@ -233,9 +238,9 @@ class ResourceRepo {
   Future<List<SkillItemModel>> getSkillList() async {
     late List<SkillItemModel> skillList;
     try {
-      final response = await http.get(
+      final response = await client.get(
           Uri.parse('${AppStrings.BASE_URL}api/v1/skills'),
-          headers: requestHeaders);
+           );
 
       skillList = (json.decode(utf8.decode(response.bodyBytes)) as List)
           .map((i) => SkillItemModel.fromJson(i))
@@ -250,10 +255,10 @@ class ResourceRepo {
   Future<http.Response?> fetchResourceData1(
       String resourceId, String resourceType) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v2.2/user/${globalCountryCode}/${globalPhoneNo}/resource/${resourceId}?resourceType=${resourceType}'),
-          headers: requestHeaders);
+           );
       print(" fetchResourceData Request Url :==>" +
           response.request!.url.toString());
       print(" fetchResourceData Response data :==>" + response.body.toString());
@@ -272,10 +277,10 @@ class ResourceRepo {
   Future<http.Response?> updateResourceData1(
       {required ResourceResults addResourceModel}) async {
     try {
-      final response = await http.put(
+      final response = await client.put(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/$globalCountryCode/$globalPhoneNo/resource/${addResourceModel.id}'),
-          headers: requestHeaders,
+
           body: jsonEncode(addResourceModel));
       log(response.statusCode.toString());
       log(response.request!.url.toString());
@@ -290,9 +295,9 @@ class ResourceRepo {
       CreateEditProfileModel createEditProfileModel) async {
     PrivacyModel resourceList=PrivacyModel();
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
-        headers: requestHeaders,
+
       );
 
       print("getHomeData request :==>" + response.request!.url.toString());
@@ -312,9 +317,9 @@ class ResourceRepo {
       PrivacyModel privacyModel) async {
     PrivacyModel resourceList=PrivacyModel();
     try {
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/privacy/user/${createEditProfileModel.id.toString()}'),
-          headers: requestHeaders,
+
           body: jsonEncode(privacyModel));
 
       print("getHomeData request :==>" + response.request!.url.toString());
@@ -338,7 +343,7 @@ class ResourceRepo {
 
 
     try {
-      final response = await http.get(
+      final response = await client.get(
         //'${AppStrings.BASE_URL}api/v2/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start',
         //Old Url
         // '${AppStrings.BASE_URL}api/v2.2/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start',
@@ -346,7 +351,7 @@ class ResourceRepo {
         //New Url
         Uri.parse('${AppStrings.BASE_URL}api/v2.4/user/${globalCountryCode}/${globalPhoneNo}/resources/search?limit=$limit&searchString=$searchString&start=$start'),
         //'https://api.pahir.com/api/v2.3/user/+91/9994081073/resources/search?limit=10&searchString=Electrician&start=0',
-        headers: requestHeaders,
+
       );
 
       print("getSearchData1 request.url body:==>"+response.request!.url.toString());
@@ -397,9 +402,9 @@ class ResourceRepo {
       String mobileNumber, String countryCode) async {
     MessagesModel? messageResponse;
     try {
-      final response = await http.get(
+      final response = await client.get(
           Uri.parse('${AppStrings.BASE_URL}api/v1/message/$mobileNumber/$countryCode'),
-          headers: requestHeaders);
+           );
       log(response.body.toString());
       log("GetReviewResponse request :==>"+response.request!.url.toString());
       if (response.statusCode == 200) {
@@ -460,9 +465,9 @@ class ResourceRepo {
       ) async {
     String resourceList = "";
     try {
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/message/member/$orgmemberid/message/$messageid/$reaction/$reactionid'),
-          headers: requestHeaders);
+           );
       log(response.request!.url.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
@@ -486,9 +491,9 @@ class ResourceRepo {
       ) async {
     String resourceList = "";
     try {
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/message/member/$orgmemberid/message/$messageid/$reaction/$reactionid'),
-          headers: requestHeaders);
+           );
       log(response.request!.url.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {

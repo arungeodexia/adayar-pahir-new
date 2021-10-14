@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 
 
+import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
 import 'package:pahir/Model/AddchatnewModel.dart';
@@ -13,6 +15,7 @@ import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/resources.dart';
 import 'package:pahir/Model/skill_item.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_strings.dart';
@@ -22,13 +25,15 @@ import 'package:async/async.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRepo {
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   Future<http.Response?> gethomedata() async {
     try {
-      http.Response response = await http.get(
+      http.Response response = await client.get(
           Uri.parse(
               '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}/resources'),
-          headers: requestHeaders);
+           );
       log(response.body);
       return response;
     } on SocketException {
@@ -37,6 +42,7 @@ class ChatRepo {
       return null;
     }
   }
+
 
 
 
@@ -49,9 +55,9 @@ class ChatRepo {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/chat/members/org/1/group/$grpid/user/${createEditProfileModel.id}'),
-        headers: requestHeaders,
+
       );
 
       print("getSearchData1 request.url body:==>" +
@@ -77,9 +83,8 @@ class ChatRepo {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/organization/user/${globalCountryCode}/${globalPhoneNo}'),
-        headers: requestHeaders,
       );
 
       print("getSearchData1 request.url body:==>" +
@@ -106,9 +111,8 @@ class ChatRepo {
     try {
 
 
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/chat/group/notification/org/1/group/$grpid/user/$userid'),
-          headers: requestHeaders,
           body: jsonEncode(grpname));
       print(response.body.toString());
 
@@ -138,9 +142,8 @@ class ChatRepo {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/chat/users/university/1/orgMember/1/search/$search'),
-        headers: requestHeaders,
       );
 
       print("getSearchData1 request.url body:==>" +
@@ -169,9 +172,8 @@ class ChatRepo {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/chat/users/university/1/orgMember/1?start=$page&limit=$limit'),
-        headers: requestHeaders,
       );
 
       print("getSearchData1 request.url body:==>" +
@@ -197,9 +199,9 @@ class ChatRepo {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${AppStrings.BASE_URL}api/v1/chat/users/university/1/orgMember/1/chatgroup/$grpid?start=$page&limit=$limit'),
-        headers: requestHeaders,
+
 
       );
 
@@ -227,9 +229,8 @@ class ChatRepo {
     try {
 
 
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/chat/member/org/1/group/$grpid/user/$userid'),
-          headers: requestHeaders,
           body: jsonEncode(grpname));
       print("body"+response.body.toString());
 
@@ -258,9 +259,8 @@ class ChatRepo {
     try {
 
 
-      final response = await http.delete(
+      final response = await client.delete(
         Uri.parse('${AppStrings.BASE_URL}api/v1/chat/group/org/1/group/$grpid/user/$userid'),
-        headers: requestHeaders,
       );
       print(response.body.toString());
 
@@ -288,9 +288,9 @@ class ChatRepo {
     try {
 
 
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${AppStrings.BASE_URL}api/v1/chat/group/org/1/group/$grpid/user/$userid'),
-          headers: requestHeaders,
+
           body: jsonEncode(grpname));
       print(response.body.toString());
 

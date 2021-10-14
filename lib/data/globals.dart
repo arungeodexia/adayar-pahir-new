@@ -1,5 +1,6 @@
 library ishare.globals;
 
+import 'package:flutter/material.dart';
 import 'package:pahir/Bloc/message/message_model_class.dart';
 import 'package:pahir/Model/GetReviewResponse.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
@@ -38,11 +39,13 @@ const actionIncrement = 'actionIncrement';
 
 /// 减法事件
 const actionDecrease = 'actionDecrease';
+BuildContext? globalcontext;
 
 /// 直接修改事件
 const actionChange = 'actionChange';
 Map<String, String> requestHeaders = {
-  'Content-type': 'application/json',
+  'Content-type': 'application/json; charset=UTF-8',
+  "Access-Control-Expose-Headers": "*",
   'Accept': 'application/json',
   'appcode': '100000',
   'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',

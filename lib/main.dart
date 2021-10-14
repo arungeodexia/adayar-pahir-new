@@ -27,6 +27,7 @@ import 'package:pahir/Screen/mydashboard.dart';
 import 'package:pahir/Screen/splash_view.dart';
 import 'package:pahir/SimpleBlocObserver.dart';
 import 'package:pahir/Auth_bloc.dart';
+import 'package:pahir/data/globals.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -44,7 +45,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  Bloc.observer=SimpleBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
@@ -63,7 +64,7 @@ void main() async {
     /// default FCM channel to enable heads up notifications.
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     /// Update the iOS foreground notification presentation options to allow
@@ -79,8 +80,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
@@ -88,19 +87,22 @@ class MyApp extends StatelessWidget {
       path: 'i18n', // <-- change the path of the translation files
       fallbackLocale: Locale('en', 'US'),
       child: MultiBlocProvider(
-          providers: _multiBlocProviders(), child: MaterialApp(
-        title: 'Pahir',
-        home: Auth(),
-      )),
+          providers: _multiBlocProviders(),
+          child: MaterialApp(
+            title: 'Pahir',
+            home: Auth(),
+          )),
     );
   }
 
   List<BlocProvider<Bloc>> _multiBlocProviders() {
-    UserRepository userRepository=UserRepository();
+    UserRepository userRepository = UserRepository();
     return [
       BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
-      BlocProvider<AuthenticationBloc>(create: (context) => AuthenticationBloc(userRepository: userRepository)),
+      BlocProvider<AuthenticationBloc>(
+          create: (context) =>
+              AuthenticationBloc(userRepository: userRepository)),
       BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
       BlocProvider<MyhomepageBloc>(create: (context) => MyhomepageBloc()),
       BlocProvider<AddResouceBloc>(create: (context) => AddResouceBloc()),
@@ -110,7 +112,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class Auth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -119,7 +120,8 @@ class Auth extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is AuthInitial) {
-              BlocProvider.of<AuthBloc>(context).add(AuthRequested(city: "cityname"));
+              BlocProvider.of<AuthBloc>(context)
+                  .add(AuthRequested(city: "cityname"));
               return SplashView();
             }
             if (state is AuthLoadInProgress) {
@@ -130,7 +132,7 @@ class Auth extends StatelessWidget {
               final weather = state.AuthCheck;
               if (weather) {
                 return Mydashboard();
-              }  else{
+              } else {
                 return LoginInitView();
               }
             }
@@ -139,19 +141,15 @@ class Auth extends StatelessWidget {
                 'Something went wrong!',
                 style: TextStyle(color: Colors.red),
               );
-            }else{
+            } else {
               return Text(
                 'Something went wrong!',
                 style: TextStyle(color: Colors.red),
               );
-
             }
-
           },
         ),
       ),
     );
   }
 }
-
-

@@ -13,6 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:open_file/open_file.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/PDFLocal.dart';
@@ -97,7 +98,9 @@ class _ChatRoomState extends State<ChatRoom> {
   List<String>? extensions;
 
   bool? _allowWriteFile=false;
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
 
 
   String progress="";
@@ -1211,7 +1214,7 @@ class _ChatRoomState extends State<ChatRoom> {
     String json =
         '{"message":"$msg","id":"$id","peerurl":"$userImage","timezone":"$time","peerid":"$globalPhoneNo","peername":"$username","peercode":"$countrycode"}';
     // make POST request
-    var response = await http.post(Uri.parse(url), headers: headers, body: json);
+    var response = await client.post(Uri.parse(url), headers: headers, body: json);
     print(response.body.toString());
     print(response.statusCode.toString());
     // check the status code for the result

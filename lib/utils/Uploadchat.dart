@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:http_interceptor/http/http.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Model/phone_contact_model.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:path/path.dart';
@@ -25,8 +26,11 @@ Future<int> uploadContactsnew(
   // for(int arrIndx = 0;arrIndx < phoneContactList.length;arrIndx++){
   //  showToastMessage("Uploading contact value:==> "+"Country code: "+phoneContactList[arrIndx].countryCode+"Mobile no :==>"+phoneContactList[arrIndx].mobileNumber);
   // }
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
 
-  final response = await http.post(
+  final response = await client.post(
       Uri.parse('${AppStrings.BASE_URL}api/v1/user/${globalUserId}/contacts'),
       headers: {HttpHeaders.contentTypeHeader: 'application/json'},
       body: jsonArray);

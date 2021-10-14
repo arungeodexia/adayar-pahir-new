@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         String? userFingerprintHash=await prefs.getString("userFingerprintHash");
         if (prefs.getBool(IS_LOGGED_IN) ?? false) {
           requestHeaders = {
-            'Content-type': 'application/json',
+            'Content-type': 'application/json; charset=UTF-8',
             'Accept': 'application/json',
             'appcode': '100000',
             'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',

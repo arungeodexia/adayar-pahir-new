@@ -4,6 +4,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
+import 'package:pahir/data/api/repository/api_intercepter.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +24,9 @@ class PdfViewerNew extends StatefulWidget {
 
 class _PdfViewerState extends State<PdfViewerNew> {
   String? path;
-
+  Client client = InterceptedClient.build(interceptors: [
+    ApiInterceptor(),
+  ]);
   @override
   initState() {
     super.initState();
@@ -52,7 +57,7 @@ class _PdfViewerState extends State<PdfViewerNew> {
 
   Future<Uint8List> fetchPost(String pdfUrl) async {
     print("widget.pdfUrl fetchPost:==>"+widget.pdfUrl);
-    final response = await http.get(
+    final response = await client.get(
       //'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
         Uri.parse(pdfUrl)
     );

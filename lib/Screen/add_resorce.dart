@@ -445,6 +445,8 @@ class _AddResorceState extends State<AddResorce> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(

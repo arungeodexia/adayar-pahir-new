@@ -42,6 +42,7 @@ class SigninState extends State<SigninView> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     _launchURL() async {
       const url =
           "https://d2c56lckh61bcl.cloudfront.net/live/CovidTermsandConditions.html";

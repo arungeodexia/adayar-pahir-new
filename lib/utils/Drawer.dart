@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,6 +12,7 @@ import 'package:pahir/Screen/Webview.dart';
 import 'package:pahir/Screen/contact_sync_view.dart';
 import 'package:pahir/Screen/edit_profile_view.dart';
 import 'package:pahir/Screen/help_view.dart';
+import 'package:pahir/Screen/login_init_view.dart';
 import 'package:pahir/Screen/privacy_control.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
@@ -198,9 +200,52 @@ class IShareAppDrawer extends StatelessWidget {
           _createUserProfile(),
           new Column(children: _createDrawerItems(context, userDrawerItems)),
           Divider(),
-          new Column(children: _createDrawerItems(context, socialDrawerItems))
+          new Column(children: _createDrawerItems(context, socialDrawerItems)),
+          kIsWeb
+              ? Column(
+                  children: <Widget>[
+                    _createFooterItem(
+                        icon: Icons.logout,
+                        text: 'Logout',
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool(IS_LOGGED_IN, false);
+                          await prefs.clear();
+                          Navigator.pushAndRemoveUntil(
+                              context, _dashBoardRoute, (Route<dynamic> r) => false);
+                        })
+                  ],
+                )
+              : Container(),
         ],
       ),
+    );
+  }
+  final PageRouteBuilder _dashBoardRoute = new PageRouteBuilder(
+    pageBuilder: (BuildContext context, _, __) {
+      return LoginInitView();
+    },
+  );
+  Widget _createFooterItem(
+      {IconData? icon, String? text, GestureTapCallback? onTap}) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Icon(icon),
+          Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Text(
+              text!,
+              style: new TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "OpenSans"),
+            ),
+          )
+        ],
+      ),
+      onTap: onTap,
     );
   }
 

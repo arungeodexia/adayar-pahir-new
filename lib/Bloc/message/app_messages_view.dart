@@ -95,6 +95,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
 
   @override
   Widget build(BuildContext context) {
+    globalcontext = context;
     return Scaffold(
       appBar: AppBar(
           title: StreamBuilder<Object>(
