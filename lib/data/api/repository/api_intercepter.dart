@@ -15,8 +15,8 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
-    data.headers["appcode"] = "300000";
-    data.headers["licensekey"] = "0b48fc5c-2af6-47d9-a2d6-aff2b91b152c";
+    data.headers["appcode"] = "100000";
+    data.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? accesstoken= prefs.getString("accessToken");
@@ -41,6 +41,9 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
+    print(data.request!.url.toString());
+    print(data.body);
+    print(data.statusCode);
    if (kIsWeb) {
      if (data.statusCode==200) {
       try{

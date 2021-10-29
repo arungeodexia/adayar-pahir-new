@@ -16,6 +16,8 @@ String globalResourceId = "";
 String globalSearchData = "";
 String timezone = 'Unknown';
 List finalSelectedList = [];
+List<String> channelsname=[];
+
 
 bool globalIsLaunch = false;
 bool globalAndroidIsOnMsgExecuted = false;

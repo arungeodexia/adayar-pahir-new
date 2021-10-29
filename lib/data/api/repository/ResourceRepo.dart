@@ -2,12 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:pahir/Bloc/message/message_model_class.dart';
 
 import 'package:pahir/Model/AddUpdateReviewModel.dart';
 import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
+import 'package:pahir/Model/ChannelModel.dart';
+import 'package:pahir/Model/ChannelModel.dart';
+import 'package:pahir/Model/ChannelModel.dart';
+import 'package:pahir/Model/ContentModel.dart';
 import 'package:pahir/Model/PrivacyModel.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
 import 'package:pahir/Model/ResourceSearchNew.dart';
@@ -257,7 +262,7 @@ class ResourceRepo {
     try {
       final response = await client.get(
           Uri.parse(
-              '${AppStrings.BASE_URL}api/v2.2/user/${globalCountryCode}/${globalPhoneNo}/resource/${resourceId}?resourceType=${resourceType}'),
+              '${AppStrings.BASE_URL}api/v2.5/user/${globalCountryCode}/${globalPhoneNo}/resource/${resourceId}?resourceType=${resourceType}'),
            );
       print(" fetchResourceData Request Url :==>" +
           response.request!.url.toString());
@@ -273,6 +278,113 @@ class ResourceRepo {
       return null;
     }
   }
+  Future<ContentModel?> uploadchannel(
+      String channelId,ContentModel contentModelfrom) async {
+    try {
+      ContentModel contentModel=ContentModel();
+      final response = await client.post(
+          Uri.parse(
+              "${AppStrings.BASE_URL}api/v1/user/content"),body: jsonEncode(contentModelfrom)
+           );
+      print(" fetchResourceData Request Url :==>" +
+          response.request!.url.toString());
+      print(" fetchResourceData Response data :==>" + response.body.toString());
+      print(" fetchResourceData Response data :==>" + contentModelfrom.toJson().toString());
+      if (response.statusCode == 200) {
+        contentModel=ContentModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+        return contentModel;
+      } else {
+        return contentModel;
+      }
+    } on SocketException {
+      return null;
+    } on Exception catch (e) {
+      return null;
+    }
+  }
+  Future<ChannelModel> getchannel(
+      String orgid) async {
+    ChannelModel channelmodel=ChannelModel();
+    try {
+      final response = await client.get(
+          Uri.parse("${AppStrings.BASE_URL}/api/v1/user/channels/org/$orgid"));
+      print(" fetchResourceData Request Url :==>" +
+          response.request!.url.toString());
+      print(" fetchResourceData Response data :==>" + response.body.toString());
+      if (response.statusCode == 200) {
+        channelmodel=ChannelModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+        return channelmodel;
+      } else {
+        return channelmodel;
+      }
+    } on SocketException {
+      return channelmodel;
+    } on Exception catch (e) {
+      return channelmodel;
+    }
+  }
+
+  Future<int> upload(File imageFile,String channelid,String contentid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+
+    var uri = Uri.parse("${AppStrings.BASE_URL}/api/v1/user/content/$contentid/file");
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: basename(imageFile.path));
+    //contentType: new MediaType('image', 'png'));
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
+    if (at != null) {
+      request.headers["Authorization"] = "Bearer " + at;
+      request.headers["userFingerprintHash"] = uph!;
+      request.headers["appcode"] = "100000";
+      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+    }
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    print(response.stream);
+    print(response.request!.url.toString());
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+    return response.statusCode;
+  }
+  Future<int> uploadweb(PlatformFile imageFile,String channelid,String contentid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.readStream!));
+    var length = await imageFile.size;
+
+    var uri = Uri.parse("${AppStrings.BASE_URL}/api/v1/user/content/$contentid/file");
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: imageFile.name);
+    //contentType: new MediaType('image', 'png'));
+    var at =  prefs.getString( "accessToken");
+    var uph =  prefs.getString( "userFingerprintHash");
+    var pahirAuthHeader =  prefs.getString( "pahirAuthHeader");
+    if (at != null) {
+      request.headers["Authorization"] = "Bearer " + at;
+      request.headers["userFingerprintHash"] = uph!;
+      request.headers["appcode"] = "100000";
+      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["pahiruserauth"] = pahirAuthHeader!;
+    }
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+    print(response.stream);
+    print(response.request!.url.toString());
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
+    return response.statusCode;
+  }
+
 
   Future<http.Response?> updateResourceData1(
       {required ResourceResults addResourceModel}) async {

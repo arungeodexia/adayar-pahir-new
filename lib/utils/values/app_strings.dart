@@ -381,6 +381,9 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String APP_HELP_SUB_TITLE_FIVE = "Can I find who recommended the resource?";
   static const String APP_HELP_SUB_CONTENT_FIVE = "Yes, of course. In the resource details page tap the \"shared by\" link to get the list of your contacts who referred that particular resource along with their rating for that resource.";
+  static const String TITLE = "Title";
+  static const String DESC = "Description";
+  static const String CHANNEL = "Channel";
 
 
 

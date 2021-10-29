@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pahir/Bloc/message/app_messages_view.dart';
 import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/Screen/BGVideoPlayerView.dart';
+import 'package:pahir/Screen/my_home_page_DMK.dart';
 import 'package:pahir/Screen/myhomepage.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
@@ -68,21 +69,22 @@ class _MydashboardState extends State<Mydashboard> {
   String _message = '';
 
   DateTime? currentBackPressTime;
- late CreateEditProfileModel createEditProfileModel;
-
+  late CreateEditProfileModel createEditProfileModel;
 
   void onTabTapped(int index) {
     if (index == 0)
       appBloc.updateTitle('Home');
     else if (index == 1)
-      appBloc.updateTitle('Favourites');
+      appBloc.updateTitle('Groups');
     else if (index == 2)
+      appBloc.updateTitle('Favourites');
+    else if (index == 3)
       appBloc.updateTitle('Chat');
-    else if (index == 3) appBloc.updateTitle('Info');
+    else if (index == 4) appBloc.updateTitle('Info');
     setState(() {
       _currentIndex = index;
-      if (unreads=="1") {
-        unreads="";
+      if (unreads == "1") {
+        unreads = "";
       }
     });
   }
@@ -107,6 +109,7 @@ class _MydashboardState extends State<Mydashboard> {
     }
     return false;
   }
+
   _takeUserInformationFromFBDB() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var resourceDetailsResponse = await json
@@ -114,13 +117,12 @@ class _MydashboardState extends State<Mydashboard> {
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
 
-
     FirebaseController.instanace
         .saveUserDataToFirebaseDatabase(
-        randomIdWithName(globalPhoneNo),
-        createEditProfileModel.firstName,
-        createEditProfileModel.countryCode,
-        createEditProfileModel.profilePicture)
+            randomIdWithName(globalPhoneNo),
+            createEditProfileModel.firstName,
+            createEditProfileModel.countryCode,
+            createEditProfileModel.profilePicture)
         .then((data) {});
     FirebaseController.instanace
         .takeUserInformationFromFBDB()
@@ -128,10 +130,11 @@ class _MydashboardState extends State<Mydashboard> {
       if (documents.length > 0) {}
     });
   }
+
   Future<void> _moveTochatRoom(selectedUserToken, selectedUserID,
-      selectedUserName, selectedUserThumbnail,countrycode) async {
+      selectedUserName, selectedUserThumbnail, countrycode) async {
     try {
-      String username="", userImage="";
+      String username = "", userImage = "";
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final resourceDetailsResponse = await json
@@ -141,12 +144,11 @@ class _MydashboardState extends State<Mydashboard> {
         username = resourceDetailsResponse['firstName'];
         print(resourceDetailsResponse['profilePicture']);
         userImage = resourceDetailsResponse['profilePicture'];
-
       });
 
       FirebaseController.instanace
           .saveUserDataToFirebaseDatabase(randomIdWithName(selectedUserID),
-          selectedUserName, countrycode, selectedUserThumbnail)
+              selectedUserName, countrycode, selectedUserThumbnail)
           .then((data) {});
 
       String chatID = makeChatId(globalPhoneNo, selectedUserID);
@@ -160,7 +162,8 @@ class _MydashboardState extends State<Mydashboard> {
                   selectedUserID,
                   chatID,
                   selectedUserName,
-                  selectedUserThumbnail,countrycode)));
+                  selectedUserThumbnail,
+                  countrycode)));
     } catch (e) {
       print(e);
     }
@@ -176,7 +179,6 @@ class _MydashboardState extends State<Mydashboard> {
         .then((RemoteMessage? message) async {
       print("msg init" + message.toString());
 
-
       if (message != null) {
         if (message.data['title'].toString().contains('You got a message')) {
           final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
@@ -186,23 +188,25 @@ class _MydashboardState extends State<Mydashboard> {
           String name = prefs.getString('name2') ?? '';
 
           if (name != msgObject['timezone'].toString()) {
-            Map<String, dynamic> row = {
-            };
+            Map<String, dynamic> row = {};
 
-            if (msgObject['peercode'].toString() =="grp") {
+            if (msgObject['peercode'].toString() == "grp") {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ChatroomGroup(
-                        globalPhoneNo,
-                        createEditProfileModel.firstName.toString(),
-                        'selectedUserToken',
-                        msgObject['id'].toString(),
-                        msgObject['id'].toString(),
-                        msgObject['peername'].toString().replaceAll("+", " "),
-                        msgObject['peerurl'].toString(),
-                        msgObject['peercode'].toString(),)));
-            }  else{
+                            globalPhoneNo,
+                            createEditProfileModel.firstName.toString(),
+                            'selectedUserToken',
+                            msgObject['id'].toString(),
+                            msgObject['id'].toString(),
+                            msgObject['peername']
+                                .toString()
+                                .replaceAll("+", " "),
+                            msgObject['peerurl'].toString(),
+                            msgObject['peercode'].toString(),
+                          )));
+            } else {
               _moveTochatRoom(
                 '',
                 msgObject['peerid'].toString(),
@@ -211,7 +215,6 @@ class _MydashboardState extends State<Mydashboard> {
                 msgObject['peercode'].toString(),
               );
             }
-
           } else {}
         } else {
           if (Platform.isIOS) {
@@ -229,7 +232,7 @@ class _MydashboardState extends State<Mydashboard> {
       }
     });
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("msg listen" + message.data.toString());
 
       if (message != null) {
@@ -244,45 +247,7 @@ class _MydashboardState extends State<Mydashboard> {
             setState(() {
               unreads = '1';
             });
-            Map<String, dynamic> row = {
-            };
-
-            // if (msgObject['peercode'].toString() =="grp") {
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => ChatroomGroup(
-            //             globalPhoneNo,
-            //             createEditProfileModel.firstName.toString(),
-            //             'selectedUserToken',
-            //             msgObject['id'].toString(),
-            //             msgObject['id'].toString(),
-            //             msgObject['peername'].toString().replaceAll("+", " "),
-            //             msgObject['peerurl'].toString(),
-            //             msgObject['peercode'].toString(),)));
-            // }  else{
-            //   _moveTochatRoom(
-            //     '',
-            //     msgObject['peerid'].toString(),
-            //     msgObject['peername'].toString(),
-            //     msgObject['peerurl'].toString(),
-            //     msgObject['peercode'].toString(),
-            //   );
-            // }
-
-
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => ChatScreen(
-            //               peerId: msgObject['peerid'].toString(),
-            //               peerName: msgObject['peername'].toString(),
-            //               peerAvatar: msgObject['peerurl'].toString(),
-            //               peergcm: '',
-            //               userid: '',
-            //             )));
-
-            // getchat();
+            Map<String, dynamic> row = {};
           } else {}
         } else {
           if (Platform.isIOS) {
@@ -300,7 +265,7 @@ class _MydashboardState extends State<Mydashboard> {
       }
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async{
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print("msg open" + message.data.toString());
 
       if (message != null) {
@@ -312,23 +277,25 @@ class _MydashboardState extends State<Mydashboard> {
           String name = prefs.getString('name2') ?? '';
 
           if (name != msgObject['timezone'].toString()) {
-            Map<String, dynamic> row = {
-            };
+            Map<String, dynamic> row = {};
 
-            if (msgObject['peercode'].toString() =="grp") {
+            if (msgObject['peercode'].toString() == "grp") {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ChatroomGroup(
-                        globalPhoneNo,
-                        createEditProfileModel.firstName.toString(),
-                        'selectedUserToken',
-                        msgObject['id'].toString(),
-                        msgObject['id'].toString(),
-                        msgObject['peername'].toString().replaceAll("+", " "),
-                        msgObject['peerurl'].toString(),
-                        msgObject['peercode'].toString(),)));
-            }  else{
+                            globalPhoneNo,
+                            createEditProfileModel.firstName.toString(),
+                            'selectedUserToken',
+                            msgObject['id'].toString(),
+                            msgObject['id'].toString(),
+                            msgObject['peername']
+                                .toString()
+                                .replaceAll("+", " "),
+                            msgObject['peerurl'].toString(),
+                            msgObject['peercode'].toString(),
+                          )));
+            } else {
               _moveTochatRoom(
                 '',
                 msgObject['peerid'].toString(),
@@ -337,7 +304,6 @@ class _MydashboardState extends State<Mydashboard> {
                 msgObject['peercode'].toString(),
               );
             }
-
           } else {}
         } else {
           if (Platform.isIOS) {
@@ -432,6 +398,20 @@ class _MydashboardState extends State<Mydashboard> {
             ),
             BottomNavigationBarItem(
               icon: new Icon(
+                Icons.group_outlined,
+                color: AppColors.APP_LIGHT_GREY,
+              ),
+              activeIcon: new Icon(
+                Icons.group,
+                color: AppColors.APP_BLUE,
+              ),
+              title: new Text(
+                'Groups',
+                style: TextStyle(color: AppColors.APP_BLUE),
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(
                 Icons.favorite_border,
                 color: AppColors.APP_LIGHT_GREY,
               ),
@@ -454,8 +434,27 @@ class _MydashboardState extends State<Mydashboard> {
                             size: 12.0, color: Colors.redAccent),
                       )
                     ])
-                  : new Icon(Icons.message),
-              title: new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
+                  : new Icon(
+                      Icons.message,
+                      color: AppColors.APP_LIGHT_GREY,
+                    ),
+              activeIcon: unreads == '1'
+                  ? new Stack(children: <Widget>[
+                      new Icon(Icons.message),
+                      new Positioned(
+                        // draw a red marble
+                        top: 0.0,
+                        right: 0.0,
+                        child: new Icon(Icons.brightness_1,
+                            size: 12.0, color: Colors.redAccent),
+                      )
+                    ])
+                  : new Icon(
+                      Icons.message,
+                      color: AppColors.APP_BLUE,
+                    ),
+              title:
+                  new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
             )
             // BottomNavigationBarItem(
             //   icon: new Icon(
@@ -478,6 +477,7 @@ class _MydashboardState extends State<Mydashboard> {
 
   final List<Widget> _children = [
     Myhomepage(),
+    MyHomePageDMK(),
     FavouritesPage(),
     ChatList(globalPhoneNo, 'name'),
   ];
@@ -512,15 +512,14 @@ class _MydashboardState extends State<Mydashboard> {
       if (globalISPNPageOpened) Navigator.of(context).pop();
 
       if (contentType == "pdf") {
-        msgData= orgChannelName + "  Has sent a PDF.Do you want to open?  ";
+        msgData = orgChannelName + "  Has sent a PDF.Do you want to open?  ";
       } else if (contentType == "video") {
-        msgData= orgChannelName + "  Has sent a Video.Do you want to open?  ";
+        msgData = orgChannelName + "  Has sent a Video.Do you want to open?  ";
       } else if (contentType == "url") {
-        msgData= orgChannelName + "  Has sent a Url.Do you want to open?  ";
+        msgData = orgChannelName + "  Has sent a Url.Do you want to open?  ";
       } else if (contentType == "image") {
-        msgData= orgChannelName + "  Has sent a Image.Do you want to open?  ";
+        msgData = orgChannelName + "  Has sent a Image.Do you want to open?  ";
       } else {}
-
 
       CoolAlert.show(
           context: context,
