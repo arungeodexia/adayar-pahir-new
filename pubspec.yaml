@@ -82,6 +82,8 @@ dependencies:
   open_file: ^3.2.1
   flutter_local_notifications: ^8.0.0
   package_info_plus: ^1.0.6
+  flutter_dropzone: ^3.0.0
+  dotted_border: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

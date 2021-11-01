@@ -14,6 +14,8 @@ import 'package:pahir/Model/create_edit_profile_model.dart';
 import 'package:pahir/data/api/repository/ResourceRepo.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
+import 'package:pahir/utils/DropZoneWidget.dart';
+import 'package:pahir/utils/DroppedFileWidget.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:path_provider/path_provider.dart';
@@ -73,12 +75,14 @@ class _UploadchannelState extends State<Uploadchannel> {
   CreateEditProfileModel createEditProfileModel = CreateEditProfileModel();
 
   String messageType="";
+  String contentType="";
   late PlatformFile platformfile;
 
   var extensions;
   List<int> channelids=[];
 
   bool isload=false;
+  File_Data_Model? file;
 
 
 
@@ -331,6 +335,7 @@ class _UploadchannelState extends State<Uploadchannel> {
                                   }
 
                                   _isImageAvailable = true;
+                                  contentType=file.extension.toString();
                                   if (file.extension=="jpg"||file.extension=="jpeg"||file.extension=="png") {
                                     messageType="image";
                                   }else if (file.extension=="mov"||file.extension=="mp4") {
@@ -364,7 +369,25 @@ class _UploadchannelState extends State<Uploadchannel> {
                                   ):messageType=="video"?Container(child: Icon(Icons.video_collection_rounded,size: 50,),):Container(child: Image.asset('images/file.png'),),
                                 ),
                               ),
-                            )
+                            ),
+                    //   Container(
+                    //       alignment: Alignment.center,
+                    //       padding: EdgeInsets.all(15),
+                    //       child: Column(
+                    //         children: [
+                    //
+                    //           Container(
+                    //             height: 300,
+                    //             child: DropZoneWidget(
+                    //               onDroppedFile: (file) => setState(()=> this.file = file) ,
+                    //             ),
+                    //           ),
+                    //           SizedBox(height: 20,),
+                    //           DroppedFileWidget(file:file ),
+                    //
+                    //         ],
+                    //       )
+                    // ),
                           ],
                         ),
                       ),
@@ -418,6 +441,8 @@ class _UploadchannelState extends State<Uploadchannel> {
                                               fullNameInputController.text
                                                   .toString();
                                           contentmodel.contentFileType =
+                                              contentType;
+                                          contentmodel.contentCategory =
                                               messageType;
                                           contentmodel.contentDescription =
                                               notesInputController.text
