@@ -76,6 +76,7 @@ class _UploadchannelState extends State<Uploadchannel> {
 
   String messageType="";
   String contentType="";
+  String contentfilename="";
   late PlatformFile platformfile;
 
   var extensions;
@@ -336,6 +337,7 @@ class _UploadchannelState extends State<Uploadchannel> {
 
                                   _isImageAvailable = true;
                                   contentType=file.extension.toString();
+                                  contentfilename=file.name.toString();
                                   if (file.extension=="jpg"||file.extension=="jpeg"||file.extension=="png") {
                                     messageType="image";
                                   }else if (file.extension=="mov"||file.extension=="mp4") {
@@ -449,6 +451,7 @@ class _UploadchannelState extends State<Uploadchannel> {
                                                   .toString();
                                           contentmodel.userName =
                                               username;
+                                          contentmodel.contentTitle=contentfilename;
                                           contentmodel.userId =
                                               globalCurrentUserId;
                                           contentmodel.contentVersion = "1.0";
@@ -599,7 +602,7 @@ class _UploadchannelState extends State<Uploadchannel> {
                                             ? AppStrings
                                                 .UPDATE_MOBILE_SUBMIT_BT_LBL
                                             : AppStrings
-                                                .UPDATE_MOBILE_CONTINUE_BT_LBL,
+                                                .UPDATE_MOBILE_SUBMIT_BT_LBL,
                                         //  AppStrings.UPDATE_MOBILE_CONTINUE_BT_LBL,
                                         style: TextStyle(
                                             fontSize: 17,

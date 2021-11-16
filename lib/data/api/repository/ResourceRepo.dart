@@ -302,6 +302,26 @@ class ResourceRepo {
       return null;
     }
   }
+  Future<int?> deletecontent(String channelId) async {
+    try {
+      final response = await client.post(
+          Uri.parse(
+              "${AppStrings.BASE_URL}api/v1/user/content/$channelId/delete"),
+           );
+      print(" fetchResourceData Request Url :==>" +
+          response.request!.url.toString());
+      print(" fetchResourceData Response data :==>" + response.body.toString());
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      } else {
+        return response.statusCode;;
+      }
+    } on SocketException {
+      return null;
+    } on Exception catch (e) {
+      return null;
+    }
+  }
   Future<ChannelModel> getchannel(
       String orgid) async {
     ChannelModel channelmodel=ChannelModel();

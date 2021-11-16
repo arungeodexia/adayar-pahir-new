@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pahir/Bloc/message/app_messages_bloc.dart';
@@ -15,6 +18,7 @@ import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/unreadchat/fullphoto.dart';
 import 'package:pahir/utils/PdfViewer.dart';
+import 'package:pahir/utils/VideoApp.dart';
 import 'package:pahir/utils/values/app_colors.dart';
 import 'package:pahir/utils/values/app_strings.dart';
 import 'package:share/share.dart';
@@ -45,8 +49,7 @@ class AppPropertiesBloc {
 class AppMessagesViewState extends State<AppMessagesView> {
   MessagesModel messageResponse = MessagesModel();
   late SharedPreferences prefs;
-  ResourceRepo resourceRepository=ResourceRepo();
-
+  ResourceRepo resourceRepository = ResourceRepo();
 
   String fileName = "";
   String username = "";
@@ -97,48 +100,47 @@ class AppMessagesViewState extends State<AppMessagesView> {
   Widget build(BuildContext context) {
     globalcontext = context;
     return Scaffold(
-      appBar: AppBar(
-          title: StreamBuilder<Object>(
-              stream: appBloc.titleStream,
-              initialData: AppStrings.APP_MESSAGES_TITLE,
-              builder: (context, snapshot) {
-                return Text(snapshot.data.toString());
-              }),
-          centerTitle: true,
-          automaticallyImplyLeading: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
+        appBar: AppBar(
+            title: StreamBuilder<Object>(
+                stream: appBloc.titleStream,
+                initialData: AppStrings.APP_MESSAGES_TITLE,
+                builder: (context, snapshot) {
+                  return Text(snapshot.data.toString());
+                }),
+            centerTitle: true,
+            automaticallyImplyLeading: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
 //              Navigator.pushReplacementNamed(
 //                  context, AppRoutes.APP_ROUTE_MY_DASHBOARD);
-              Navigator.pop(context);
-            },
-          )),
-      backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+                Navigator.pop(context);
+              },
+            )),
+        backgroundColor: AppColors.APP_LIGHT_BLUE_30,
         body: BlocListener<AppMessagesBloc, AppMessagesState>(
-    listener: (context, state) {
-    },
-    child: BlocBuilder<AppMessagesBloc, AppMessagesState>(
-    builder: (context, state) {
-      if (state is MessagesFetchSuccess) {
-        appBloc.updateTitle(AppStrings.APP_MESSAGES_TITLE);
-        messageResponse = state.messageResponse;
-        return showForm();
-      } else if (state is MessagesFetching) {
-        return buildLoading();
-      } else {
-        appBloc.updateTitle(AppStrings.APP_MESSAGES_TITLE);
-        return buildLoading();
-      }
-    },
-    ),
-    )
-    );
+          listener: (context, state) {},
+          child: BlocBuilder<AppMessagesBloc, AppMessagesState>(
+            builder: (context, state) {
+              if (state is MessagesFetchSuccess) {
+                appBloc.updateTitle(AppStrings.APP_MESSAGES_TITLE);
+                messageResponse = state.messageResponse;
+                return showForm();
+              } else if (state is MessagesFetching) {
+                return buildLoading();
+              } else {
+                appBloc.updateTitle(AppStrings.APP_MESSAGES_TITLE);
+                return buildLoading();
+              }
+            },
+          ),
+        ));
   }
+
   Widget buildloading() {
     return Container(
       height:
-      MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
+          MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
       child: Center(
         child: CircularProgressIndicator(),
       ),
@@ -146,37 +148,23 @@ class AppMessagesViewState extends State<AppMessagesView> {
   }
 
   Widget showForm() {
-    return Column(
-      children: <Widget>[
-        //Form container
-        Form(
-          key: _appMessageKey,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                messageResponse != null && messageResponse.messages!.length > 0
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        padding: EdgeInsets.all(0.0),
-                        itemCount: messageResponse.messages!.length,
-                        itemBuilder: (_, index) {
-                          return _buildMessageCard(index, messageResponse);
-                        })
-                    : Center(
-                        child: Text(
-                          'There are no pending messages to read.',
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-              ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+      child: messageResponse != null && messageResponse.messages!.length > 0
+          ? ListView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.all(0.0),
+              itemCount: messageResponse.messages!.length,
+              itemBuilder: (_, index) {
+                return _buildMessageCard(index, messageResponse);
+              })
+          : Center(
+              child: Text(
+                'There are no pending messages to read.',
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -190,312 +178,348 @@ class AppMessagesViewState extends State<AppMessagesView> {
       date = arr[0];
     } catch (e) {}
 
-    return GestureDetector(
-      onTap: () {
-        redirectContentType(index, messageList);
-      },
-      child: Card(
-        elevation: 2,
-        margin: EdgeInsets.only(top: 16.0),
-        child: Container(
-          padding:
-              EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 8.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                  flex: 75,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Text(
-                            ((messageResponse.messages![index].messageBody!
-                                        .contentType! ==
-                                    "plain")
-                                ? messageResponse.messages![index].messageBody!
-                                        .messageTitle ??
-                                    ""
-                                : messageResponse.messages![index].messageBody!
-                                        .contentTitle ??
-                                    ""),
-                            //(messageList.messages[index].messageBody.messageTitle != null) ?messageList.messages[index].messageBody.messageTitle : "",
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                                fontSize: 18),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          messageList.messages![index].messageBody!.contentType ==
-                                  "pdf"
-                              ? Image.asset(
-                                  'images/pdficon.png',
-                                  width: 25,
-                                  height: 25,
-                                )
-                              : messageList.messages![index].messageBody!
-                                          .contentType ==
-                                      "video"
-                                  ? Icon(
-                                      Icons.videocam,
-                                      color: Colors.blue,
-                                      size: 20,
-                                    )
-                                  : messageList.messages![index].messageBody!
-                                              .contentType ==
-                                          "url"
-                                      ? Image.asset(
-                                          'images/webicon.png',
-                                          width: 25,
-                                          height: 25,
-                                        )
-                                      : messageList.messages![index].messageBody!
-                                                  .contentType ==
-                                              "txt"
-                                          ? Icon(
-                                              Icons.event_note,
-                                              color: Colors.blue,
-                                              size: 20,
-                                            )
-                                          : Container()
-                        ],
-                      ),
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Received : " + date,
-                            // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
-                            style: TextStyle(color: Colors.blue, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(
-                        messageList.messages![index].orgChannelName!,
-                        // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
-                        style: TextStyle(color: Colors.blue, fontSize: 12),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        height: 30,
-                        decoration: new BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0),
-                            )),
-                        child: Row(
+    return Slidable(
+      actionExtentRatio: 0.25,
+      secondaryActions: <Widget>[
+        new IconSlideAction(
+          caption: 'Delete',
+          color: Colors.indigo,
+          icon: Icons.delete,
+          onTap: () => () async {
+            int? status = await resourceRepository.deletecontent(
+                messageList.messages![index].contentId.toString());
+            if (status != null && status == 200) {
+              BlocProvider.of<AppMessagesBloc>(context).add(FetchMessages(
+                  countryCode: globalCountryCode, mobileNumber: globalPhoneNo));
+            } else {
+              Fluttertoast.showToast(msg: "Unable to Delete");
+            }
+          },
+        ),
+      ],
+      actionPane: SlidableDrawerActionPane(),
+      child: GestureDetector(
+        onTap: () {
+          redirectContentType(index, messageList);
+        },
+        child: Card(
+          elevation: 2,
+          margin: EdgeInsets.only(top: 16.0),
+          child: Container(
+            padding: EdgeInsets.only(
+                left: 16.0, right: 16.0, top: 16.0, bottom: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                    flex: 75,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
                           children: [
-                            messageList.messages![index].messageReaction!
-                                        .selectedReactionId! ==
-                                    0
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        messageList
-                                            .messages![index]
-                                            .messageReaction!
-                                            .selectedReactionId = 1;
-                                        messageList
-                                            .messages![index]
-                                            .messageReaction!
-                                            .numberOfReactions![0]
-                                            .messageReactionCount = messageList
-                                                .messages![index]
-                                                .messageReaction!
-                                                .numberOfReactions![0]
-                                                .messageReactionCount! +
-                                            1;
-                                      });
-                                      String response =
-                                          await resourceRepository.getlike(
-                                              messageList
-                                                  .messages![index].orgMemberId
-                                                  .toString(),
-                                              messageList
-                                                  .messages![index].messageId
-                                                  .toString(),
-                                              "reaction",
-                                              messageList
-                                                  .messages![index]
-                                                  .messageReaction!
-                                                  .numberOfReactions![0]
-                                                  .messageReactionId
-                                                  .toString());
-                                      print(response);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          width: 25,
-                                          height: 25,
-                                          image: AssetImage(
-                                              "images/thumboutline.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                            messageList
-                                                .messages![index]
-                                                .messageReaction!
-                                                .numberOfReactions!.length==0?"0":  messageList
-                                              .messages![index]
-                                              .messageReaction!
-                                              .numberOfReactions![0]
-                                              .messageReactionCount
-                                              .toString(),
-                                          style: TextStyle(color: Colors.blue),
-                                        )
-                                      ],
-                                    ),
+                            Text(
+                              ((messageResponse.messages![index].messageBody!
+                                          .contentType! ==
+                                      "plain")
+                                  ? messageResponse.messages![index]
+                                          .messageBody!.messageTitle ??
+                                      ""
+                                  : messageResponse.messages![index]
+                                          .messageBody!.contentTitle ??
+                                      ""),
+                              //(messageList.messages[index].messageBody.messageTitle != null) ?messageList.messages[index].messageBody.messageTitle : "",
+                              maxLines: 2,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                  fontSize: 18),
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            messageList.messages![index].messageBody!
+                                        .contentType ==
+                                    "pdf"
+                                ? Image.asset(
+                                    'images/pdficon.png',
+                                    width: 25,
+                                    height: 25,
                                   )
-                                : GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        messageList
-                                            .messages![index]
-                                            .messageReaction!
-                                            .selectedReactionId = 0;
-                                        messageList
-                                            .messages![index]
-                                            .messageReaction!
-                                            .numberOfReactions![0]
-                                            .messageReactionCount = messageList
-                                                .messages![index]
-                                                .messageReaction!
-                                                .numberOfReactions![0]
-                                                .messageReactionCount! -
-                                            1;
-                                      });
-                                      String response =
-                                          await resourceRepository.getlike(
-                                              messageList
-                                                  .messages![index].orgMemberId
-                                                  .toString(),
-                                              messageList
-                                                  .messages![index].messageId
-                                                  .toString(),
-                                              "unreaction",
-                                              messageList
-                                                  .messages![index]
-                                                  .messageReaction!
-                                                  .numberOfReactions![0]
-                                                  .messageReactionId
-                                                  .toString());
-                                      print(response);
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up,
-                                          color: AppColors.APP_BLUE,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-
+                                : messageList.messages![index].messageBody!
+                                            .contentType ==
+                                        "video"
+                                    ? Icon(
+                                        Icons.videocam,
+                                        color: Colors.blue,
+                                        size: 20,
+                                      )
+                                    : messageList.messages![index].messageBody!
+                                                .contentType ==
+                                            "url"
+                                        ? Image.asset(
+                                            'images/webicon.png',
+                                            width: 25,
+                                            height: 25,
+                                          )
+                                        : messageList.messages![index]
+                                                    .messageBody!.contentType ==
+                                                "txt"
+                                            ? Icon(
+                                                Icons.event_note,
+                                                color: Colors.blue,
+                                                size: 20,
+                                              )
+                                            : Container()
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.0,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "Received : " + date,
+                              // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 4.0,
+                        ),
+                        Text(
+                          messageList.messages![index].orgChannelName!,
+                          // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
+                          style: TextStyle(color: Colors.blue, fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Container(
+                          height: 30,
+                          decoration: new BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: new BorderRadius.only(
+                                topLeft: const Radius.circular(10.0),
+                                topRight: const Radius.circular(10.0),
+                                bottomLeft: const Radius.circular(10.0),
+                                bottomRight: const Radius.circular(10.0),
+                              )),
+                          child: Row(
+                            children: [
+                              messageList.messages![index].messageReaction!
+                                          .selectedReactionId! ==
+                                      0
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
                                           messageList
                                               .messages![index]
                                               .messageReaction!
-                                              .numberOfReactions!.length==0?"0":messageList
+                                              .selectedReactionId = 1;
+                                          messageList
+                                                  .messages![index]
+                                                  .messageReaction!
+                                                  .numberOfReactions![0]
+                                                  .messageReactionCount =
+                                              messageList
+                                                      .messages![index]
+                                                      .messageReaction!
+                                                      .numberOfReactions![0]
+                                                      .messageReactionCount! +
+                                                  1;
+                                        });
+                                        String response =
+                                            await resourceRepository.getlike(
+                                                messageList.messages![index]
+                                                    .orgMemberId
+                                                    .toString(),
+                                                messageList
+                                                    .messages![index].messageId
+                                                    .toString(),
+                                                "reaction",
+                                                messageList
+                                                    .messages![index]
+                                                    .messageReaction!
+                                                    .numberOfReactions![0]
+                                                    .messageReactionId
+                                                    .toString());
+                                        print(response);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Image(
+                                            width: 25,
+                                            height: 25,
+                                            image: AssetImage(
+                                                "images/thumboutline.png"),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            messageList
+                                                        .messages![index]
+                                                        .messageReaction!
+                                                        .numberOfReactions!
+                                                        .length ==
+                                                    0
+                                                ? "0"
+                                                : messageList
+                                                    .messages![index]
+                                                    .messageReaction!
+                                                    .numberOfReactions![0]
+                                                    .messageReactionCount
+                                                    .toString(),
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
+                                          messageList
                                               .messages![index]
                                               .messageReaction!
-                                              .numberOfReactions![0]
-                                              .messageReactionCount
-                                              .toString(),
-                                          style: TextStyle(color: Colors.blue),
-                                        )
-                                      ],
+                                              .selectedReactionId = 0;
+                                          messageList
+                                                  .messages![index]
+                                                  .messageReaction!
+                                                  .numberOfReactions![0]
+                                                  .messageReactionCount =
+                                              messageList
+                                                      .messages![index]
+                                                      .messageReaction!
+                                                      .numberOfReactions![0]
+                                                      .messageReactionCount! -
+                                                  1;
+                                        });
+                                        String response =
+                                            await resourceRepository.getlike(
+                                                messageList.messages![index]
+                                                    .orgMemberId
+                                                    .toString(),
+                                                messageList
+                                                    .messages![index].messageId
+                                                    .toString(),
+                                                "unreaction",
+                                                messageList
+                                                    .messages![index]
+                                                    .messageReaction!
+                                                    .numberOfReactions![0]
+                                                    .messageReactionId
+                                                    .toString());
+                                        print(response);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.thumb_up,
+                                            color: AppColors.APP_BLUE,
+                                            size: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            messageList
+                                                        .messages![index]
+                                                        .messageReaction!
+                                                        .numberOfReactions!
+                                                        .length ==
+                                                    0
+                                                ? "0"
+                                                : messageList
+                                                    .messages![index]
+                                                    .messageReaction!
+                                                    .numberOfReactions![0]
+                                                    .messageReactionCount
+                                                    .toString(),
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                String share = ''' 
+                              SizedBox(
+                                width: 20,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  String share = ''' 
 ${messageList.messages![index].messageTitle}
 
 ${messageList.messages![index].messageBody!.contentUri!}
 ''';
 
-                                Share.share(share);
-                                String response =
-                                    await resourceRepository.shareApi(
-                                        messageList.messages![index].orgMemberId
-                                            .toString(),
-                                        messageList.messages![index].messageId
-                                            .toString(),
-                                        "share",
-                                        "1");
-                                print(response);
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.share,
-                                    color: Colors.blue,
-                                    size: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Text(
-                                    'Share',
-                                    style: TextStyle(
-                                        color: Colors.blue, fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                  Share.share(share);
+                                  String response =
+                                      await resourceRepository.shareApi(
+                                          messageList
+                                              .messages![index].orgMemberId
+                                              .toString(),
+                                          messageList.messages![index].messageId
+                                              .toString(),
+                                          "share",
+                                          "1");
+                                  print(response);
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.share,
+                                      color: Colors.blue,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      'Share',
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                width: 16.0,
-              ),
-              Expanded(
-                  flex: 25,
-                  child: (messageList.messages![index].orgChannelLogo != null &&
-                          messageList.messages![index].orgChannelLogo != "")
-                      ? Image.network(
-                          messageList.messages![index].orgChannelLogo!,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.fill,
-                        )
-                      : Image.asset(
-                          "images/ishare_logo.png",
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        )
+                      ],
+                    )),
+                SizedBox(
+                  width: 16.0,
+                ),
+                Expanded(
+                    flex: 25,
+                    child: (messageList.messages![index].orgChannelLogo !=
+                                null &&
+                            messageList.messages![index].orgChannelLogo != "")
+                        ? Image.network(
+                            messageList.messages![index].orgChannelLogo!,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.fill,
+                          )
+                        : Image.asset(
+                            "images/ishare_logo.png",
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          )
 //
-                  )
-            ],
+                    )
+              ],
+            ),
           ),
         ),
       ),
@@ -514,23 +538,61 @@ ${messageList.messages![index].messageBody!.contentUri!}
 
   void redirectContentType(int index, MessagesModel messageList) async {
     if (messageList.messages![index].messageBody!.contentType! == "video") {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => BGVideoPlayerView(
-                local: "",
-                    videoUrl:
-                        messageList.messages![index].messageBody!.contentUri!,
-                    title: messageList.messages![index].messageBody!.contentTitle!,
-                  )));
+      if (!kIsWeb) {
+        print(messageList.messages![index].messageBody!.contentUri!.toString());
+        print(
+            messageList.messages![index].messageBody!.contentTitle!.toString());
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VideoApp( videoUrl: messageList.messages![index].messageBody!.contentUri!.toString(),
+                  title: messageList.messages![index].messageBody!.contentTitle!.toString(),)));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => BGVideoPlayerView(
+        //               local: "",
+        //               videoUrl:
+        //                   messageList.messages![index].messageBody!.contentUri!,
+        //               title: messageList
+        //                   .messages![index].messageBody!.contentTitle!,
+        //             )));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VideoApp( videoUrl: messageList.messages![index].messageBody!.contentUri!.toString(),
+                  title: messageList.messages![index].messageBody!.contentTitle!.toString(),)));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => BGVideoPlayerView(
+        //               local: "",
+        //               videoUrl:
+        //                   messageList.messages![index].messageBody!.contentUri!,
+        //               title: messageList
+        //                   .messages![index].messageBody!.contentTitle!,
+        //             )));
+      }
     } else if (messageList.messages![index].messageBody!.contentType == "pdf") {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => PdfViewerNew(
-                    pdfUrl: messageList.messages![index].messageBody!.contentUri!,
-                    title: messageList.messages![index].messageBody!.contentTitle!,
-                  )));
+      if (kIsWeb) {
+        var url = messageList.messages![index].messageBody!.contentUri!;
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PdfViewerNew(
+                      pdfUrl:
+                          messageList.messages![index].messageBody!.contentUri!,
+                      title: messageList
+                          .messages![index].messageBody!.contentTitle!,
+                    )));
+      }
     } else if (messageList.messages![index].messageBody!.contentType == "url") {
       String url = messageList.messages![index].messageBody!.contentUri!;
       if (await canLaunch(url)) {
@@ -538,8 +600,10 @@ ${messageList.messages![index].messageBody!.contentUri!}
       } else {
         throw 'Could not launch $url';
       }
-    } else if (messageList.messages![index].messageBody!.contentType == "image") {
-      String url = messageList.messages![index].messageBody!.contentUri!;
+    } else if (messageList.messages![index].messageBody!.contentType ==
+        "image") {
+      String url =
+          messageList.messages![index].messageBody!.contentUri!.toString();
 
       globalISPNPageOpened = true;
 
@@ -549,19 +613,23 @@ ${messageList.messages![index].messageBody!.contentUri!}
           MaterialPageRoute(
               builder: (context) => FullPhoto(
                     url: url,
-                    title: messageList.messages![index].messageBody!.contentTitle,
+                    title: messageList
+                        .messages![index].messageBody!.contentTitle
+                        .toString(),
                   )));
     } else {
-      print("data");
+      print("datasss");
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (_) => DialogOverlay(
-          title: messageList.messages![index].messageBody!.messageTitle!,
-          message: messageList.messages![index].messageBody!.message,
-          image: messageList.messages![index].orgLogo,
-          date: messageList.messages![index].messageBody!.messageSent,
-          orgName: messageList.messages![index].orgName,
+          title: messageList.messages![index].messageBody!.messageTitle!
+              .toString(),
+          message: messageList.messages![index].messageBody!.message.toString(),
+          image: messageList.messages![index].orgLogo.toString(),
+          date:
+              messageList.messages![index].messageBody!.messageSent.toString(),
+          orgName: messageList.messages![index].orgName.toString(),
         ),
       );
     }
@@ -656,8 +724,8 @@ class DialogOverlayState extends State<DialogOverlay>
                                     backgroundImage: ((widget.image != null &&
                                             widget.image != "")
                                         ? NetworkImage(widget.image!)
-                                        : AssetImage(
-                                            "images/photo_avatar.png") as ImageProvider),
+                                        : AssetImage("images/photo_avatar.png")
+                                            as ImageProvider),
                                     radius: 25,
                                     backgroundColor: AppColors.APP_BLUE,
                                     foregroundColor: AppColors.APP_WHITE,
@@ -719,7 +787,9 @@ class DialogOverlayState extends State<DialogOverlay>
                             SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Text(
-                                (widget.message! != null) ? widget.message! : "",
+                                (widget.message! != null)
+                                    ? widget.message!
+                                    : "",
                                 style: TextStyle(
                                     color: AppColors.APP_BLACK,
                                     fontWeight: FontWeight.normal,

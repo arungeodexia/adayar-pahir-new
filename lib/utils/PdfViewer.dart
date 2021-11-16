@@ -59,7 +59,7 @@ class _PdfViewerState extends State<PdfViewerNew> {
     print("widget.pdfUrl fetchPost:==>"+widget.pdfUrl);
     final response = await client.get(
       //'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-        Uri.parse(pdfUrl)
+        Uri.parse("https://d1rtv5ttcyt7b.cloudfront.net/app/pahir-resources/%2F1635851211704_dummy.pdf")
     );
     final responseJson = response.bodyBytes;
 
