@@ -14,7 +14,6 @@ import 'package:pahir/data/api/repository/ResourceRepo.dart';
 import 'package:pahir/data/globals.dart';
 import 'package:pahir/data/sp/shared_keys.dart';
 import 'package:pahir/utils/values/app_colors.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Controllers/firebaseController.dart';

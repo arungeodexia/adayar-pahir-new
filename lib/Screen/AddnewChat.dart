@@ -17,7 +17,6 @@ import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
 import 'package:pahir/unreadchat/Controllers/utils.dart';
 import 'package:pahir/unreadchat/chatroom.dart';
 import 'package:pahir/utils/values/app_colors.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
