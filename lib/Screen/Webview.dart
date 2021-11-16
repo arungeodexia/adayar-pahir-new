@@ -67,7 +67,7 @@ class _WebViewExampleState extends State<WebViewExample> {
             _toasterJavascriptChannel(context),
           ].toSet(),
           navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
+            if (request.url.startsWith('https://www.youtube.com')) {
               print('blocking navigation to $request}');
               return NavigationDecision.prevent;
             }
