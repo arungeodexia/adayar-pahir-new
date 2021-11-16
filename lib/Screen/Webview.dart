@@ -68,7 +68,7 @@ class _WebViewExampleState extends State<WebViewExample> {
           ].toSet(),
           navigationDelegate: (NavigationRequest request) {
             if (request.url.startsWith('https://www.youtube.com')) {
-              print('blocking navigation to $request}');
+              print('bloccking navigation to $request}');
               return NavigationDecision.prevent;
             }
             print('allowing navigation to $request');
