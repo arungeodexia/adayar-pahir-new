@@ -11,11 +11,11 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - echo "Your build and test goes here..."
+            - flutter pub get
       - step:
           name: 'Lint'
           script:
-            - echo "Your linting goes here..."
+            - flutter --no-color build apk
       - step:
           name: 'Security scan'
           script:
