@@ -1,0 +1,13 @@
+image: cirrusci/flutter
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build APK
+          script:
+            - flutter pub get
+            - flutter --no-color build apk
+          artifacts:
+            - build/**
+      
