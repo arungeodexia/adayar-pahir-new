@@ -4,9 +4,10 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build web
+          name: Build APK
           script:
-            - flutter build web --web-renderer html --release
+            - flutter pub get
+            - flutter --no-color build apk
           artifacts:
             - build/**
       
