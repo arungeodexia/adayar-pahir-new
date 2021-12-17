@@ -8,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -277,22 +276,6 @@ body: Column(
     );
   }
 
-  Container getWelcomeScreen() {
-    String html = "";
-    /* String html = """
-          <div>
-          <h3>Welcome to Pahir, the most trusted referral platform.</h3>
-          <ul>
-          <li style="margin-bottom:6px;">Tap “+” at the top right corner to recommend.</li>
-          <li style="margin-bottom:6px;">Search resources recommended by your contacts.</li>
-          <li style="margin-bottom:6px;">Menu->Invite to invite your contacts to join Pahir.</li>
-          </ul>
-          The more you share the more you all benefit!
-          </div>
-        """;*/
-
-    return Container(child: Html(data: html));
-  }
 
   Container _buildHomePageData() {
     return Container(

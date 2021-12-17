@@ -91,7 +91,9 @@ class _MyhomepageState extends State<Myhomepage> {
       ),
     );
   }
+  void doNothing(BuildContext context) {
 
+  }
   Container _buildHomePageData(List<Resources> resources) {
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -222,24 +224,34 @@ class _MyhomepageState extends State<Myhomepage> {
                             itemCount: resources.length,
                             itemBuilder: (BuildContext ctxt, int index) {
                               return Slidable(
-                                secondaryActions: <Widget>[
-                                  // new IconSlideAction(
-                                  //   caption: 'More',
-                                  //   color: Colors.black45,
-                                  //   icon: Icons.more_horiz,
-                                  //   onTap: () {},
-                                  // ),
-                                  new IconSlideAction(
-                                    caption: 'Delete',
-                                    color: Colors.red,
-                                    icon: Icons.delete,
-                                    onTap: () {
-                                      BlocProvider.of<MyhomepageBloc>(context).add(DeleteHomepage(resources[index]));
-                                    },
-                                  ),
-                                ],
-                                actionExtentRatio: 0.25,
-                                actionPane: SlidableDrawerActionPane(),
+                                startActionPane: ActionPane(
+                                  // A motion is a widget used to control how the pane animates.
+                                  motion: const ScrollMotion(),
+
+                                  // A pane can dismiss the Slidable.
+                                  dismissible: DismissiblePane(onDismissed: () {}),
+
+                                  // All actions are defined in the children parameter.
+                                  children:  [
+                                    // A SlidableAction can have an icon and/or a label.
+                                    SlidableAction(
+                                      onPressed: (ctx){
+                                        BlocProvider.of<MyhomepageBloc>(context).add(DeleteHomepage(resources[index]));
+                                      },
+                                      backgroundColor: Color(0xFFFE4A49),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                    ),
+                                    SlidableAction(
+                                      onPressed: doNothing,
+                                      backgroundColor: Color(0xFF21B7CA),
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.share,
+                                      label: 'Share',
+                                    ),
+                                  ],
+                                ),
                                 child: new ListTile(
                                   onTap: (){
                                       Navigator.of(context).pushAndRemoveUntil(

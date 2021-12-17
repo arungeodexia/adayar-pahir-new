@@ -260,7 +260,7 @@ class SigninState extends State<SigninView> {
                                           },
                                           keyboardType: TextInputType.phone,
                                           inputFormatters: [
-                                            new WhitelistingTextInputFormatter(
+                                            new FilteringTextInputFormatter.deny(
                                                 RegExp("[0-9]")),
                                           ],
                                           controller: mobilecontroller,

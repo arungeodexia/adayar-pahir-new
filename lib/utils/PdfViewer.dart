@@ -109,7 +109,7 @@ class _PdfViewerState extends State<PdfViewerNew> {
                   Container(
                     height:  MediaQuery.of(context).size.height/1.2,
                     child: PdfView(
-                      path: path,
+                      path: path!,
                     ),
                   )
                 :

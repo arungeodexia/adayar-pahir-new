@@ -179,25 +179,32 @@ class AppMessagesViewState extends State<AppMessagesView> {
     } catch (e) {}
 
     return Slidable(
-      actionExtentRatio: 0.25,
-      secondaryActions: <Widget>[
-        new IconSlideAction(
-          caption: 'Delete',
-          color: Colors.indigo,
-          icon: Icons.delete,
-          onTap: () => () async {
-            int? status = await resourceRepository.deletecontent(
-                messageList.messages![index].contentId.toString());
-            if (status != null && status == 200) {
-              BlocProvider.of<AppMessagesBloc>(context).add(FetchMessages(
-                  countryCode: globalCountryCode, mobileNumber: globalPhoneNo));
-            } else {
-              Fluttertoast.showToast(msg: "Unable to Delete");
-            }
-          },
-        ),
-      ],
-      actionPane: SlidableDrawerActionPane(),
+      startActionPane:  ActionPane(
+        // A motion is a widget used to control how the pane animates.
+        motion: ScrollMotion(),
+
+        // All actions are defined in the children parameter.
+        children: [
+          // A SlidableAction can have an icon and/or a label.
+          SlidableAction(
+            onPressed: (doNothing) async{
+              int? status = await resourceRepository.deletecontent(
+                  messageList.messages![index].contentId.toString());
+              if (status != null && status == 200) {
+                BlocProvider.of<AppMessagesBloc>(context).add(FetchMessages(
+                    countryCode: globalCountryCode, mobileNumber: globalPhoneNo));
+              } else {
+                Fluttertoast.showToast(msg: "Unable to Delete");
+              }
+            },
+            backgroundColor: Colors.indigo,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ],
+      ),
+
       child: GestureDetector(
         onTap: () {
           redirectContentType(index, messageList);

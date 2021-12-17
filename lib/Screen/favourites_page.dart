@@ -230,8 +230,6 @@ class _FavouritesPageState extends State<FavouritesPage> {
                                 //     onTap: () {},
                                 //   ),
                                 // ],
-                                actionExtentRatio: 0.25,
-                                actionPane: SlidableDrawerActionPane(),
                                 child: new ListTile(
                                   onTap: () {
                                     Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ResourceDetailsView(
