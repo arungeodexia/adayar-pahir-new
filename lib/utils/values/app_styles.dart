@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 
 ///App Styles Class -> Resource class for storing app level styles constants
 class AppStyles {

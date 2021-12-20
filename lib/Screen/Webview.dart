@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

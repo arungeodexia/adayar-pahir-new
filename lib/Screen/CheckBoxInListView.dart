@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pahir/Model/ChannelModel.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/calls_messages_services.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/Model/ChannelModel.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/calls_messages_services.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckBoxInListView extends StatefulWidget {

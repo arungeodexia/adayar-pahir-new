@@ -1,10 +1,10 @@
 library ishare.globals;
 
 import 'package:flutter/material.dart';
-import 'package:pahir/Bloc/message/message_model_class.dart';
-import 'package:pahir/Model/GetReviewResponse.dart';
-import 'package:pahir/Model/ResourceSearchNew.dart';
-import 'package:pahir/Model/add_resource_model.dart';
+import 'package:ACI/Bloc/message/message_model_class.dart';
+import 'package:ACI/Model/GetReviewResponse.dart';
+import 'package:ACI/Model/ResourceSearchNew.dart';
+import 'package:ACI/Model/add_resource_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -49,7 +49,7 @@ Map<String, String> requestHeaders = {
   'Content-type': 'application/json; charset=UTF-8',
   "Access-Control-Expose-Headers": "*",
   'Accept': 'application/json',
-  'appcode': '100000',
-  'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',
+  'appcode': '700000',
+  'licensekey': '33783ui7-hepf-3698-tbk9-so69eq185173',
 };
 

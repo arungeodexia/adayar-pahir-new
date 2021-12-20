@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/http.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/Model/phone_contact_model.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/Model/phone_contact_model.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'dart:io';
@@ -80,8 +80,8 @@ Future<String> fileuploadchat({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
 
@@ -133,8 +133,8 @@ Future<String> fileimageupload({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
 
@@ -189,8 +189,8 @@ Future<String> fileuploadgroup(
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
 
@@ -246,8 +246,8 @@ Future<String> fileuploadresource({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
 

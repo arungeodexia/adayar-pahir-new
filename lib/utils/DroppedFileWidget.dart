@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pahir/utils/DropZoneWidget.dart';
+import 'package:ACI/utils/DropZoneWidget.dart';
 
 class DroppedFileWidget extends StatelessWidget {
 

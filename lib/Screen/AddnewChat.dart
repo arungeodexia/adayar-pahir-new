@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pahir/Model/AddchatnewModel.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/api/repository/ChatRepo.dart';
-import 'package:pahir/data/api/repository/ChatRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
-import 'package:pahir/unreadchat/Controllers/utils.dart';
-import 'package:pahir/unreadchat/chatroom.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/Model/AddchatnewModel.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/api/repository/ChatRepo.dart';
+import 'package:ACI/data/api/repository/ChatRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/unreadchat/Controllers/firebaseController.dart';
+import 'package:ACI/unreadchat/Controllers/utils.dart';
+import 'package:ACI/unreadchat/chatroom.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

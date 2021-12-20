@@ -8,9 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/http.dart';
 import 'package:meta/meta.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

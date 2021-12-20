@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/api/repository/LoginRepo.dart';
@@ -28,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthEvent event,
   ) async* {
     if (event is AuthRequested) {
-      yield AuthLoadInProgress();
+      emit (AuthLoadInProgress());
       try {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? accesstoken=await prefs.getString("accessToken");
@@ -37,8 +37,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           requestHeaders = {
             'Content-type': 'application/json; charset=UTF-8',
             'Accept': 'application/json',
-            'appcode': '100000',
-            'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',
+            'appcode': '700000',
+            'licensekey': '33783ui7-hepf-3698-tbk9-so69eq185173',
             'Authorization': "Bearer " +accesstoken!,
             'userFingerprintHash': userFingerprintHash!
 
@@ -46,16 +46,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           print(requestHeaders);
           globalCountryCode=await prefs.getString(USER_COUNTRY_CODE)??"";
           globalPhoneNo=await prefs.getString(USER_MOBILE_NUMBER)??"";
-          yield AuthLoadSuccess(AuthCheck: true);
+          emit( AuthLoadSuccess(AuthCheck: true));
         } else {
-          yield AuthLoadSuccess(AuthCheck: false);
+          emit (AuthLoadSuccess(AuthCheck: false));
 
         }
 
 
 
       } catch (_) {
-        yield AuthLoadFailure();
+        emit (AuthLoadFailure());
       }
     }
   }

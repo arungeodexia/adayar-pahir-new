@@ -1,7 +1,7 @@
 class AppStrings {
   //--------------------------------------------------- General -----------------------------------------------------------------------------------------
 
-  static const String APP_NAME = "Pahir";
+  static const String APP_NAME = "ACI";
   static const String SEARCH_RESOURCE = "Search Skill";
   static const String BASE_URL = DEV_URL;
   
@@ -28,8 +28,8 @@ class AppStrings {
   static String WELCOME_SYS_ERROR="System error. Try again.";
   static String WELCOME_SERVER_TEMP_NOT_REACHABLE="Server temporarily not reachable. Try again.";
   static String WELCOME_CONTACT_NOT_AVAIL="Contact is not available";
-  //static String WELCOME_UPDATE_CONTACT_MSG="  Pahir is currently processing contacts.\n It make take few seconds. Do not quit.  ";
-  static String WELCOME_UPDATE_CONTACT_MSG="  Checking other Pahir users in your network. Please be patient.  ";
+  //static String WELCOME_UPDATE_CONTACT_MSG="  ACI is currently processing contacts.\n It make take few seconds. Do not quit.  ";
+  static String WELCOME_UPDATE_CONTACT_MSG="  Checking other ACI users in your network. Please be patient.  ";
   static String LOADING_MSG="Loading..";
   
   //--------------------------------------------------- Login -----------------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ static const String CONTACT_SYNC_SUCCESSFULLY = "Contacts Synced Sucessfully";
   static const String SIGNUP_MOBILE_ENTER_PHNO_TITLE =
       "Enter your phone number";
   static const String SIGNUP_MOBILE_ENTER_PHNO_TITLE_DESC =
-      "Pahir will send an SMS message to verify your phone number (carrier charges may apply).";
+      "ACI will send an SMS message to verify your phone number (carrier charges may apply).";
 
   static const String SIGNUP_MOBILE_ENTER_PHNO_TF_LABEL =
       "Enter your phone number";
@@ -64,7 +64,7 @@ static const String CONTACT_SYNC_SUCCESSFULLY = "Contacts Synced Sucessfully";
 
   static const String SIGNUP_MOBILE_ENTER_PHNO_LBL_TERMS_URL =
     //  "https://s3.amazonaws.com/dailywagers-terms/Terms-and-conditions.html";
-      "https://ishare-public.s3.amazonaws.com/live/PahirTermsandConditions.html";
+      "https://ishare-public.s3.amazonaws.com/live/ACITermsandConditions.html";
 
 //--------------------------------------------------- Signup Otp -----------------------------------------------------------------------------------------
 
@@ -146,7 +146,7 @@ static const String INVALID_EMAIL_ID = "Invalid Email id";
   static const String UPDATE_MOBILE_ENTER_PHNO_TITLE =
       "Update your phone number";
   static const String UPDATE_MOBILE_ENTER_PHNO_TITLE_DESC =
-      "Pahir will send an SMS message to verify your phone number (carrier charges may apply). Enter your country code and phone number";
+      "ACI will send an SMS message to verify your phone number (carrier charges may apply). Enter your country code and phone number";
 
 
 
@@ -258,12 +258,12 @@ static const String UPDATE_RESOURCE_SAVE_BT_LBL = "Update Resource";
   static const String CHOOSE_PROFILE_TYPE_RESOURCE_TITLE = "Service Provider";
 
   static const String CHOOSE_PROFILE_TYPE_RESOURCE_CONTENT =
-      "I offer services to Pahir users.";
+      "I offer services to ACI users.";
 
   static const String CHOOSE_PROFILE_TYPE_SERVICE_TITLE = "User";
 
   static const String CHOOSE_PROFILE_TYPE_SERVICE_CONTENT =
-      "I use Pahir to find and refer skilled resources.";
+      "I use ACI to find and refer skilled resources.";
 
 //--------------------------------------------------- Resource List -----------------------------------------------------------------------------------------
 
@@ -298,14 +298,14 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String CONTACT_ACCESS_SCREEN_TITLE = "Who my contacts recommend?";
 
-//  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "Pahir will now find what your friends recommend for you.The larger your connections the more trusted recommendations you will see.";
+//  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "ACI will now find what your friends recommend for you.The larger your connections the more trusted recommendations you will see.";
 //
-//  static const String CONTACT_ACCESS_SCREEN_NAME_LIST = "Pahir will do this by accessing only the phone numbers in your contacts.";
+//  static const String CONTACT_ACCESS_SCREEN_NAME_LIST = "ACI will do this by accessing only the phone numbers in your contacts.";
 //
 //  static const String CONTACT_ACCESS_SCREEN__CONTENT = " Once you started recommending services and resources that you came across they will be shared among your connections.You can remove your recommendations at any time.";
 
 
-  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "Pahir will now find what your friends recommended to you. Pahir will do this by checking the phone numbers in your contacts. We can serve you better only if we know your friends.";
+  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "ACI will now find what your friends recommended to you. ACI will do this by checking the phone numbers in your contacts. We can serve you better only if we know your friends.";
 
   static const String CONTACT_ACCESS_SCREEN_NAME_LIST = "You can start recommending people and services after this step. Remember, your recommendations are valued high by your connections. You can remove your recommendations at any time.";
 
@@ -327,7 +327,7 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String QR_DIALOG_DIG_INVALID_QR_TITLE = "Invalid QR";
 
-  static const String QR_DIALOG_DIG_INVALID_QR_CONTENT = "Not a valid Pahir QR";
+  static const String QR_DIALOG_DIG_INVALID_QR_CONTENT = "Not a valid ACI QR";
 
   //---------------------------------------------------My Resource -----------------------------------------------------------------------------------------
 
@@ -367,8 +367,8 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String APP_HELP_TITLE = "Help";
 
-  static const String APP_HELP_SUB_TITLE_ONE = "What does Pahir do?";
-  static const String APP_HELP_SUB_CONTENT_ONE = "Pahir helps friends and families share information about their resources, selectively and instantly. Once you installed and registered the mobile application you will start seeing the resources that your friends and families share with you.";
+  static const String APP_HELP_SUB_TITLE_ONE = "What does ACI do?";
+  static const String APP_HELP_SUB_CONTENT_ONE = "ACI helps friends and families share information about their resources, selectively and instantly. Once you installed and registered the mobile application you will start seeing the resources that your friends and families share with you.";
 
   static const String APP_HELP_SUB_TITLE_TWO = "How do I find resources?";
   static const String APP_HELP_SUB_CONTENT_TWO = "Once registered you will be taken to the home page where there is an option to enter what you are looking for. You can search for resource by skill or by name. For example \"Carpenter\" will get the list of all carpenters that your close networks recommend to you. Searching for \"Joe\" will get the list of resources with \"joe\" appearing anywhere in their name, and recommended by your friends and families.";

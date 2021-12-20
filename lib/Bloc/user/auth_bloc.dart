@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:meta/meta.dart';
-import 'package:pahir/Bloc/user/user_repository.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
+import 'package:ACI/Bloc/user/user_repository.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_events.dart';

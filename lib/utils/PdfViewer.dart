@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/data/globals.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/data/globals.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
@@ -109,7 +109,7 @@ class _PdfViewerState extends State<PdfViewerNew> {
                   Container(
                     height:  MediaQuery.of(context).size.height/1.2,
                     child: PdfView(
-                      path: path,
+                      path: path!,
                     ),
                   )
                 :

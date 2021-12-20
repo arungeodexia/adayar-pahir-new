@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:intl/intl.dart';
-import 'package:pahir/Bloc/message/message_model_class.dart';
-import 'package:pahir/Model/MembersModel.dart';
-import 'package:pahir/Model/OrganizationModel.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/message/message_model_class.dart';
+import 'package:ACI/Model/MembersModel.dart';
+import 'package:ACI/Model/OrganizationModel.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

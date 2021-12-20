@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:pahir/Bloc/message/message_model_class.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/Bloc/message/message_model_class.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
 
 part 'app_messages_event.dart';
 

@@ -9,12 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
-import 'package:pahir/Model/phone_contact_model.dart';
-import 'package:pahir/Screen/mydashboard.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/phone_contact_model.dart';
+import 'package:ACI/Screen/mydashboard.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -115,7 +115,7 @@ class ContactSyncState extends State<ContactSyncView> {
         openAppSettings();
       }
       handleToastMsgDialog(
-          "Allow contact permission : Settings --> Pahir(Contact Permission)");
+          "Allow contact permission : Settings --> ACI(Contact Permission)");
     }
   }
 
@@ -296,7 +296,7 @@ class ContactSyncState extends State<ContactSyncView> {
                             height: 5.0,
                           ),
                           Text(
-                            'Selected contact(s) updated in Pahir',
+                            'Selected contact(s) updated in ACI',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontSize: 14.0,

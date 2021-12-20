@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Bloc/login/signin_mobile_view.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/login/signin_mobile_view.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 
 final List<String> imgList = [
   "https://d2c56lckh61bcl.cloudfront.net/live/covid_splash1.jpg",

@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:pahir/Bloc/Resorceview/resource_details_view.dart';
-import 'package:pahir/Model/ResourceSearchNew.dart';
-import 'package:pahir/Screen/BGVideoPlayerView.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/unreadchat/fullphoto.dart';
-import 'package:pahir/utils/PdfViewer.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/Bloc/Resorceview/resource_details_view.dart';
+import 'package:ACI/Model/ResourceSearchNew.dart';
+import 'package:ACI/Screen/BGVideoPlayerView.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/unreadchat/fullphoto.dart';
+import 'package:ACI/utils/PdfViewer.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 

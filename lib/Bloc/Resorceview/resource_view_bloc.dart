@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
-import 'package:pahir/Model/ResourceSearchNew.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/Model/ResourceSearchNew.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
 import 'package:http/http.dart' as http;
 
 part 'resource_view_event.dart';

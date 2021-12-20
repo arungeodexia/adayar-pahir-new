@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Bloc/Myhomepage/myhomepage_bloc.dart';
-import 'package:pahir/Bloc/Profilepage/profile_bloc.dart';
-import 'package:pahir/Bloc/Resorceview/resource_details_view.dart';
-import 'package:pahir/Model/add_resource_model.dart';
-import 'package:pahir/Model/resources.dart';
-import 'package:pahir/Screen/search_page.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/Myhomepage/myhomepage_bloc.dart';
+import 'package:ACI/Bloc/Profilepage/profile_bloc.dart';
+import 'package:ACI/Bloc/Resorceview/resource_details_view.dart';
+import 'package:ACI/Model/add_resource_model.dart';
+import 'package:ACI/Model/resources.dart';
+import 'package:ACI/Screen/search_page.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -85,13 +85,15 @@ class _MyhomepageState extends State<Myhomepage> {
   Widget buildloading() {
     return Container(
       height:
-          MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
+      MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
       child: Center(
         child: CircularProgressIndicator(),
       ),
     );
   }
+  void doNothing(BuildContext context) {
 
+  }
   Container _buildHomePageData(List<Resources> resources) {
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -155,7 +157,7 @@ class _MyhomepageState extends State<Myhomepage> {
                   ),
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
@@ -175,11 +177,11 @@ class _MyhomepageState extends State<Myhomepage> {
                       hintText: "e.g. Exporters in California",
                       border: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.white, width: 32.0),
+                          BorderSide(color: Colors.white, width: 32.0),
                           borderRadius: BorderRadius.circular(5.0)),
                       focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(color: Colors.white, width: 32.0),
+                          BorderSide(color: Colors.white, width: 32.0),
                           borderRadius: BorderRadius.circular(5.0)))),
             ),
             Visibility(
@@ -203,7 +205,7 @@ class _MyhomepageState extends State<Myhomepage> {
                     child: Text(
                       AppStrings.MY_RESOURCE_TITLE,
                       style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                      TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                     )),
               ),
             ),
@@ -219,110 +221,120 @@ class _MyhomepageState extends State<Myhomepage> {
                         ? Container()
                         :
                     new ListView.builder(
-                            itemCount: resources.length,
-                            itemBuilder: (BuildContext ctxt, int index) {
-                              return Slidable(
-                                secondaryActions: <Widget>[
-                                  // new IconSlideAction(
-                                  //   caption: 'More',
-                                  //   color: Colors.black45,
-                                  //   icon: Icons.more_horiz,
-                                  //   onTap: () {},
-                                  // ),
-                                  new IconSlideAction(
-                                    caption: 'Delete',
-                                    color: Colors.red,
-                                    icon: Icons.delete,
-                                    onTap: () {
-                                      BlocProvider.of<MyhomepageBloc>(context).add(DeleteHomepage(resources[index]));
-                                    },
-                                  ),
-                                ],
-                                actionExtentRatio: 0.25,
-                                actionPane: SlidableDrawerActionPane(),
-                                child: new ListTile(
-                                  onTap: (){
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: resources[index].isMyResource.toString(),resoruceid: resources[index].id.toString(),resorucetype: resources[index].resourceType.toString(),)),(Route<dynamic> route) => false,);
+                        itemCount: resources.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return Slidable(
+                            startActionPane: ActionPane(
+                              // A motion is a widget used to control how the pane animates.
+                              motion: const ScrollMotion(),
+
+                              // A pane can dismiss the Slidable.
+                              dismissible: DismissiblePane(onDismissed: () {}),
+
+                              // All actions are defined in the children parameter.
+                              children:  [
+                                // A SlidableAction can have an icon and/or a label.
+                                SlidableAction(
+                                  onPressed: (ctx){
+                                    BlocProvider.of<MyhomepageBloc>(context).add(DeleteHomepage(resources[index]));
                                   },
-                                  title: Text(
-                                    resources[index].firstName!,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 1,
+                                  backgroundColor: Color(0xFFFE4A49),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                                SlidableAction(
+                                  onPressed: doNothing,
+                                  backgroundColor: Color(0xFF21B7CA),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.share,
+                                  label: 'Share',
+                                ),
+                              ],
+                            ),
+                            child: new ListTile(
+                              onTap: (){
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: resources[index].isMyResource.toString(),resoruceid: resources[index].id.toString(),resorucetype: resources[index].resourceType.toString(),)),(Route<dynamic> route) => false,);
+                              },
+                              title: Text(
+                                resources[index].firstName!,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                resources[index].city!,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                maxLines: 1,
+                              ),
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    resources[index].skill!,
                                     style: TextStyle(
-                                        fontFamily: "OpenSans",
-                                        fontSize: 14,
+                                        color: AppColors.APP_LIGHT_BLUE_20,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  subtitle: Text(
-                                    resources[index].city!,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 1,
+                                  RatingBarIndicator(
+                                    rating:
+                                    resources[index].rating!.toDouble(),
+                                    itemBuilder: (context, index) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                    direction: Axis.horizontal,
+                                  )
+                                ],
+                              ),
+                              leading: Stack(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5, bottom: 2),
+                                    child:
+                                    CircleAvatar(
+                                      backgroundImage: resources[index]
+                                          .profilePicture ==
+                                          null
+                                          ? AssetImage('images/photo_avatar.png')
+                                      as ImageProvider
+                                          : NetworkImage(
+                                          resources[index].profilePicture!),
+                                    ),
                                   ),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        resources[index].skill!,
-                                        style: TextStyle(
-                                            color: AppColors.APP_LIGHT_BLUE_20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      RatingBarIndicator(
-                                        rating:
-                                            resources[index].rating!.toDouble(),
-                                        itemBuilder: (context, index) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                        ),
-                                        itemCount: 5,
-                                        itemSize: 20.0,
-                                        direction: Axis.horizontal,
+                                  Positioned.fill(
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: (resources[index].favorite == 1)
+                                          ? Icon(
+                                        Icons.favorite,
+                                        size: 20,
+                                        color: Colors.red,
                                       )
-                                    ],
-                                  ),
-                                  leading: Stack(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 5, bottom: 2),
-                                        child:
-                                        CircleAvatar(
-                                          backgroundImage: resources[index]
-                                              .profilePicture ==
-                                              null
-                                              ? AssetImage('images/photo_avatar.png')
-                                          as ImageProvider
-                                              : NetworkImage(
-                                              resources[index].profilePicture!),
-                                        ),
+                                          : Icon(
+                                        Icons.favorite,
+                                        size: 20,
+                                        color: Colors.grey,
                                       ),
-                                      Positioned.fill(
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: (resources[index].favorite == 1)
-                                              ? Icon(
-                                            Icons.favorite,
-                                            size: 20,
-                                            color: Colors.red,
-                                          )
-                                              : Icon(
-                                            Icons.favorite,
-                                            size: 20,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                  )
+                                ],
+                              ),
 
 
-                                ),
-                              );
-                            })))
+                            ),
+                          );
+                        })))
           ],
         ));
   }

@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Bloc/login/login_bloc.dart';
-import 'package:pahir/Bloc/user/user_repository.dart';
-import 'package:pahir/Screen/otp_verify_form.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/login/login_bloc.dart';
+import 'package:ACI/Bloc/user/user_repository.dart';
+import 'package:ACI/Screen/otp_verify_form.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -260,7 +260,7 @@ class SigninState extends State<SigninView> {
                                           },
                                           keyboardType: TextInputType.phone,
                                           inputFormatters: [
-                                            new WhitelistingTextInputFormatter(
+                                            new FilteringTextInputFormatter.allow(
                                                 RegExp("[0-9]")),
                                           ],
                                           controller: mobilecontroller,

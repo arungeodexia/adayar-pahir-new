@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/Model/drawer_item.dart';
-import 'package:pahir/Screen/Webview.dart';
-import 'package:pahir/Screen/contact_sync_view.dart';
-import 'package:pahir/Screen/edit_profile_view.dart';
-import 'package:pahir/Screen/help_view.dart';
-import 'package:pahir/Screen/login_init_view.dart';
-import 'package:pahir/Screen/privacy_control.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/Model/drawer_item.dart';
+import 'package:ACI/Screen/Webview.dart';
+import 'package:ACI/Screen/contact_sync_view.dart';
+import 'package:ACI/Screen/edit_profile_view.dart';
+import 'package:ACI/Screen/help_view.dart';
+import 'package:ACI/Screen/login_init_view.dart';
+import 'package:ACI/Screen/privacy_control.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,12 +35,12 @@ class IShareAppDrawer extends StatelessWidget {
     new DrawerItem(
         "Privacy & Security", Icons.insert_drive_file, "/mydashboard"),
     new DrawerItem("Help", Icons.help, "/help"),
-    new DrawerItem(
-        AppStrings.CONTACT_SYNC_TITLE, Icons.sync, "/contactsyncview"),
+    // new DrawerItem(
+    //     AppStrings.CONTACT_SYNC_TITLE, Icons.sync, "/contactsyncview"),
   ];
 
   final socialDrawerItems = [
-    new DrawerItem("Invite a friend", Icons.assignment_ind, "/myresources"),
+    // new DrawerItem("Invite a friend", Icons.assignment_ind, "/myresources"),
 
     // new DrawerItem("Share QR Code",
     //     Icons.scanner, "/qrresourcedetails"),
@@ -271,8 +271,8 @@ class IShareAppDrawer extends StatelessWidget {
 
   static Future<String?> shareData() async {
     Share.share(
-        'Inviting you join the fight against Corona. Install QCare, find vacant beds, oxygen cylinders, plasma, ambulance services, and more. Stay safe, and save lives. Visit https://www.geodexia.com/QCare/ for details.',
-        subject: 'QCare!');
+        'Inviting you join the fight against Corona. Install ACI, find vacant beds, oxygen cylinders, plasma, ambulance services, and more. Stay safe, and save lives. Visit https://www.geodexia.com/ACI/ for details.',
+        subject: 'ACI!');
   }
 
   static _launchURL(String toMailId, String subject, String body) async {

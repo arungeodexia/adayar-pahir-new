@@ -8,23 +8,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Bloc/message/app_messages_view.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/Screen/BGVideoPlayerView.dart';
-import 'package:pahir/Screen/my_home_page_DMK.dart';
-import 'package:pahir/Screen/myhomepage.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/main.dart';
-import 'package:pahir/unreadchat/Controllers/firebaseController.dart';
-import 'package:pahir/unreadchat/Controllers/utils.dart';
-import 'package:pahir/unreadchat/chatlist.dart';
-import 'package:pahir/unreadchat/chatroom.dart';
-import 'package:pahir/unreadchat/chatroom_Group.dart';
-import 'package:pahir/unreadchat/fullphoto.dart';
-import 'package:pahir/utils/Drawer.dart';
-import 'package:pahir/utils/PdfViewer.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/Bloc/message/app_messages_view.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/Screen/BGVideoPlayerView.dart';
+import 'package:ACI/Screen/my_home_page_DMK.dart';
+import 'package:ACI/Screen/myhomepage.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/main.dart';
+import 'package:ACI/unreadchat/Controllers/firebaseController.dart';
+import 'package:ACI/unreadchat/Controllers/utils.dart';
+import 'package:ACI/unreadchat/chatlist.dart';
+import 'package:ACI/unreadchat/chatroom.dart';
+import 'package:ACI/unreadchat/chatroom_Group.dart';
+import 'package:ACI/unreadchat/fullphoto.dart';
+import 'package:ACI/utils/Drawer.dart';
+import 'package:ACI/utils/PdfViewer.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -355,25 +355,25 @@ class _MydashboardState extends State<Mydashboard> {
                     MaterialPageRoute(builder: (context) => AppMessagesView()));
               },
             ),
-            GestureDetector(
-              child: Padding(
-                  padding: EdgeInsets.only(right: 13),
-                  child: CircleAvatar(
-                    child: Icon(
-                      Icons.add,
-                      size: 18,
-                    ),
-                    radius: 12,
-                    backgroundColor: AppColors.APP_LIGHT_BLUE_30,
-                    foregroundColor: AppColors.APP_BLUE,
-                  )),
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => AddResorce()),
-                  (Route<dynamic> route) => false,
-                );
-              },
-            )
+            // GestureDetector(
+            //   child: Padding(
+            //       padding: EdgeInsets.only(right: 13),
+            //       child: CircleAvatar(
+            //         child: Icon(
+            //           Icons.add,
+            //           size: 18,
+            //         ),
+            //         radius: 12,
+            //         backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+            //         foregroundColor: AppColors.APP_BLUE,
+            //       )),
+            //   onTap: () {
+            //     Navigator.of(context).pushAndRemoveUntil(
+            //       MaterialPageRoute(builder: (context) => AddResorce()),
+            //       (Route<dynamic> route) => false,
+            //     );
+            //   },
+            // )
           ],
         ),
         drawer: IShareAppDrawer(),

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pahir/data/api/repository/LoginRepo.dart';
+import 'package:ACI/data/api/repository/LoginRepo.dart';
 
 part 'login_event.dart';
 
@@ -16,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is Login) {
-      yield OTPVerifyLoading();
+      emit( OTPVerifyLoading());
       LoginRepo loginRepo = LoginRepo();
       var res = await loginRepo.askForOTP(countryCode: event.countrycode, phoneNo: event.mobile);
       yield LoginSuccess(res);

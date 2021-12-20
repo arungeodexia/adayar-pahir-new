@@ -4,10 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_strings.dart';
-import 'package:pahir/utils/values/app_styles.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_strings.dart';
+import 'package:ACI/utils/values/app_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -95,7 +95,7 @@ class SplashState extends State<SplashView>
             children: [
               Image(
                //image: AssetImage("images/ishare_logo_transparent.png"),
-                image: tr('appname').toString()=='Pahir'?AssetImage("images/pahir_logo_transparent.png"):AssetImage("images/pahir_logo_transparent.png"),
+                image: tr('appname').toString()=='ACI'?AssetImage("images/pahir_logo_transparent.png"):AssetImage("images/pahir_logo_transparent.png"),
                 width: _iconAnimation.value * 180,
                 height: _iconAnimation.value * 180,
               ),

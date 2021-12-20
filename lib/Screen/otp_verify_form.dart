@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pahir/Bloc/login/login_bloc.dart';
-import 'package:pahir/Screen/edit_profile_view.dart';
-import 'package:pahir/Screen/mydashboard.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/login/login_bloc.dart';
+import 'package:ACI/Screen/edit_profile_view.dart';
+import 'package:ACI/Screen/mydashboard.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

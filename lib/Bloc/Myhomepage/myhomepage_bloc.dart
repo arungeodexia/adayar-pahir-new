@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pahir/Model/add_resource_model.dart';
-import 'package:pahir/Model/resources.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/Model/add_resource_model.dart';
+import 'package:ACI/Model/resources.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
 import 'package:http/http.dart' as http;
 
 part 'myhomepage_event.dart';

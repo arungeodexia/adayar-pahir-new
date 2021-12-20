@@ -4,13 +4,13 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Model/PrivacyModel.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/PrivacyModel.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -282,7 +282,7 @@ class privacycontrolstate extends State<Privacy_Control> {
                       'images/ishare_logo.png',
                     ),
                   ),
-                  title: Text("Pahir Chat ",
+                  title: Text("ACI Chat ",
                       style: TextStyle(
                           color: AppColors.APP_BLACK,
                           fontWeight: FontWeight.w700,

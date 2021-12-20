@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pahir/Model/ContentModel.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/DropZoneWidget.dart';
-import 'package:pahir/utils/DroppedFileWidget.dart';
-import 'package:pahir/utils/values/app_colors.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/ContentModel.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/DropZoneWidget.dart';
+import 'package:ACI/utils/DroppedFileWidget.dart';
+import 'package:ACI/utils/values/app_colors.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -648,8 +648,8 @@ try{
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     //-------Send request
     var resp = await request.send();

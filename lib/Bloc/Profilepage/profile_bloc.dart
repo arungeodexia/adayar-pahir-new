@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/api/repository/ProfileRepo.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/api/repository/ProfileRepo.dart';
 import 'package:http/http.dart' as http;
 
 part 'profile_event.dart';

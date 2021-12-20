@@ -5,23 +5,23 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
-import 'package:pahir/Bloc/message/message_model_class.dart';
+import 'package:ACI/Bloc/message/message_model_class.dart';
 
-import 'package:pahir/Model/AddUpdateReviewModel.dart';
-import 'package:pahir/Model/AddUpdtReviewRespModel.dart';
-import 'package:pahir/Model/ChannelModel.dart';
-import 'package:pahir/Model/ChannelModel.dart';
-import 'package:pahir/Model/ChannelModel.dart';
-import 'package:pahir/Model/ContentModel.dart';
-import 'package:pahir/Model/PrivacyModel.dart';
-import 'package:pahir/Model/ResourceSearchNew.dart';
-import 'package:pahir/Model/ResourceSearchNew.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/Model/resources.dart';
-import 'package:pahir/Model/skill_item.dart';
-import 'package:pahir/data/api/repository/api_intercepter.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Model/AddUpdateReviewModel.dart';
+import 'package:ACI/Model/AddUpdtReviewRespModel.dart';
+import 'package:ACI/Model/ChannelModel.dart';
+import 'package:ACI/Model/ChannelModel.dart';
+import 'package:ACI/Model/ChannelModel.dart';
+import 'package:ACI/Model/ContentModel.dart';
+import 'package:ACI/Model/PrivacyModel.dart';
+import 'package:ACI/Model/ResourceSearchNew.dart';
+import 'package:ACI/Model/ResourceSearchNew.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/Model/resources.dart';
+import 'package:ACI/Model/skill_item.dart';
+import 'package:ACI/data/api/repository/api_intercepter.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
@@ -211,8 +211,8 @@ class ResourceRepo {
         if (at != null) {
           request.headers["Authorization"] = "Bearer " + at;
           request.headers["userFingerprintHash"] = uph!;
-          request.headers["appcode"] = "100000";
-          request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+          request.headers["appcode"] = "700000";
+          request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
         }
         var response = await request.send();
 
@@ -360,8 +360,8 @@ class ResourceRepo {
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     request.files.add(multipartFile);
     var response = await request.send();
@@ -390,8 +390,8 @@ class ResourceRepo {
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "100000";
-      request.headers["licensekey"] = "90839e11-bdce-4bc1-90af-464986217b9a";
+      request.headers["appcode"] = "700000";
+      request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
       request.headers["pahiruserauth"] = pahirAuthHeader!;
     }
     request.files.add(multipartFile);

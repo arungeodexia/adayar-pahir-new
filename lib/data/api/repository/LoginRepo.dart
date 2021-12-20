@@ -8,13 +8,13 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pahir/Bloc/user/user_repository.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/Model/device_info_model.dart';
-import 'package:pahir/data/api/repository/ProfileRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/data/sp/shared_keys.dart';
-import 'package:pahir/utils/values/app_strings.dart';
+import 'package:ACI/Bloc/user/user_repository.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/Model/device_info_model.dart';
+import 'package:ACI/data/api/repository/ProfileRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/values/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -80,8 +80,8 @@ class LoginRepo{
         'Content-type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         "Access-Control-Expose-Headers": "*",
-        'appcode': '100000',
-        'licensekey': '90839e11-bdce-4bc1-90af-464986217b9a',
+        'appcode': '700000',
+        'licensekey': '33783ui7-hepf-3698-tbk9-so69eq185173',
 
         'Authorization': "Bearer " +createEditProfileModel.accessToken!,
         'userFingerprintHash': createEditProfileModel.userFingerprintHash!

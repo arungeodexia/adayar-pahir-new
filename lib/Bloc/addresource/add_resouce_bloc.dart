@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pahir/Model/AddUpdateReviewModel.dart';
-import 'package:pahir/Model/resources.dart';
-import 'package:pahir/Model/skill_item.dart';
-import 'package:pahir/data/api/repository/ResourceRepo.dart';
+import 'package:ACI/Model/AddUpdateReviewModel.dart';
+import 'package:ACI/Model/resources.dart';
+import 'package:ACI/Model/skill_item.dart';
+import 'package:ACI/data/api/repository/ResourceRepo.dart';
 import 'package:http/http.dart' as http;
 
 part 'add_resouce_event.dart';

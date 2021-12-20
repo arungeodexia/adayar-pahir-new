@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pahir/Model/AddchatnewModel.dart';
-import 'package:pahir/Model/GroupchatMembersModel.dart';
-import 'package:pahir/Model/create_edit_profile_model.dart';
-import 'package:pahir/data/api/repository/ChatRepo.dart';
-import 'package:pahir/data/globals.dart';
-import 'package:pahir/utils/Uploadchat.dart';
-import 'package:pahir/utils/values/app_colors.dart';
+import 'package:ACI/Model/AddchatnewModel.dart';
+import 'package:ACI/Model/GroupchatMembersModel.dart';
+import 'package:ACI/Model/create_edit_profile_model.dart';
+import 'package:ACI/data/api/repository/ChatRepo.dart';
+import 'package:ACI/data/globals.dart';
+import 'package:ACI/utils/Uploadchat.dart';
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProfileView extends StatefulWidget {

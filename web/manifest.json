@@ -1,11 +1,11 @@
 {
-    "name": "pahir",
-    "short_name": "pahir",
+    "name": "ACI",
+    "short_name": "ACI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Pahir",
+    "description": "ACI",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

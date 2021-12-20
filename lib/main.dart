@@ -8,26 +8,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pahir/Bloc/Myhomepage/myhomepage_bloc.dart';
-import 'package:pahir/Bloc/Myhomepage/myhomepage_bloc.dart';
-import 'package:pahir/Bloc/Profilepage/profile_bloc.dart';
-import 'package:pahir/Bloc/Profilepage/profile_bloc.dart';
-import 'package:pahir/Bloc/Resorceview/resource_view_bloc.dart';
-import 'package:pahir/Bloc/addresource/add_resouce_bloc.dart';
-import 'package:pahir/Bloc/login/login_bloc.dart';
-import 'package:pahir/Bloc/login/login_bloc.dart';
-import 'package:pahir/Bloc/login/signin_mobile_view.dart';
-import 'package:pahir/Bloc/message/app_messages_bloc.dart';
-import 'package:pahir/Bloc/user/auth.dart';
-import 'package:pahir/Bloc/user/auth.dart';
-import 'package:pahir/Bloc/user/user_repository.dart';
-import 'package:pahir/Screen/edit_profile_view.dart';
-import 'package:pahir/Screen/login_init_view.dart';
-import 'package:pahir/Screen/mydashboard.dart';
-import 'package:pahir/Screen/splash_view.dart';
-import 'package:pahir/SimpleBlocObserver.dart';
-import 'package:pahir/Auth_bloc.dart';
-import 'package:pahir/data/globals.dart';
+import 'package:ACI/Bloc/Myhomepage/myhomepage_bloc.dart';
+import 'package:ACI/Bloc/Myhomepage/myhomepage_bloc.dart';
+import 'package:ACI/Bloc/Profilepage/profile_bloc.dart';
+import 'package:ACI/Bloc/Profilepage/profile_bloc.dart';
+import 'package:ACI/Bloc/Resorceview/resource_view_bloc.dart';
+import 'package:ACI/Bloc/addresource/add_resouce_bloc.dart';
+import 'package:ACI/Bloc/login/login_bloc.dart';
+import 'package:ACI/Bloc/login/login_bloc.dart';
+import 'package:ACI/Bloc/login/signin_mobile_view.dart';
+import 'package:ACI/Bloc/message/app_messages_bloc.dart';
+import 'package:ACI/Bloc/user/auth.dart';
+import 'package:ACI/Bloc/user/auth.dart';
+import 'package:ACI/Bloc/user/user_repository.dart';
+import 'package:ACI/Screen/edit_profile_view.dart';
+import 'package:ACI/Screen/login_init_view.dart';
+import 'package:ACI/Screen/mydashboard.dart';
+import 'package:ACI/Screen/splash_view.dart';
+import 'package:ACI/SimpleBlocObserver.dart';
+import 'package:ACI/Auth_bloc.dart';
+import 'package:ACI/data/globals.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -52,7 +52,7 @@ void main() async {
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
-      'This channel is used for important notifications.', // description
+      // 'This channel is used for important notifications.', // description
       importance: Importance.high,
     );
 
@@ -76,6 +76,10 @@ void main() async {
       sound: true,
     );
   }
+  // BlocOverrides.runZoned(
+  //       () => runApp( MyApp()),
+  //   blocObserver: SimpleBlocObserver(),
+  // );
   runApp(MyApp());
 }
 
@@ -89,7 +93,7 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
           providers: _multiBlocProviders(),
           child: MaterialApp(
-            title: 'Pahir',
+            title: 'ACI',
             home: Auth(),
           )),
     );
