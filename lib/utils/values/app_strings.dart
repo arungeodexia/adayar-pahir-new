@@ -340,6 +340,8 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 
   static const String RESOURCE_FAVORITE_SUB_TITLE = "Your go-to crew!";
 
+  static const String SURVEY_SUB_TITLE = "Survey";
+
   static const String RESOURCE_FAVORITE_LIST_TITLE = "Favorites";
 
   //--------------------------------------------------- APP FeedBack -----------------------------------------------------------------------------------------

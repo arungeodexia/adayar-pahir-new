@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ACI/Screen/surveymenu.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -75,7 +76,7 @@ class _MydashboardState extends State<Mydashboard> {
     if (index == 0)
       appBloc.updateTitle('Home');
     else if (index == 1)
-      appBloc.updateTitle('Groups');
+      appBloc.updateTitle('Tasks');
     else if (index == 2)
       appBloc.updateTitle('Favourites');
     else if (index == 3)
@@ -398,15 +399,15 @@ class _MydashboardState extends State<Mydashboard> {
             ),
             BottomNavigationBarItem(
               icon: new Icon(
-                Icons.group_outlined,
+                Icons.volunteer_activism,
                 color: AppColors.APP_LIGHT_GREY,
               ),
               activeIcon: new Icon(
-                Icons.group,
+                Icons.volunteer_activism,
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(
-                'Groups',
+                'Tasks',
                 style: TextStyle(color: AppColors.APP_BLUE),
               ),
             ),
@@ -477,7 +478,7 @@ class _MydashboardState extends State<Mydashboard> {
 
   final List<Widget> _children = [
     Myhomepage(),
-    MyHomePageDMK(),
+    Surveymenu(),
     FavouritesPage(),
     ChatList(globalPhoneNo, 'name'),
   ];

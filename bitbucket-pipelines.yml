@@ -2,7 +2,7 @@ image: cirrusci/flutter
 
 pipelines:
   branches:
-    master:
+    masternew:
       - step:
           name: Build APK
           script:
