@@ -305,7 +305,7 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
 //  static const String CONTACT_ACCESS_SCREEN__CONTENT = " Once you started recommending services and resources that you came across they will be shared among your connections.You can remove your recommendations at any time.";
 
 
-  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "ACI will now find what your friends recommended to you. ACI will do this by checking the phone numbers in your contacts. We can serve you better only if we know your friends.";
+  static const String CONTACT_ACCESS_SCREEN_SUB_TITLE = "The Cancer Institute (WIA) is a public charitable voluntary institute dedicated to the care of cancer for the last 60 years. The ethos of the Cancer Institute (WIA) is service to all irrespective of social or economical class";
 
   static const String CONTACT_ACCESS_SCREEN_NAME_LIST = "You can start recommending people and services after this step. Remember, your recommendations are valued high by your connections. You can remove your recommendations at any time.";
 

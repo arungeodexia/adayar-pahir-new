@@ -31,7 +31,22 @@ class SurveyRepo {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       http.Response response = await client.get(
           Uri.parse(
-              '${AppStrings.BASE_URL}api/v1/survey/user/1/surveys'),
+              '${AppStrings.BASE_URL}api/v1/survey/user/1/questions'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> getSurveyDetails(String questionid) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.get(
+          Uri.parse(
+              '${AppStrings.BASE_URL}api/v1/survey/user/1/question/${questionid}'),
            );
       log(response.body);
       print(response.request!.headers);
