@@ -15,9 +15,9 @@ class SurveyDetailsModel {
   Question? get question => _question;
 
   SurveyDetailsModel({
-      int? userId, 
-      String? userName, 
-      String? topText, 
+      int? userId,
+      String? userName,
+      String? topText,
       Question? question}){
     _userId = userId;
     _userName = userName;
@@ -82,15 +82,15 @@ class Question {
   bool? get hasPrevious => _hasPrevious;
 
   Question({
-      int? templateid, 
-      int? questionId, 
-      String? question, 
-      String? questionType, 
-      String? url, 
-      String? answerType, 
-      List<Choices>? choices, 
-      bool? consolidateOptions, 
-      bool? hasNext, 
+      int? templateid,
+      int? questionId,
+      String? question,
+      String? questionType,
+      String? url,
+      String? answerType,
+      List<Choices>? choices,
+      bool? consolidateOptions,
+      bool? hasNext,
       bool? hasPrevious}){
     _templateid = templateid;
     _questionId = questionId;
@@ -182,13 +182,13 @@ class Choices {
   bool? get hasPrevious => _hasPrevious;
 
   Choices({
-      int? questionId, 
-      String? question, 
-      String? questionType, 
-      dynamic? url, 
-      String? answerType, 
-      List<Options>? options, 
-      bool? hasNext, 
+      int? questionId,
+      String? question,
+      String? questionType,
+      dynamic? url,
+      String? answerType,
+      List<Options>? options,
+      bool? hasNext,
       bool? hasPrevious}){
     _questionId = questionId;
     _question = question;
@@ -241,17 +241,23 @@ class Options {
   dynamic? _optionId;
   String? _option;
   dynamic? _url;
+  int? _select=-1;
 
   String? get optionId => _optionId;
   String? get option => _option;
+  int? get select => _select;
   dynamic? get url => _url;
 
+  set selct(int val) => _select = val; // optionally perform validation, etc
+
   Options({
-      String? optionId, 
-      String? option, 
+      String? optionId,
+      String? option,
+      int? select,
       dynamic? url}){
     _optionId = optionId;
     _option = option;
+    _select = select;
     _url = url;
 }
 

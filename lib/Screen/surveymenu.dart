@@ -82,7 +82,7 @@ class _SurveymenuState extends State<Surveymenu> {
                     new CircleAvatar(
                         radius: 25.0,
                         backgroundColor: const Color(0xFF778899),
-                        backgroundImage: userImage != 'null'
+                        backgroundImage: userImage.toString()!="null"&&userImage != ""
                             ? NetworkImage(userImage.toString())
                             : AssetImage("images/photo_avatar.png")
                                 as ImageProvider),
