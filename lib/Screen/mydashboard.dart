@@ -399,11 +399,11 @@ class _MydashboardState extends State<Mydashboard> {
             ),
             BottomNavigationBarItem(
               icon: new Icon(
-                Icons.volunteer_activism,
+                Icons.task,
                 color: AppColors.APP_LIGHT_GREY,
               ),
               activeIcon: new Icon(
-                Icons.volunteer_activism,
+                Icons.task,
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(
@@ -423,40 +423,40 @@ class _MydashboardState extends State<Mydashboard> {
               title: new Text('Favourites',
                   style: TextStyle(color: AppColors.APP_BLUE)),
             ),
-            BottomNavigationBarItem(
-              icon: unreads == '1'
-                  ? new Stack(children: <Widget>[
-                      new Icon(Icons.message),
-                      new Positioned(
-                        // draw a red marble
-                        top: 0.0,
-                        right: 0.0,
-                        child: new Icon(Icons.brightness_1,
-                            size: 12.0, color: Colors.redAccent),
-                      )
-                    ])
-                  : new Icon(
-                      Icons.message,
-                      color: AppColors.APP_LIGHT_GREY,
-                    ),
-              activeIcon: unreads == '1'
-                  ? new Stack(children: <Widget>[
-                      new Icon(Icons.message),
-                      new Positioned(
-                        // draw a red marble
-                        top: 0.0,
-                        right: 0.0,
-                        child: new Icon(Icons.brightness_1,
-                            size: 12.0, color: Colors.redAccent),
-                      )
-                    ])
-                  : new Icon(
-                      Icons.message,
-                      color: AppColors.APP_BLUE,
-                    ),
-              title:
-                  new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
-            )
+            // BottomNavigationBarItem(
+            //   icon: unreads == '1'
+            //       ? new Stack(children: <Widget>[
+            //           new Icon(Icons.message),
+            //           new Positioned(
+            //             // draw a red marble
+            //             top: 0.0,
+            //             right: 0.0,
+            //             child: new Icon(Icons.brightness_1,
+            //                 size: 12.0, color: Colors.redAccent),
+            //           )
+            //         ])
+            //       : new Icon(
+            //           Icons.message,
+            //           color: AppColors.APP_LIGHT_GREY,
+            //         ),
+            //   activeIcon: unreads == '1'
+            //       ? new Stack(children: <Widget>[
+            //           new Icon(Icons.message),
+            //           new Positioned(
+            //             // draw a red marble
+            //             top: 0.0,
+            //             right: 0.0,
+            //             child: new Icon(Icons.brightness_1,
+            //                 size: 12.0, color: Colors.redAccent),
+            //           )
+            //         ])
+            //       : new Icon(
+            //           Icons.message,
+            //           color: AppColors.APP_BLUE,
+            //         ),
+            //   title:
+            //       new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
+            // )
             // BottomNavigationBarItem(
             //   icon: new Icon(
             //     Icons.chat_bubble_outline,
@@ -480,7 +480,7 @@ class _MydashboardState extends State<Mydashboard> {
     Myhomepage(),
     Surveymenu(),
     FavouritesPage(),
-    ChatList(globalPhoneNo, 'name'),
+    // ChatList(globalPhoneNo, 'name'),
   ];
 
   void messageHdlrForAndroid(Map<String, dynamic> message, bool bool) async {

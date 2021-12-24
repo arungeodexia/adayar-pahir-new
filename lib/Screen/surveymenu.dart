@@ -69,54 +69,54 @@ class _SurveymenuState extends State<Surveymenu> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 25,
-                top: 20,
-                right: 20,
-                bottom: 10,
-              ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new CircleAvatar(
-                        radius: 25.0,
-                        backgroundColor: const Color(0xFF778899),
-                        backgroundImage: userImage.toString()!="null"&&userImage != ""
-                            ? NetworkImage(userImage.toString())
-                            : AssetImage("images/photo_avatar.png")
-                                as ImageProvider),
-                    SizedBox(width: 10),
-                    new Expanded(
-                        child: Text(username == null ? "" : username.trim(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)))
-                  ]),
-            ),
-            Visibility(
-              visible:  true,
-              //visible:isMyResVisible,
-              child: Padding(
-                padding: EdgeInsets.only(top: 7, bottom: 7),
-                child: Container(
-                    padding: const EdgeInsets.only(
-                      left: 45,
-                      top: 7,
-                      right: 45,
-                      bottom: 7,
-                    ),
-                    decoration: BoxDecoration(
-                        color: AppColors.APP_LIGHT_GREY_10,
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(16.0),
-                            topRight: Radius.circular(16.0))),
-                    child: Text(
-                      AppStrings.SURVEY_SUB_TITLE,
-                      style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                    )),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     left: 25,
+            //     top: 20,
+            //     right: 20,
+            //     bottom: 10,
+            //   ),
+            //   child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: <Widget>[
+            //         new CircleAvatar(
+            //             radius: 25.0,
+            //             backgroundColor: const Color(0xFF778899),
+            //             backgroundImage: userImage.toString()!="null"&&userImage != ""
+            //                 ? NetworkImage(userImage.toString())
+            //                 : AssetImage("images/photo_avatar.png")
+            //                     as ImageProvider),
+            //         SizedBox(width: 10),
+            //         new Expanded(
+            //             child: Text(username == null ? "" : username.trim(),
+            //                 style: TextStyle(
+            //                     fontWeight: FontWeight.bold, fontSize: 20)))
+            //       ]),
+            // ),
+            // Visibility(
+            //   visible:  true,
+            //   //visible:isMyResVisible,
+            //   child: Padding(
+            //     padding: EdgeInsets.only(top: 7, bottom: 7),
+            //     child: Container(
+            //         padding: const EdgeInsets.only(
+            //           left: 45,
+            //           top: 7,
+            //           right: 45,
+            //           bottom: 7,
+            //         ),
+            //         decoration: BoxDecoration(
+            //             color: AppColors.APP_LIGHT_GREY_10,
+            //             borderRadius: BorderRadius.only(
+            //                 bottomRight: Radius.circular(16.0),
+            //                 topRight: Radius.circular(16.0))),
+            //         child: Text(
+            //           AppStrings.SURVEY_SUB_TITLE,
+            //           style:
+            //           TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            //         )),
+            //   ),
+            // ),
             isload
                 ? Expanded(child: buildLoading())
                 : Expanded(
@@ -152,7 +152,7 @@ class _SurveymenuState extends State<Surveymenu> {
                                     "${index + 1} ",
                                   style: TextStyle(
                                       fontFamily: "OpenSans",
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                   color: Colors.white
                                   ),
@@ -166,7 +166,7 @@ class _SurveymenuState extends State<Surveymenu> {
                                   maxLines: 3,
                                   style: TextStyle(
                                       fontFamily: "OpenSans",
-                                      fontSize: 14,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w700),
                                 ),
                             ),
