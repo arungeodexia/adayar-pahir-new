@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ACI/Screen/MyHomePageACI.dart';
 import 'package:ACI/Screen/surveymenu.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -71,6 +72,9 @@ class _MydashboardState extends State<Mydashboard> {
 
   DateTime? currentBackPressTime;
   late CreateEditProfileModel createEditProfileModel;
+  String username = "";
+
+  String userImage = "";
 
   void onTabTapped(int index) {
     if (index == 0)
@@ -117,6 +121,13 @@ class _MydashboardState extends State<Mydashboard> {
         .decode(prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString());
     createEditProfileModel =
         CreateEditProfileModel.fromJson(resourceDetailsResponse);
+    setState(() {
+      username = resourceDetailsResponse['firstName'];
+      globalCurrentUserMobileNo = resourceDetailsResponse['mobile'];
+      globalCurrentUserId = resourceDetailsResponse['id'];
+      userImage = resourceDetailsResponse['profilePicture'];
+      print(userImage);
+    });
 
     FirebaseController.instanace
         .saveUserDataToFirebaseDatabase(
@@ -342,39 +353,38 @@ class _MydashboardState extends State<Mydashboard> {
               }),
           centerTitle: true,
           actions: <Widget>[
-            GestureDetector(
-              child: Padding(
-                  padding: EdgeInsets.only(right: 18),
-                  child: CircleAvatar(
-                    child: Icon(Icons.notifications),
-                    radius: 12,
-                    backgroundColor: AppColors.APP_LIGHT_BLUE_30,
-                    foregroundColor: AppColors.APP_BLUE,
-                  )),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => AppMessagesView()));
-              },
-            ),
             // GestureDetector(
             //   child: Padding(
-            //       padding: EdgeInsets.only(right: 13),
+            //       padding: EdgeInsets.only(right: 18),
             //       child: CircleAvatar(
-            //         child: Icon(
-            //           Icons.add,
-            //           size: 18,
-            //         ),
+            //         child: Icon(Icons.notifications),
             //         radius: 12,
             //         backgroundColor: AppColors.APP_LIGHT_BLUE_30,
             //         foregroundColor: AppColors.APP_BLUE,
             //       )),
             //   onTap: () {
-            //     Navigator.of(context).pushAndRemoveUntil(
-            //       MaterialPageRoute(builder: (context) => AddResorce()),
-            //       (Route<dynamic> route) => false,
-            //     );
+            //     Navigator.of(context).push(
+            //         MaterialPageRoute(builder: (context) => AppMessagesView()));
             //   },
-            // )
+            // ),
+           GestureDetector(
+              child: Container(
+                margin: EdgeInsets.all(8),
+                child: CircleAvatar(
+                    radius: 25.0,
+                    backgroundColor: const Color(0xFF778899),
+                    backgroundImage:  userImage.toString()!="null"&&userImage != ""
+                        ? NetworkImage(userImage.toString())
+                        : AssetImage("images/photo_avatar.png") as ImageProvider),
+              ),
+
+        onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => AddResorce()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            )
           ],
         ),
         drawer: IShareAppDrawer(),
@@ -477,7 +487,7 @@ class _MydashboardState extends State<Mydashboard> {
   }
 
   final List<Widget> _children = [
-    Myhomepage(),
+    MyHomePageACI(),
     Surveymenu(),
     FavouritesPage(),
     // ChatList(globalPhoneNo, 'name'),

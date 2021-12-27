@@ -96,8 +96,8 @@ class SplashState extends State<SplashView>
               Image(
                //image: AssetImage("images/ishare_logo_transparent.png"),
                 image: tr('appname').toString()=='ACI'?AssetImage("images/pahir_logo_transparent.png"):AssetImage("images/pahir_logo_transparent.png"),
-                width: _iconAnimation.value * 180,
-                height: _iconAnimation.value * 180,
+                // width: _iconAnimation.value * 180,
+                // height: _iconAnimation.value * 180,
               ),
               SizedBox(height: 10,),
               Text(AppStrings.APP_NAME,style: TextStyle(fontSize: 18, color: Colors.white),),

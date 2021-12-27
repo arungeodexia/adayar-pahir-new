@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ACI/Model/SurveyModel.dart';
 import 'package:ACI/Model/survey_details_model.dart';
+import 'package:ACI/Screen/ScreenCheckSuccess.dart';
 import 'package:ACI/data/api/repository/SurveyRepo.dart';
 import 'package:ACI/data/globals.dart';
 import 'package:ACI/data/sp/shared_keys.dart';
@@ -11,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
@@ -156,51 +158,89 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //     left: 0,
+                  //     top: 20,
+                  //     right: 0,
+                  //     bottom: 10,
+                  //   ),
+                  //   child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: <Widget>[
+                  //         new CircleAvatar(
+                  //             radius: 25.0,
+                  //             backgroundColor: const Color(0xFF778899),
+                  //             backgroundImage: userImage.toString() != "null" &&
+                  //                     userImage != ""
+                  //                 ? NetworkImage(userImage.toString())
+                  //                 : AssetImage("images/photo_avatar.png")
+                  //                     as ImageProvider),
+                  //         SizedBox(width: 10),
+                  //         new Expanded(
+                  //             child: Text(
+                  //                 username == null
+                  //                     ? ""
+                  //                     : "Hi " + username.trim(),
+                  //                 style: TextStyle(
+                  //                     fontWeight: FontWeight.bold,
+                  //                     fontSize: 17)))
+                  //       ]),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //     left: 10,
+                  //     top: 7,
+                  //     right: 15,
+                  //     bottom: 15,
+                  //   ),
+                  //   child: Text(
+                  //     surveyDetailsModel.topText.toString(),
+                  //     overflow: TextOverflow.ellipsis,
+                  //     softWrap: false,
+                  //     maxLines: 3,
+                  //     style: TextStyle(
+                  //         fontFamily: "OpenSans",
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.w500),
+                  //   ),
+                  // ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 0,
-                      top: 20,
-                      right: 0,
-                      bottom: 10,
+                    padding: EdgeInsets.all(15.0),
+                    child: new LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width/1.3,
+                      animation: true,
+                      animationDuration: 1000,
+                      lineHeight: 20.0,
+                      leading: new Text(""),
+                      trailing: new Text(""),
+                      percent: 0.45,
+                      center: Text(""),
+                      linearStrokeCap: LinearStrokeCap.roundAll,
+                      progressColor: AppColors.APP_LIGHT_BLUE,
                     ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new CircleAvatar(
-                              radius: 25.0,
-                              backgroundColor: const Color(0xFF778899),
-                              backgroundImage: userImage.toString() != "null" &&
-                                      userImage != ""
-                                  ? NetworkImage(userImage.toString())
-                                  : AssetImage("images/photo_avatar.png")
-                                      as ImageProvider),
-                          SizedBox(width: 10),
-                          new Expanded(
-                              child: Text(
-                                  username == null
-                                      ? ""
-                                      : "Hi " + username.trim(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17)))
-                        ]),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      top: 7,
-                      right: 15,
-                      bottom: 15,
-                    ),
-                    child: Text(
-                      surveyDetailsModel.topText.toString(),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 3,
-                      style: TextStyle(
-                          fontFamily: "OpenSans",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        top: 0,
+                        right: 30,
+                        bottom: 10,
+                      ),
+                      child: Text(
+
+                        "Screen Check Result will expires in 12 days",
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 3,
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                   Divider(
@@ -268,39 +308,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                         ),
                                 ],
                               ),
-                              // child: _controller.value.isInitialized
-                              //     ? SizedBox.expand(
-                              //         child: GestureDetector(
-                              //           onTap: () {
-                              //             if (_controller.value.isPlaying) {
-                              //               _controller.pause();
-                              //             } else {
-                              //               // If the video is paused, play it.
-                              //               _controller.play();
-                              //             }
-                              //             setState(() {});
-                              //           },
-                              //           child: FittedBox(
-                              //             //fit: BoxFit.cover,
-                              //             //fit: BoxFit.fitWidth,
-                              //             fit: BoxFit.contain,
-                              //             child: SizedBox(
-                              //               // width: (_controller.value.size?.width - 20.0) ?? 0,
-                              //               //height: size.height -10.0 ?? 0,
-                              //               // width: (size.width - 10.0) ?? 0,
-                              //
-                              //               height: 600,
-                              //               width:
-                              //                   (_controller.value.size.width -
-                              //                       200),
-                              //               child: VideoPlayer(_controller),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       )
-                              //     : Center(
-                              //         child: CircularProgressIndicator(),
-                              //       ),
+
                             )
                           : Container(),
                   surveyDetailsModel.question!.options == null
@@ -312,12 +320,13 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             surveyDetailsModel.question!.answerType == "radio"
                                 ? Center(
                                     child: Container(
-                                      margin: EdgeInsets.only(top: 5),
-                                      height: 200.0,
+                                      margin: EdgeInsets.only(top: 20),
+                                      // height: 200.0,
                                       // width: 150,
-                                      child: ListView.builder(
+                                      child:
+                                      ListView.builder(
                                         shrinkWrap: true,
-                                        scrollDirection: Axis.horizontal,
+                                        scrollDirection: Axis.vertical,
                                           physics: NeverScrollableScrollPhysics(),
                                           // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                           itemCount: surveyDetailsModel
@@ -342,10 +351,9 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                 });
                                               },
                                               child: Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                padding: EdgeInsets.all(5),
+                                                child: Row(
+
                                                   children: [
 
                                                     CachedNetworkImage(
@@ -377,19 +385,22 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       width: 50,
                                                       height: 10,
                                                     ),
-                                                    Text(
-                                                      surveyDetailsModel
-                                                          .question!
-                                                          .options![index]
-                                                          .option!,
-                                                      style: TextStyle(
-                                                          fontFamily: "OpenSans",
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black),
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width/2.8,
+                                                      child: Text(
+                                                        surveyDetailsModel
+                                                            .question!
+                                                            .options![index]
+                                                            .option!,
+                                                        style: TextStyle(
+                                                            fontFamily: "OpenSans",
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black),
+                                                      ),
                                                     ),
-                                                    SizedBox(height: 20,),
+                                                    SizedBox(width: 20,),
 
                                                     Image.asset(
                                                       surveyDetailsModel
@@ -659,16 +670,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             padding: EdgeInsets.all(8.0),
                             onPressed: () async {
                               if (isFullNameChangeBtnState) {
-                                CoolAlert.show(
-                                    context: context,
-                                    type: CoolAlertType.success,
-                                    text: "Submitted successfully",
-                                    title: "Success",
-                                    loopAnimation: true,
-                                    onConfirmBtnTap: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                    });
+                                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheckSuccess(
+
+                                )),)
+                                    .then((val)=>getsurvey());
+
+                                // CoolAlert.show(
+                                //     context: context,
+                                //     type: CoolAlertType.success,
+                                //     text: "Submitted successfully",
+                                //     title: "Success",
+                                //     loopAnimation: true,
+                                //     onConfirmBtnTap: () {
+                                //       Navigator.of(context).pop();
+                                //       Navigator.of(context).pop();
+                                //     });
                               }
                             },
                             child: Padding(
