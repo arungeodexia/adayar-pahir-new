@@ -78,7 +78,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                 ),
                 child: Center(
                   child:
-                  Lottie.asset('assets/success.json'),
+                  Lottie.asset('assets/success.json',repeat: false),
                 ),
               ),
               Center(
@@ -153,7 +153,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     child: Text(
                       "All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w200,
                         fontSize: 16,
                       ),
                     )),
@@ -185,16 +185,12 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                                 onPressed: () async {
                                   Navigator.of(context).pop();
                                   Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                  // Navigator.of(context).pop();
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10),
                                     child: Text(
-                                      (widget != null)
-                                          ? "Ok"
-                                          : "Ok",
+                                      "OK",
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),

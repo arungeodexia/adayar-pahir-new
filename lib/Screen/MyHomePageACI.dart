@@ -81,7 +81,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                 bottom: 15,
               ),
               child: Text(
-                "You have an scheduled appointment on January 8,2022 at 3:20 PM at the Adayar Cancer Institute",
+                "You have a scheduled appointment on January 8,2022 at 3:20 PM at the Adayar Cancer Institute",
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
                 maxLines: 3,
@@ -130,6 +130,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                     return Card(
                       color: AppColors.APP_LIGHT_BLUE,
                       child: ListTile(
+
                         onTap: (){
                           Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
 
@@ -143,7 +144,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                             color: AppColors.APP_WHITE)
                         ),
                         trailing:
-                        Text(index==0?'65 ':'10', style:
+                        Text(index==0?'65%':'10%', style:
                         TextStyle(fontWeight: FontWeight.w500,
                             fontSize: 16,
                             color: AppColors.APP_WHITE)

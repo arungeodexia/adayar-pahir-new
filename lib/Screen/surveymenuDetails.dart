@@ -74,7 +74,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
             }));
       // await videoPlayerController.initialize();
 
-       chewieController = ChewieController(
+      chewieController = ChewieController(
         videoPlayerController: videoPlayerController,
         autoPlay: true,
         looping: true,
@@ -146,7 +146,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
         SingleChildScrollView(
           child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height-80,
+              height: MediaQuery.of(context).size.height - 80,
               padding: const EdgeInsets.only(
                 left: 25,
                 top: 7,
@@ -205,10 +205,39 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                   //         fontWeight: FontWeight.w500),
                   //   ),
                   // ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 1.1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 10,
+                          top: 10,
+                          right: 10,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          "CANCEL",
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                          maxLines: 3,
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.APP_LIGHT_BLUE),
+                        ),
+                      ),
+                    ),
+                  ),
+
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child: new LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width/1.3,
+                      width: MediaQuery.of(context).size.width / 1.3,
                       animation: true,
                       animationDuration: 1000,
                       lineHeight: 20.0,
@@ -221,7 +250,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width/1.1,
+                    width: MediaQuery.of(context).size.width / 1.1,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 10,
@@ -230,7 +259,6 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                         bottom: 10,
                       ),
                       child: Text(
-
                         "Screen Check Result will expires in 12 days",
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
@@ -308,7 +336,6 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                         ),
                                 ],
                               ),
-
                             )
                           : Container(),
                   surveyDetailsModel.question!.options == null
@@ -323,48 +350,47 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                       margin: EdgeInsets.only(top: 20),
                                       // height: 200.0,
                                       // width: 150,
-                                      child:
-                                      ListView.builder(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                          physics: NeverScrollableScrollPhysics(),
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                           itemCount: surveyDetailsModel
                                               .question!.options!.length,
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return GestureDetector(
-                                              onTap: (){
+                                              onTap: () {
                                                 isFullNameChangeBtnState = true;
-                                                for (int j = 0; j < surveyDetailsModel.question!.options!.length; j++) {
-                                                  surveyDetailsModel
-                                                      .question!
-                                                      .options![j]
-                                                      .selct = -1;
+                                                for (int j = 0;
+                                                    j <
+                                                        surveyDetailsModel
+                                                            .question!
+                                                            .options!
+                                                            .length;
+                                                    j++) {
+                                                  surveyDetailsModel.question!
+                                                      .options![j].selct = -1;
                                                 }
-                                                surveyDetailsModel
-                                                    .question!
-                                                    .options![index]
-                                                    .selct = 0;
-                                                setState(() {
-
-                                                });
+                                                surveyDetailsModel.question!
+                                                    .options![index].selct = 0;
+                                                setState(() {});
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.all(5),
                                                 child: Row(
-
                                                   children: [
-
                                                     CachedNetworkImage(
                                                       width: 50,
                                                       height: 50,
                                                       fit: BoxFit.fill,
-                                                      imageUrl: surveyDetailsModel
-                                                          .question!
-                                                          .options![index]
-                                                          .url
-                                                          .toString(),
+                                                      imageUrl:
+                                                          surveyDetailsModel
+                                                              .question!
+                                                              .options![index]
+                                                              .url
+                                                              .toString(),
                                                       placeholder:
                                                           (context, url) =>
                                                               Center(
@@ -374,9 +400,9 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                             child:
                                                                 new CircularProgressIndicator()),
                                                       ),
-                                                      errorWidget:
-                                                          (context, url, error) =>
-                                                              new Icon(
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          new Icon(
                                                         Icons.error,
                                                         size: 30,
                                                       ),
@@ -386,25 +412,38 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       height: 10,
                                                     ),
                                                     Container(
-                                                      width: MediaQuery.of(context).size.width/2.8,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              2.8,
                                                       child: Text(
                                                         surveyDetailsModel
                                                             .question!
                                                             .options![index]
                                                             .option!,
                                                         style: TextStyle(
-                                                            fontFamily: "OpenSans",
+                                                            fontFamily:
+                                                                "OpenSans",
                                                             fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            color: Colors.black),
+                                                            color:
+                                                                Colors.black),
                                                       ),
                                                     ),
-                                                    SizedBox(width: 20,),
-
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
                                                     Image.asset(
                                                       surveyDetailsModel
-                                                          .question!.options![index].select==0?'images/radioonbutton.png':'images/radiobutton.png',
+                                                                  .question!
+                                                                  .options![
+                                                                      index]
+                                                                  .select ==
+                                                              0
+                                                          ? 'images/radioonbutton.png'
+                                                          : 'images/radiobutton.png',
                                                       width: 25,
                                                       height: 25,
                                                     ),
@@ -503,11 +542,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                 child: Text(
                                                   i.option!,
                                                   style: TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      ),
+                                                    fontFamily: "OpenSans",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
                                           ],
@@ -517,8 +555,9 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                           height: 200.0,
                                           // width: 150,
                                           child: ListView.builder(
-                                            shrinkWrap: true,
-                                              physics: NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
                                               // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                                               itemCount: surveyDetailsModel
                                                   .question!.choices!.length,
@@ -526,14 +565,18 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                   (BuildContext context,
                                                       int index) {
                                                 return ListTile(
-                                                  title: Text(surveyDetailsModel
-                                                      .question!
-                                                      .choices![index]
-                                                      .question
-                                                      .toString(),                      style: TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 20,
-                                                      fontWeight: FontWeight.w500)),
+                                                  title: Text(
+                                                      surveyDetailsModel
+                                                          .question!
+                                                          .choices![index]
+                                                          .question
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                              "OpenSans",
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
                                                   trailing: Container(
                                                     width: 100,
                                                     child: ListView.builder(
@@ -550,26 +593,31 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                     context,
                                                                 int i) {
                                                           return GestureDetector(
-                                                            onTap: (){
+                                                            onTap: () {
                                                               setState(() {
                                                                 isFullNameChangeBtnState =
-                                                                true;
-                                                                for (int j =
-                                                                0;
-                                                                j < surveyDetailsModel.question!.choices![index].options!.length;
-                                                                j++) {
+                                                                    true;
+                                                                for (int j = 0;
+                                                                    j <
+                                                                        surveyDetailsModel
+                                                                            .question!
+                                                                            .choices![index]
+                                                                            .options!
+                                                                            .length;
+                                                                    j++) {
                                                                   surveyDetailsModel
                                                                       .question!
-                                                                      .choices![index]
-                                                                      .options![j]
+                                                                      .choices![
+                                                                          index]
+                                                                      .options![
+                                                                          j]
                                                                       .selct = -1;
                                                                 }
                                                                 surveyDetailsModel
                                                                     .question!
                                                                     .choices![
-                                                                index]
-                                                                    .options![
-                                                                i]
+                                                                        index]
+                                                                    .options![i]
                                                                     .selct = 0;
                                                               });
                                                             },
@@ -577,9 +625,16 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                               children: [
                                                                 // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
                                                                 Padding(
-                                                                  padding: const EdgeInsets.all(10.0),
-                                                                  child: Image.asset(
-                                                                    surveyDetailsModel.question!.choices![index].options![i].select==0?'images/radioonbutton.png':'images/radiobutton.png',
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          10.0),
+                                                                  child: Image
+                                                                      .asset(
+                                                                    surveyDetailsModel.question!.choices![index].options![i].select ==
+                                                                            0
+                                                                        ? 'images/radioonbutton.png'
+                                                                        : 'images/radiobutton.png',
                                                                     width: 25,
                                                                     height: 25,
                                                                   ),
@@ -662,18 +717,22 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                           child: RaisedButton(
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(8.0),
-                                side: BorderSide(color: AppColors.APP_GREEN)),
+                                side: BorderSide(
+                                    color: AppColors.APP_LIGHT_BLUE)),
                             color: ((isFullNameChangeBtnState))
-                                ? AppColors.APP_GREEN
+                                ? AppColors.APP_LIGHT_BLUE
                                 : AppColors.APP_LIGHT_GREY_20,
                             textColor: AppColors.APP_WHITE,
                             padding: EdgeInsets.all(8.0),
                             onPressed: () async {
                               if (isFullNameChangeBtnState) {
-                                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheckSuccess(
-
-                                )),)
-                                    .then((val)=>getsurvey());
+                                Navigator.of(context)
+                                    .pushReplacement(
+                                      new MaterialPageRoute(
+                                          builder: (_) =>
+                                              new ScreenCheckSuccess()),
+                                    )
+                                    .then((val) => getsurvey());
 
                                 // CoolAlert.show(
                                 //     context: context,

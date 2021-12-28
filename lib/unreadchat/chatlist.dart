@@ -207,16 +207,16 @@ class _ChatListState extends State<ChatList> {
         //     //       ),
         //   ],
         // ),
-        floatingActionButton: FloatingActionButton.extended(
-          isExtended: true,
-          onPressed: () {
-            _popupDialog(context);
-          },
-          icon: Icon(Icons.group_add, color: Colors.white, size: 30.0),
-          label: Text("Create Group"),
-          backgroundColor: Colors.grey[700],
-          elevation: 0.0,
-        ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //   isExtended: true,
+        //   onPressed: () {
+        //     _popupDialog(context);
+        //   },
+        //   icon: Icon(Icons.group_add, color: Colors.white, size: 30.0),
+        //   label: Text("Create Group"),
+        //   backgroundColor: Colors.grey[700],
+        //   elevation: 0.0,
+        // ),
         body: VisibilityDetector(
           key: Key("1"),
           onVisibilityChanged: ((visibility) {

@@ -80,11 +80,11 @@ class _MydashboardState extends State<Mydashboard> {
     if (index == 0)
       appBloc.updateTitle('Home');
     else if (index == 1)
-      appBloc.updateTitle('Tasks');
+      appBloc.updateTitle('Care Team');
     else if (index == 2)
       appBloc.updateTitle('Favourites');
     else if (index == 3)
-      appBloc.updateTitle('Chat');
+      appBloc.updateTitle('Messages');
     else if (index == 4) appBloc.updateTitle('Info');
     setState(() {
       _currentIndex = index;
@@ -417,56 +417,57 @@ class _MydashboardState extends State<Mydashboard> {
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(
-                'Tasks',
+                'Care Team',
                 style: TextStyle(color: AppColors.APP_BLUE),
               ),
             ),
+
+            BottomNavigationBarItem(
+              icon: unreads == '1'
+                  ? new Stack(children: <Widget>[
+                      new Icon(Icons.message),
+                      new Positioned(
+                        // draw a red marble
+                        top: 0.0,
+                        right: 0.0,
+                        child: new Icon(Icons.brightness_1,
+                            size: 12.0, color: Colors.redAccent),
+                      )
+                    ])
+                  : new Icon(
+                      Icons.message,
+                      color: AppColors.APP_LIGHT_GREY,
+                    ),
+              activeIcon: unreads == '1'
+                  ? new Stack(children: <Widget>[
+                      new Icon(Icons.message),
+                      new Positioned(
+                        // draw a red marble
+                        top: 0.0,
+                        right: 0.0,
+                        child: new Icon(Icons.brightness_1,
+                            size: 12.0, color: Colors.redAccent),
+                      )
+                    ])
+                  : new Icon(
+                      Icons.message,
+                      color: AppColors.APP_BLUE,
+                    ),
+              title:
+                  new Text('Messages', style: TextStyle(color: AppColors.APP_BLUE)),
+            ),
             BottomNavigationBarItem(
               icon: new Icon(
-                Icons.favorite_border,
+                Icons.list_alt_rounded,
                 color: AppColors.APP_LIGHT_GREY,
               ),
               activeIcon: new Icon(
-                Icons.favorite,
+                Icons.list_alt_rounded,
                 color: AppColors.APP_BLUE,
               ),
-              title: new Text('Favourites',
+              title: new Text('Reports',
                   style: TextStyle(color: AppColors.APP_BLUE)),
             ),
-            // BottomNavigationBarItem(
-            //   icon: unreads == '1'
-            //       ? new Stack(children: <Widget>[
-            //           new Icon(Icons.message),
-            //           new Positioned(
-            //             // draw a red marble
-            //             top: 0.0,
-            //             right: 0.0,
-            //             child: new Icon(Icons.brightness_1,
-            //                 size: 12.0, color: Colors.redAccent),
-            //           )
-            //         ])
-            //       : new Icon(
-            //           Icons.message,
-            //           color: AppColors.APP_LIGHT_GREY,
-            //         ),
-            //   activeIcon: unreads == '1'
-            //       ? new Stack(children: <Widget>[
-            //           new Icon(Icons.message),
-            //           new Positioned(
-            //             // draw a red marble
-            //             top: 0.0,
-            //             right: 0.0,
-            //             child: new Icon(Icons.brightness_1,
-            //                 size: 12.0, color: Colors.redAccent),
-            //           )
-            //         ])
-            //       : new Icon(
-            //           Icons.message,
-            //           color: AppColors.APP_BLUE,
-            //         ),
-            //   title:
-            //       new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
-            // )
             // BottomNavigationBarItem(
             //   icon: new Icon(
             //     Icons.chat_bubble_outline,
@@ -476,7 +477,7 @@ class _MydashboardState extends State<Mydashboard> {
             //     Icons.chat_bubble,
             //     color: AppColors.APP_BLUE,
             //   ),
-            //   title: new Text('Chat', style: TextStyle(color: AppColors.APP_BLUE)),
+            //   title: new Text('Messages', style: TextStyle(color: AppColors.APP_BLUE)),
             //   label:  "test",
             // )
           ],
@@ -489,8 +490,8 @@ class _MydashboardState extends State<Mydashboard> {
   final List<Widget> _children = [
     MyHomePageACI(),
     Surveymenu(),
+    ChatList(globalPhoneNo, 'name'),
     FavouritesPage(),
-    // ChatList(globalPhoneNo, 'name'),
   ];
 
   void messageHdlrForAndroid(Map<String, dynamic> message, bool bool) async {

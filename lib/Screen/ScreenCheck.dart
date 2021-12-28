@@ -165,7 +165,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     child: Text(
                       "All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w200,
                         fontSize: 16,
                       ),
                     )),
