@@ -2,6 +2,8 @@ import 'package:ACI/Screen/surveymenuDetails.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -16,6 +18,9 @@ class ScreenCheck extends StatefulWidget {
 
 class _ScreenCheckState extends State<ScreenCheck> {
   var isFullNameChangeBtnState = true;
+  String formattedDate="";
+  String date="";
+  String month="";
 
   Map<String, double> dataMap = {
     "A": 65,
@@ -45,6 +50,13 @@ class _ScreenCheckState extends State<ScreenCheck> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting();
+    DateTime now = DateTime.now();
+    formattedDate = DateFormat(' MMMM d ').format(now);
+    month = DateFormat('kk:mm a').format(now);
+    // month=DateFormat('MMMM').format(now);
+    // date=DateFormat('d').format(now);
+
   }
 
   @override
@@ -101,7 +113,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     right: 0,
                     bottom: 0,
                   ),
-                  child: Text("January 12 at 10.32 AM",
+                  child: Text(formattedDate +" at "+month,
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
                 ),

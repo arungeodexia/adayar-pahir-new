@@ -1,7 +1,9 @@
 import 'package:ACI/Screen/surveymenuDetails.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -17,6 +19,9 @@ class ScreenCheckSuccess extends StatefulWidget {
 
 class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
   var isFullNameChangeBtnState = true;
+  String formattedDate="";
+  String date="";
+  String month="";
 
   Map<String, double> dataMap = {
     "A": 65,
@@ -46,6 +51,10 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting();
+    DateTime now = DateTime.now();
+    formattedDate = DateFormat(' MMMM d ').format(now);
+    month = DateFormat('kk:mm a').format(now);
   }
 
   @override
@@ -89,7 +98,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     right: 0,
                     bottom: 0,
                   ),
-                  child: Text("January 12 at 10.32 AM",
+                  child: Text(formattedDate +" at "+month,
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
                 ),
@@ -103,7 +112,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     bottom: 15,
                   ),
                   child: Text(
-                    "Screening Check Results exipres in 12 days",
+                    "Screening Check Results expires in 12 days",
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 3,
