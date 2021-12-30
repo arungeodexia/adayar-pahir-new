@@ -752,7 +752,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                 child: Text(
                                   (widget != null) ? "Submit" : "Submit",
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 )),
                           ))),

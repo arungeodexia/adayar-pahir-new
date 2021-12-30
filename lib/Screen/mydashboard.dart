@@ -82,10 +82,10 @@ class _MydashboardState extends State<Mydashboard> {
     else if (index == 1)
       appBloc.updateTitle('Care Team');
     else if (index == 2)
-      appBloc.updateTitle('Favourites');
-    else if (index == 3)
       appBloc.updateTitle('Messages');
-    else if (index == 4) appBloc.updateTitle('Info');
+    else if (index == 3)
+      appBloc.updateTitle('Reports');
+    else if (index == 4) appBloc.updateTitle('Favourites');
     setState(() {
       _currentIndex = index;
       if (unreads == "1") {

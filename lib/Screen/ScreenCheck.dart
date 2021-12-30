@@ -208,7 +208,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                 padding: EdgeInsets.all(8.0),
                                 onPressed: () async {
                                   Navigator.of(context)
-                                      .push(
+                                      .pushReplacement(
                                         new MaterialPageRoute(
                                             builder: (_) =>
                                                 new SurveymenuDetails(

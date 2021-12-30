@@ -87,7 +87,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                 ),
                 child: Center(
                   child:
-                  Lottie.asset('assets/success.json',repeat: false),
+                  Lottie.asset('assets/success.json',repeat: false,height: 150),
                 ),
               ),
               Center(
@@ -193,7 +193,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                                 padding: EdgeInsets.all(8.0),
                                 onPressed: () async {
                                   Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
+                                  // Navigator.of(context).pop();
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.only(
