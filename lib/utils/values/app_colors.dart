@@ -42,5 +42,6 @@ class AppColors {
   static const Color APP_BLACK_10 = Color(0xFF37392E);
   static const Color APP_BLACK_20 = Color(0xFF423E37);
   static const Color APP_LIGHT_BLUE_40 = Color(0xFFBCD4E1);
+  static const Color APP_LIGHT_BLUE_50 = Color(0xFFf2f7fa);
 
 }

@@ -372,17 +372,17 @@ class _MydashboardState extends State<Mydashboard> {
                 margin: EdgeInsets.all(8),
                 child: CircleAvatar(
                     radius: 25.0,
-                    backgroundColor: const Color(0xFF778899),
+                    backgroundColor: AppColors.APP_LIGHT_BLUE,
                     backgroundImage:  userImage.toString()!="null"&&userImage != ""
                         ? NetworkImage(userImage.toString())
                         : AssetImage("images/photo_avatar.png") as ImageProvider),
               ),
 
         onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => AddResorce()),
-                  (Route<dynamic> route) => false,
-                );
+                // Navigator.of(context).pushAndRemoveUntil(
+                //   MaterialPageRoute(builder: (context) => AddResorce()),
+                //   (Route<dynamic> route) => false,
+                // );
               },
             )
           ],
@@ -409,11 +409,11 @@ class _MydashboardState extends State<Mydashboard> {
             ),
             BottomNavigationBarItem(
               icon: new Icon(
-                Icons.task,
+                Icons.group,
                 color: AppColors.APP_LIGHT_GREY,
               ),
               activeIcon: new Icon(
-                Icons.task,
+                Icons.group,
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(

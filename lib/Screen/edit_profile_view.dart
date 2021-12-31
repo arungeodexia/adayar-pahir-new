@@ -844,39 +844,39 @@ class EditProfileState extends State<EditProfileView> {
                         ],
                       )),
                   //Notes or More Skills
-                  Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            //  AppStrings.CREATE_PROFILE_NOTES_LABEL,
-                            AppStrings.MORE_SKILL_LABEL,
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          TextField(
-                            controller: notesInputController,
-                            maxLines: 10,
-                            minLines: 8,
-                            textCapitalization: TextCapitalization.sentences,
-                            decoration: InputDecoration(
-                                // hintText: AppStrings.CREATE_PROFILE_NOTES_HINT,
-                                hintText: AppStrings.MORE_SKILL_HINT,
-                                hintStyle: TextStyle(
-                                    color: AppColors.APP_LIGHT_GREY_40),
-                                border: OutlineInputBorder(),
-                                fillColor: AppColors.APP_WHITE,
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AppColors.APP_LIGHT_BLUE_10)),
-                                enabled: true),
-                          )
-                        ],
-                      )),
+                  // Padding(
+                  //     padding: EdgeInsets.symmetric(vertical: 10.0),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: <Widget>[
+                  //         Text(
+                  //           //  AppStrings.CREATE_PROFILE_NOTES_LABEL,
+                  //           AppStrings.MORE_SKILL_LABEL,
+                  //           textAlign: TextAlign.left,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         TextField(
+                  //           controller: notesInputController,
+                  //           maxLines: 10,
+                  //           minLines: 8,
+                  //           textCapitalization: TextCapitalization.sentences,
+                  //           decoration: InputDecoration(
+                  //               // hintText: AppStrings.CREATE_PROFILE_NOTES_HINT,
+                  //               hintText: AppStrings.MORE_SKILL_HINT,
+                  //               hintStyle: TextStyle(
+                  //                   color: AppColors.APP_LIGHT_GREY_40),
+                  //               border: OutlineInputBorder(),
+                  //               fillColor: AppColors.APP_WHITE,
+                  //               filled: true,
+                  //               enabledBorder: OutlineInputBorder(
+                  //                   borderSide: BorderSide(
+                  //                       color: AppColors.APP_LIGHT_BLUE_10)),
+                  //               enabled: true),
+                  //         )
+                  //       ],
+                  //     )),
                 ],
               ),
             ),

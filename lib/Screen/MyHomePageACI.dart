@@ -71,7 +71,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                       : "Hi " + username.trim()+" ,",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 17)),
+                      fontSize: 17,fontFamily: "OpenSans")),
             ),
             Padding(
               padding: const EdgeInsets.only(
