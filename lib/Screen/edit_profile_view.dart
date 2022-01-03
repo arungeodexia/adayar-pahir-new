@@ -906,7 +906,7 @@ class EditProfileState extends State<EditProfileView> {
                                     isEmailChangeBtnState ||
                                     isNotesChangeBtnState ||
                                     isSkillChangeBtnState))
-                                ? AppColors.APP_GREEN
+                                ? AppColors.APP_LIGHT_BLUE
                                 : AppColors.APP_LIGHT_GREY_20,
                             textColor: AppColors.APP_WHITE,
                             padding: EdgeInsets.all(8.0),

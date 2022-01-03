@@ -12,7 +12,7 @@ class AppColors {
 
   static const Color APP_BLUE = Color(0xFF0C6291);
   static const Color APP_BLUE_10 = Color(0xFF02457A);
-  static const Color APP_LIGHT_BLUE = Color(0xFF4EA5D9);
+  static const Color APP_LIGHT_BLUE = Color(0xFF3098FB);
   static const Color APP_LIGHT_BLUE_10 = Color(0xFFBCE0FD);
   static const Color APP_LIGHT_BLUE_20 = Color(0xFF2699FB);
   static const Color APP_LIGHT_BLUE_30 = Color(0xFFBCD4E1);
@@ -43,5 +43,19 @@ class AppColors {
   static const Color APP_BLACK_20 = Color(0xFF423E37);
   static const Color APP_LIGHT_BLUE_40 = Color(0xFFBCD4E1);
   static const Color APP_LIGHT_BLUE_50 = Color(0xFFf2f7fa);
+  static const Color APP_TIME = Color(0xFFC9342A);
+  static const Color APP_TEXT_NAME = Color(0xFF4C4C4C);
+  static const Color APP_BG_COLOR = Color(0xFFBCE0FC);
+  static const Color APP_TASK_COLOR = Color(0xFF56ACF5);
+  static const Color APP_SUB_COLOR = Color(0xFF686867);
+  static const Color APP_PHONEICON_COLOR = Color(0xFF66A0C4);
+  static const Color APP_TASK_HEAD_COLOR = Color(0xFF6F7A88);
+  static const Color APP_SCREENINGCHECK_HEAD_COLOR = Color(0xFF71B7F6);
+  static const Color APP_SCREENINGCHECK_PARAGRAPH_COLOR = Color(0xFF8D8C88);
+  static const Color APP_BTN_COLOR = Color(0xFF3098FB);
+  static const Color APP_TEXT_SCHRS_COLOR = Color(0xFF7C7C7A);
+  static const Color APP_TEXT_DATETIME_COLOR = Color(0xFF868683);
+  static const Color APP_QUESTION_COLOR = Color(0xFF716E6A);
+  static const Color APP_ANSWER_COLOR = Color(0xFF969794);
 
 }

@@ -267,7 +267,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                         style: TextStyle(
                             fontFamily: "OpenSans",
                             fontSize: 12,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.APP_TEXT_SCHRS_COLOR),
                       ),
                     ),
                   ),
@@ -289,21 +290,25 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                       maxLines: 3,
                       style: TextStyle(
                           fontFamily: "OpenSans",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.APP_QUESTION_COLOR
+                      ),
                     ),
                   ),
                   surveyDetailsModel.question!.questionType.toString() ==
                           "image"
                       ? Container(
                           decoration: BoxDecoration(
-                              color: AppColors.APP_WHITE,
+                              color: AppColors.APP_LIGHT_BLUE_50,
                               borderRadius: BorderRadius.circular(5.0)),
-                          padding: EdgeInsets.all(2),
+                          margin: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(4),
+
                           width: MediaQuery.of(context).size.width,
                           height: 200,
                           child: CachedNetworkImage(
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             imageUrl:
                                 surveyDetailsModel.question!.url.toString(),
                             placeholder: (context, url) => Center(
@@ -340,311 +345,317 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                           : Container(),
                   surveyDetailsModel.question!.options == null
                       ? Container()
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            surveyDetailsModel.question!.answerType == "radio"
-                                ? Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                              color: Colors.white70,
-                                  child: Center(
-                                      child: Container(
-                                        margin: EdgeInsets.only(top: 20,left: 20,bottom: 20),
-                                        // height: 200.0,
-                                        // width: 150,
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                                            itemCount: surveyDetailsModel
-                                                .question!.options!.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  isFullNameChangeBtnState = true;
-                                                  for (int j = 0;
-                                                      j <
-                                                          surveyDetailsModel
-                                                              .question!
-                                                              .options!
-                                                              .length;
-                                                      j++) {
+                      : Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              surveyDetailsModel.question!.answerType == "radio"
+                                  ? Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                                color: AppColors.APP_LIGHT_BLUE_50,
+                                    child: Center(
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 20,left: 20,bottom: 20),
+                                          // height: 200.0,
+                                          width: MediaQuery.of(context).size.width,
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                                              itemCount: surveyDetailsModel
+                                                  .question!.options!.length,
+                                              itemBuilder: (BuildContext context,
+                                                  int index) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    isFullNameChangeBtnState = true;
+                                                    for (int j = 0;
+                                                        j <
+                                                            surveyDetailsModel
+                                                                .question!
+                                                                .options!
+                                                                .length;
+                                                        j++) {
+                                                      surveyDetailsModel.question!
+                                                          .options![j].selct = -1;
+                                                    }
                                                     surveyDetailsModel.question!
-                                                        .options![j].selct = -1;
-                                                  }
-                                                  surveyDetailsModel.question!
-                                                      .options![index].selct = 0;
-                                                  setState(() {});
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.all(5),
-                                                  child: Row(
-                                                    children: [
-                                                      CachedNetworkImage(
-                                                        width: 50,
-                                                        height: 50,
-                                                        fit: BoxFit.fill,
-                                                        imageUrl:
+                                                        .options![index].selct = 0;
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    child: Row(
+                                                      children: [
+                                                        CachedNetworkImage(
+                                                          width: 50,
+                                                          height: 50,
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              surveyDetailsModel
+                                                                  .question!
+                                                                  .options![index]
+                                                                  .url
+                                                                  .toString(),
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Center(
+                                                            child: Container(
+                                                                width: 30,
+                                                                height: 30,
+                                                                child:
+                                                                    new CircularProgressIndicator()),
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              new Icon(
+                                                            Icons.error,
+                                                            size: 30,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 50,
+                                                          height: 10,
+                                                        ),
+                                                        Container(
+                                                          width:
+                                                              MediaQuery.of(context)
+                                                                      .size
+                                                                      .width /
+                                                                  2.8,
+                                                          child: Text(
                                                             surveyDetailsModel
                                                                 .question!
                                                                 .options![index]
-                                                                .url
-                                                                .toString(),
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Center(
-                                                          child: Container(
-                                                              width: 30,
-                                                              height: 30,
-                                                              child:
-                                                                  new CircularProgressIndicator()),
+                                                                .option!,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    "OpenSans",
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight.w400,
+                                                                color:
+                                                                    Colors.black),
+                                                          ),
                                                         ),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            new Icon(
-                                                          Icons.error,
-                                                          size: 30,
+                                                        SizedBox(
+                                                          width: 20,
                                                         ),
+                                                        Image.asset(
+                                                          surveyDetailsModel
+                                                                      .question!
+                                                                      .options![
+                                                                          index]
+                                                                      .select ==
+                                                                  0
+                                                              ? 'images/radioonbutton.png'
+                                                              : 'images/radiobutton.png',
+                                                          width: 25,
+                                                          height: 25,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                      ),
+                                  )
+                                  : Container(),
+                            ],
+                          ),
+                      ),
+                  surveyDetailsModel.question!.choices == null
+                      ? Container()
+                      : Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              surveyDetailsModel.question!.answerType == "choices"
+                                  ? Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                                color: AppColors.APP_LIGHT_BLUE_50,
+                                    child: Center(
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                for (var i in surveyDetailsModel
+                                                    .question!.choices![0].options!)
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 30, top: 20),
+                                                    child: Text(
+                                                      i.option!,
+                                                      style: TextStyle(
+                                                        fontFamily: "OpenSans",
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.bold,
                                                       ),
-                                                      SizedBox(
-                                                        width: 50,
-                                                        height: 10,
-                                                      ),
-                                                      Container(
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width /
-                                                                2.8,
-                                                        child: Text(
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(top: 0),
+                                              height: 200.0,
+                                              width: MediaQuery.of(context).size.width,
+                                              child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                                                  itemCount: surveyDetailsModel
+                                                      .question!.choices!.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return ListTile(
+                                                      title: Text(
                                                           surveyDetailsModel
                                                               .question!
-                                                              .options![index]
-                                                              .option!,
+                                                              .choices![index]
+                                                              .question
+                                                              .toString(),
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   "OpenSans",
-                                                              fontSize: 15,
+                                                              fontSize: 13,
                                                               fontWeight:
-                                                                  FontWeight.bold,
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 20,
-                                                      ),
-                                                      Image.asset(
-                                                        surveyDetailsModel
+                                                                  FontWeight.w500)),
+                                                      trailing: Container(
+                                                        width: 100,
+                                                        child: ListView.builder(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            itemCount:
+                                                                surveyDetailsModel
                                                                     .question!
-                                                                    .options![
-                                                                        index]
-                                                                    .select ==
-                                                                0
-                                                            ? 'images/radioonbutton.png'
-                                                            : 'images/radiobutton.png',
-                                                        width: 25,
-                                                        height: 25,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            }),
-                                      ),
-                                    ),
-                                )
-                                : Container(),
-                          ],
-                        ),
-                  surveyDetailsModel.question!.choices == null
-                      ? Container()
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            surveyDetailsModel.question!.answerType == "choices"
-                                ? Card(
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20))),
-                              color: AppColors.APP_LIGHT_BLUE_50,
-                                  child: Center(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              for (var i in surveyDetailsModel
-                                                  .question!.choices![0].options!)
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: 30, top: 20),
-                                                  child: Text(
-                                                    i.option!,
-                                                    style: TextStyle(
-                                                      fontFamily: "OpenSans",
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(top: 0),
-                                            height: 200.0,
-                                            // width: 150,
-                                            child: ListView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                                                itemCount: surveyDetailsModel
-                                                    .question!.choices!.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return ListTile(
-                                                    title: Text(
-                                                        surveyDetailsModel
-                                                            .question!
-                                                            .choices![index]
-                                                            .question
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "OpenSans",
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight.w500)),
-                                                    trailing: Container(
-                                                      width: 100,
-                                                      child: ListView.builder(
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          itemCount:
-                                                              surveyDetailsModel
-                                                                  .question!
-                                                                  .choices![index]
-                                                                  .options!
-                                                                  .length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int i) {
-                                                            return GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  isFullNameChangeBtnState =
-                                                                      true;
-                                                                  for (int j = 0;
-                                                                      j <
-                                                                          surveyDetailsModel
-                                                                              .question!
-                                                                              .choices![index]
-                                                                              .options!
-                                                                              .length;
-                                                                      j++) {
+                                                                    .choices![index]
+                                                                    .options!
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int i) {
+                                                              return GestureDetector(
+                                                                onTap: () {
+                                                                  setState(() {
+                                                                    isFullNameChangeBtnState =
+                                                                        true;
+                                                                    for (int j = 0;
+                                                                        j <
+                                                                            surveyDetailsModel
+                                                                                .question!
+                                                                                .choices![index]
+                                                                                .options!
+                                                                                .length;
+                                                                        j++) {
+                                                                      surveyDetailsModel
+                                                                          .question!
+                                                                          .choices![
+                                                                              index]
+                                                                          .options![
+                                                                              j]
+                                                                          .selct = -1;
+                                                                    }
                                                                     surveyDetailsModel
                                                                         .question!
                                                                         .choices![
                                                                             index]
-                                                                        .options![
-                                                                            j]
-                                                                        .selct = -1;
-                                                                  }
-                                                                  surveyDetailsModel
-                                                                      .question!
-                                                                      .choices![
-                                                                          index]
-                                                                      .options![i]
-                                                                      .selct = 0;
-                                                                });
-                                                              },
-                                                              child: Column(
-                                                                children: [
-                                                                  // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                                .all(
-                                                                            10.0),
-                                                                    child: Image
-                                                                        .asset(
-                                                                      surveyDetailsModel.question!.choices![index].options![i].select ==
-                                                                              0
-                                                                          ? 'images/radioonbutton.png'
-                                                                          : 'images/radiobutton.png',
-                                                                      width: 25,
-                                                                      height: 25,
+                                                                        .options![i]
+                                                                        .selct = 0;
+                                                                  });
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                                  .all(
+                                                                              10.0),
+                                                                      child: Image
+                                                                          .asset(
+                                                                        surveyDetailsModel.question!.choices![index].options![i].select ==
+                                                                                0
+                                                                            ? 'images/radioonbutton.png'
+                                                                            : 'images/radiobutton.png',
+                                                                        width: 25,
+                                                                        height: 25,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                  // Radio(
-                                                                  //     value: 0,
-                                                                  //     groupValue: surveyDetailsModel
-                                                                  //         .question!
-                                                                  //         .choices![
-                                                                  //             index]
-                                                                  //         .options![
-                                                                  //             i]
-                                                                  //         .select,
-                                                                  //     onChanged:
-                                                                  //         (onChanged) {
-                                                                  //       print(surveyDetailsModel
-                                                                  //           .question!
-                                                                  //           .choices![
-                                                                  //               index]
-                                                                  //           .options!
-                                                                  //           .length);
-                                                                  //       print(i
-                                                                  //           .toString());
-                                                                  //       setState(
-                                                                  //           () {
-                                                                  //         isFullNameChangeBtnState =
-                                                                  //             true;
-                                                                  //         for (int j =
-                                                                  //                 0;
-                                                                  //             j < surveyDetailsModel.question!.choices![index].options!.length;
-                                                                  //             j++) {
-                                                                  //           surveyDetailsModel
-                                                                  //               .question!
-                                                                  //               .choices![index]
-                                                                  //               .options![j]
-                                                                  //               .selct = -1;
-                                                                  //         }
-                                                                  //         surveyDetailsModel
-                                                                  //             .question!
-                                                                  //             .choices![
-                                                                  //                 index]
-                                                                  //             .options![
-                                                                  //                 i]
-                                                                  //             .selct = 0;
-                                                                  //       });
-                                                                  //     }),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }),
-                                                    ),
-                                                  );
-                                                }),
-                                          ),
-                                        ],
+                                                                    // Radio(
+                                                                    //     value: 0,
+                                                                    //     groupValue: surveyDetailsModel
+                                                                    //         .question!
+                                                                    //         .choices![
+                                                                    //             index]
+                                                                    //         .options![
+                                                                    //             i]
+                                                                    //         .select,
+                                                                    //     onChanged:
+                                                                    //         (onChanged) {
+                                                                    //       print(surveyDetailsModel
+                                                                    //           .question!
+                                                                    //           .choices![
+                                                                    //               index]
+                                                                    //           .options!
+                                                                    //           .length);
+                                                                    //       print(i
+                                                                    //           .toString());
+                                                                    //       setState(
+                                                                    //           () {
+                                                                    //         isFullNameChangeBtnState =
+                                                                    //             true;
+                                                                    //         for (int j =
+                                                                    //                 0;
+                                                                    //             j < surveyDetailsModel.question!.choices![index].options!.length;
+                                                                    //             j++) {
+                                                                    //           surveyDetailsModel
+                                                                    //               .question!
+                                                                    //               .choices![index]
+                                                                    //               .options![j]
+                                                                    //               .selct = -1;
+                                                                    //         }
+                                                                    //         surveyDetailsModel
+                                                                    //             .question!
+                                                                    //             .choices![
+                                                                    //                 index]
+                                                                    //             .options![
+                                                                    //                 i]
+                                                                    //             .selct = 0;
+                                                                    //       });
+                                                                    //     }),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }),
+                                                      ),
+                                                    );
+                                                  }),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                )
-                                : Container(),
-                          ],
-                        ),
+                                  )
+                                  : Container(),
+                            ],
+                          ),
+                      ),
                 ],
               )),
         ),
@@ -668,7 +679,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(8.0),
                                 side: BorderSide(
-                                    color: AppColors.APP_LIGHT_BLUE)),
+                                    color: AppColors.APP_LIGHT_GREY_20)),
                             color: ((isFullNameChangeBtnState))
                                 ? AppColors.APP_LIGHT_BLUE
                                 : AppColors.APP_LIGHT_GREY_20,

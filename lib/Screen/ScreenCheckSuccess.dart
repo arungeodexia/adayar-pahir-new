@@ -100,7 +100,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                   ),
                   child: Text(formattedDate +" at "+month,
                       style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                          TextStyle(fontWeight:FontWeight.w500,fontSize: 15,color: AppColors.APP_TEXT_DATETIME_COLOR)),
                 ),
               ),
               Center(
@@ -118,8 +118,8 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     maxLines: 3,
                     style: TextStyle(
                         fontFamily: "OpenSans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,color: AppColors.APP_SCREENINGCHECK_PARAGRAPH_COLOR),
                   ),
                 ),
               ),
@@ -145,8 +145,8 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                       "About Screen Check",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: AppColors.APP_LIGHT_BLUE),
+                          fontSize: 18,
+                          color: AppColors.APP_BTN_COLOR),
                       textAlign: TextAlign.start,
                     )),
               ),
@@ -160,10 +160,11 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                       bottom: 7,
                     ),
                     child: Text(
-                      "All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
+                      "      All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
                       style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                          color: AppColors.APP_TEXT_SCHRS_COLOR
                       ),
                     )),
               ),

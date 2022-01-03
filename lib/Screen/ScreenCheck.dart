@@ -8,7 +8,8 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class ScreenCheck extends StatefulWidget {
-  ScreenCheck({Key? key}) : super(key: key);
+  final String title;
+  ScreenCheck({Key? key, required this.title}) : super(key: key);
 
   @override
   _ScreenCheckState createState() {
@@ -72,7 +73,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true, // this is all you need
-        title: Text("Home"),
+        title: Text(widget.title),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -115,7 +116,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                   ),
                   child: Text(formattedDate +" at "+month,
                       style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                          TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.w600, fontSize: 15,color: AppColors.APP_TEXT_DATETIME_COLOR)),
                 ),
               ),
               Center(
@@ -133,8 +134,8 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     maxLines: 3,
                     style: TextStyle(
                         fontFamily: "OpenSans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,color: AppColors.APP_SCREENINGCHECK_PARAGRAPH_COLOR),
                   ),
                 ),
               ),
@@ -159,9 +160,10 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     child: Text(
                       "About Screen Check",
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: AppColors.APP_LIGHT_BLUE),
+                          fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: AppColors.APP_BTN_COLOR),
                       textAlign: TextAlign.start,
                     )),
               ),
@@ -175,10 +177,12 @@ class _ScreenCheckState extends State<ScreenCheck> {
                       bottom: 7,
                     ),
                     child: Text(
-                      "All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
+                      "      All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
                       style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 16,
+                          fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                          color: AppColors.APP_TEXT_SCHRS_COLOR
                       ),
                     )),
               ),
@@ -200,9 +204,9 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                     borderRadius:
                                         new BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: AppColors.APP_LIGHT_BLUE)),
+                                        color: AppColors.APP_BTN_COLOR)),
                                 color: ((isFullNameChangeBtnState))
-                                    ? AppColors.APP_LIGHT_BLUE
+                                    ? AppColors.APP_BTN_COLOR
                                     : AppColors.APP_LIGHT_GREY_20,
                                 textColor: AppColors.APP_WHITE,
                                 padding: EdgeInsets.all(8.0),
@@ -225,6 +229,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                           ? "Continue Screening Check"
                                           : "Continue Screening Check",
                                       style: TextStyle(
+                                        fontFamily: 'OpenSans',
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     )),

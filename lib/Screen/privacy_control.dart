@@ -278,6 +278,7 @@ class privacycontrolstate extends State<Privacy_Control> {
                 ),
                 ListTile(
                   leading: CircleAvatar(
+                    backgroundColor: Colors.white,
                     backgroundImage: AssetImage(
                       'images/ishare_logo.png',
                     ),

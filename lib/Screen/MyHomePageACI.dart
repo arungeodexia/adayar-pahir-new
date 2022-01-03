@@ -6,6 +6,7 @@ import 'package:ACI/Screen/ScreenCheck.dart';
 import 'package:ACI/data/api/repository/SurveyRepo.dart';
 import 'package:ACI/data/globals.dart';
 import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:ACI/utils/values/app_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -60,10 +61,10 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                left: 25,
+                left: 35,
                 top: 15,
                 right: 15,
-                bottom: 0,
+                bottom: 10,
               ),
               child: Text(
                   username == null
@@ -71,35 +72,189 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                       : "Hi " + username.trim()+" ,",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 17,fontFamily: "OpenSans")),
+                      fontSize: 15,fontFamily: "OpenSans",color: AppColors.APP_SUB_COLOR)),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Center(
+                    child: Text(
+                      "Clinic Visit",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.APP_TEXT_NAME),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Center(
+                    child: Text(
+                      "Today",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                      color: AppColors.APP_SUB_COLOR),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Center(
+                    child: Text(
+                      "10.26 AM",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                      color: AppColors.APP_TIME),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Center(
+                    child: Text(
+                      "20 minutes appointment",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "OpenSans",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.APP_SUB_COLOR),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                left: 25,
-                top: 7,
-                right: 15,
-                bottom: 15,
-              ),
-              child: Text(
-                "You have a scheduled appointment on January 8,2022 at 3:20 PM at the Adayar Cancer Institute",
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-                maxLines: 3,
-                style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500),
+              padding: EdgeInsets.only(top: 15, bottom: 15,left: 40,right: 40),
+              child: Divider(
+                height: 5,
+                thickness: 1,
               ),
             ),
-            Divider(
-              height: 5,
-              thickness: 1,
+            Row(
+              children: [
+                GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 7, bottom: 7,left: 25,right: 20),
+                    margin: EdgeInsets.all(8),
+                    child: CircleAvatar(
+                        radius: 38.0,
+                        backgroundColor: AppColors.APP_LIGHT_BLUE,
+                        backgroundImage:  userImage.toString()!="null"&&userImage != ""
+                            ? NetworkImage(userImage.toString())
+                            : AssetImage("images/photo_avatar.png") as ImageProvider),
+                  ),
+
+                  onTap: () {
+
+                  },
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text(
+                        "Dr. Melinda Rose,MD (O&G)",
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 3,
+                        style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.APP_TEXT_NAME),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text(
+                        "Cancer Institute",
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 3,
+                        style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.APP_SUB_COLOR),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Text(
+                        "Adayar, Chennai - 20",
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 3,
+                        style: TextStyle(
+                            fontFamily: "OpenSans",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.APP_SUB_COLOR),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        CallsAndMessagesService.call("98435 21693".replaceAll(' ', ''));
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.phone_rounded,color: AppColors.APP_LIGHT_BLUE,size: 18,),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 3,bottom: 5,left: 5),
+                            child: Text(
+                              "98435 21693",
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              maxLines: 3,
+                              style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.APP_SUB_COLOR),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 7, bottom: 7,left: 40,right: 40),
+              child: Divider(
+                height: 5,
+                thickness: 1,
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 7, bottom: 7),
               child: Container(
                   padding: const EdgeInsets.only(
-                    left: 25,
+                    left: 40,
                     top: 7,
                     right: 15,
                     bottom: 7,
@@ -110,11 +265,11 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                   //         bottomRight: Radius.circular(16.0),
                   //         topRight: Radius.circular(16.0))),
                   child: Text(
-                    "My To Do List",
+                    "My Tasks",
                     style:
-                    TextStyle(fontWeight: FontWeight.w500,
+                    TextStyle(fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: AppColors.APP_LIGHT_BLUE),
+                        color: AppColors.APP_TASK_COLOR),
                   )),
             ),
             Expanded(
@@ -128,26 +283,30 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                   itemBuilder: (BuildContext context,
                       int index) {
                     return Card(
-                      color: AppColors.APP_LIGHT_BLUE,
+                      color: AppColors.APP_BG_COLOR,
                       child: ListTile(
 
                         onTap: (){
                           Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                            title: index==0?'Screening Check':'Medication Instruction',
 
                           )),)
                               .then((val)=>getsurvey());
 
                         },
-                        title: Text(index==0?'Screening Check':'Medication Instruction', style:
-                        TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppColors.APP_WHITE)
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(index==0?'Screening Check':'Medication Instruction', style:
+                          TextStyle(fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: AppColors.APP_TASK_HEAD_COLOR)
+                          ),
                         ),
                         trailing:
                         Text(index==0?'65%':'10%', style:
                         TextStyle(fontWeight: FontWeight.w500,
                             fontSize: 16,
-                            color: AppColors.APP_WHITE)
+                            color: AppColors.APP_TASK_HEAD_COLOR)
                         ),
                       ),
                     );
