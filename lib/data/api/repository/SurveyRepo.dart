@@ -46,7 +46,52 @@ class SurveyRepo {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       http.Response response = await client.get(
           Uri.parse(
-              '${AppStrings.BASE_URL}api/v1/survey/user/1/question/${questionid}'),
+              '${AppStrings.BASE_URL}/api/v1/question/${questionid}'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> getAppointments() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.get(
+          Uri.parse(
+              '${AppStrings.BASE_URL}/api/v1/appointment/1'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> getTasks() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.get(
+          Uri.parse(
+              '${AppStrings.BASE_URL}/api/v1/tasks'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> getTasksDetails(String taskId) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.get(
+          Uri.parse(
+              '${AppStrings.BASE_URL}/api/v1/task/${taskId}'),
            );
       log(response.body);
       print(response.request!.headers);

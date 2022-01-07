@@ -1,15 +1,25 @@
+import 'dart:convert';
+
+import 'package:ACI/Model/task_details.dart';
 import 'package:ACI/Screen/surveymenuDetails.dart';
+import 'package:ACI/data/api/repository/SurveyRepo.dart';
+import 'package:ACI/utils/calls_messages_services.dart';
+import 'package:ACI/utils/constants.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:http/http.dart' as http;
+
 
 class ScreenCheck extends StatefulWidget {
   final String title;
-  ScreenCheck({Key? key, required this.title}) : super(key: key);
+  final String id;
+  ScreenCheck({Key? key, required this.title, required this.id}) : super(key: key);
 
   @override
   _ScreenCheckState createState() {
@@ -48,15 +58,22 @@ class _ScreenCheckState extends State<ScreenCheck> {
     Color(0xff6c5ce7),
   ];
 
+  static final SurveyRepo resourceRepository = new SurveyRepo();
+  bool isload = false;
+  TaskDetails taskDetails=TaskDetails();
+  String taskpercentage="0%";
+
+
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
     DateTime now = DateTime.now();
-    formattedDate = DateFormat(' MMMM d ').format(now);
+    formattedDate = DateFormat(' MMMM d, yyyy').format(now);
     month = DateFormat('kk:mm a').format(now);
     // month=DateFormat('MMMM').format(now);
     // date=DateFormat('d').format(now);
+    getsurvey();
 
   }
 
@@ -65,7 +82,26 @@ class _ScreenCheckState extends State<ScreenCheck> {
     super.dispose();
   }
 
-  getsurvey() {}
+  void getsurvey() async {
+    isload = true;
+    http.Response? response =
+    await resourceRepository.getTasksDetails(widget.id);
+    taskDetails = TaskDetails.fromJson(
+        json.decode(utf8.decode(response!.bodyBytes)));
+    taskpercentage="0."+taskDetails.completionPercentage.toString().replaceAll("%", "");
+    setState(() {
+      isload = false;
+    });
+  }
+  Widget buildLoading() {
+    return Container(
+      height:
+      MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +109,13 @@ class _ScreenCheckState extends State<ScreenCheck> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true, // this is all you need
-        title: Text(widget.title),
+        title: Text(widget.title,style: kSubheadingextStyle.copyWith(
+          color: AppColors.APP_WHITE
+        ),
+        ),
+        // leading: Icon(FontAwesomeIcons.solidArrowAltCircleLeft,color: AppColors.APP_BLUE,),
       ),
-      body: Container(
+      body: isload?buildLoading():taskDetails.description==null?Container():Container(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -94,11 +134,16 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     animation: true,
                     animationDuration: 1200,
                     lineWidth: 15.0,
-                    percent: 0.65,
+                    percent: double.parse(taskpercentage),
                     center: new Text(
-                      "65%",
+                      taskDetails.completionPercentage.toString(),
                       style:
-                      new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                      kSubtitleTextSyule.copyWith(
+                          fontWeight: FontWeight.bold,
+                          height: 1.5,
+                          color: AppColors.APP_BLUE,
+                        fontSize: 25
+                      ),
                     ),
                     circularStrokeCap: CircularStrokeCap.butt,
                     backgroundColor: AppColors.APP_LIGHT_BLUE,
@@ -114,9 +159,13 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     right: 0,
                     bottom: 0,
                   ),
-                  child: Text(formattedDate +" at "+month,
+                  child: Text(formattedDate +"  "+month,
                       style:
-                          TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.w600, fontSize: 15,color: AppColors.APP_TEXT_DATETIME_COLOR)),
+                      kTitleTextStyle.copyWith(
+                          fontWeight: FontWeight.w600,
+                          height: 1.5,
+                          color: AppColors.APP_BLUE
+                      ),),
                 ),
               ),
               Center(
@@ -128,14 +177,16 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     bottom: 15,
                   ),
                   child: Text(
-                    "Screening Check Results exipres in 12 days",
+                    "Screening Check Results exipres in ${taskDetails.expiry.toString()} days",
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 3,
-                    style: TextStyle(
-                        fontFamily: "OpenSans",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,color: AppColors.APP_SCREENINGCHECK_PARAGRAPH_COLOR),
+                    style: kSubtitleTextSyule1.copyWith(
+                        fontWeight: FontWeight.w600,
+                        height: 1.5,
+                        color: AppColors.APP_BLUE,
+                      fontSize: 12
+                    ),
                   ),
                 ),
               ),
@@ -158,12 +209,12 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     //         bottomRight: Radius.circular(16.0),
                     //         topRight: Radius.circular(16.0))),
                     child: Text(
-                      "About Screen Check",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
+                      "About ${widget.title}",
+                      style: kTitleTextStyle.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: AppColors.APP_BTN_COLOR),
+                          height: 1.5,
+                          color: AppColors.APP_BLUE
+                      ),
                       textAlign: TextAlign.start,
                     )),
               ),
@@ -177,12 +228,12 @@ class _ScreenCheckState extends State<ScreenCheck> {
                       bottom: 7,
                     ),
                     child: Text(
-                      "      All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontWeight: FontWeight.w400,
-                        fontSize: 13,
-                          color: AppColors.APP_TEXT_SCHRS_COLOR
+                      taskDetails.description.toString(),
+                      style: kSubtitleTextSyule1.copyWith(
+                          fontWeight: FontWeight.w600,
+                          height: 1.5,
+                          color: AppColors.APP_BLUE,
+                        fontSize: 15
                       ),
                     )),
               ),
@@ -204,9 +255,9 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                     borderRadius:
                                         new BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: AppColors.APP_BTN_COLOR)),
+                                        color: AppColors.APP_BLUE)),
                                 color: ((isFullNameChangeBtnState))
-                                    ? AppColors.APP_BTN_COLOR
+                                    ? AppColors.APP_BLUE
                                     : AppColors.APP_LIGHT_GREY_20,
                                 textColor: AppColors.APP_WHITE,
                                 padding: EdgeInsets.all(8.0),
@@ -216,7 +267,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                         new MaterialPageRoute(
                                             builder: (_) =>
                                                 new SurveymenuDetails(
-                                                  questionId: "1",
+                                                  questionId:"1",
                                                 )),
                                       )
                                       .then((val) => getsurvey());
@@ -226,12 +277,14 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                         top: 10, bottom: 10),
                                     child: Text(
                                       (widget != null)
-                                          ? "Continue Screening Check"
-                                          : "Continue Screening Check",
-                                      style: TextStyle(
-                                        fontFamily: 'OpenSans',
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                          ? "Continue "+widget.title
+                                          : "Continue "+widget.title,
+                                      style: kSubtitleTextSyule1.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          height: 1.5,
+                                          color: Colors.white
+
+                                      ),
                                     )),
                               ))),
                       flex: 1,

@@ -145,13 +145,16 @@ final Column slider1 = Column(
           .primaryColorDark, //or set color with: Color(0xFF0000FF)
     ));
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.APP_BLUE,
+      ),
 
       body:  Stack(
           children: <Widget>[
             Container(
-              color: Theme.of(context).primaryColorDark,
+              color: AppColors.APP_BLUE,
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

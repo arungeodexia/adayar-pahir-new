@@ -72,7 +72,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                       : "Hi " + username.trim()+" ,",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 15,fontFamily: "OpenSans",color: AppColors.APP_SUB_COLOR)),
+                      fontSize: 16,fontFamily: "OpenSans",color: AppColors.APP_BLACK)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,9 +104,9 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                       maxLines: 3,
                       style: TextStyle(
                           fontFamily: "OpenSans",
-                          fontSize: 13,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
-                      color: AppColors.APP_SUB_COLOR),
+                      color: AppColors.APP_BLACK),
                     ),
                   ),
                 ),
@@ -136,9 +136,9 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                       maxLines: 3,
                       style: TextStyle(
                           fontFamily: "OpenSans",
-                          fontSize: 13,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.APP_SUB_COLOR),
+                          color: AppColors.APP_BLACK),
                     ),
                   ),
                 ),
@@ -196,9 +196,9 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                         maxLines: 3,
                         style: TextStyle(
                             fontFamily: "OpenSans",
-                            fontSize: 13,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.APP_SUB_COLOR),
+                            color: AppColors.APP_BLACK),
                       ),
                     ),
                     Padding(
@@ -212,7 +212,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                             fontFamily: "OpenSans",
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.APP_SUB_COLOR),
+                            color: AppColors.APP_BLACK),
                       ),
                     ),
                     GestureDetector(
@@ -231,9 +231,9 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                               maxLines: 3,
                               style: TextStyle(
                                   fontFamily: "OpenSans",
-                                  fontSize: 13,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColors.APP_SUB_COLOR),
+                                  color: AppColors.APP_BLACK),
                             ),
                           ),
                         ],
@@ -289,6 +289,7 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                         onTap: (){
                           Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
                             title: index==0?'Screening Check':'Medication Instruction',
+                            id: "0",
 
                           )),)
                               .then((val)=>getsurvey());
@@ -297,16 +298,16 @@ class _MyHomePageACIState extends State<MyHomePageACI> {
                         title: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(index==0?'Screening Check':'Medication Instruction', style:
-                          TextStyle(fontWeight: FontWeight.w500,
+                          TextStyle(fontWeight: FontWeight.w400,
                               fontSize: 15,
-                              color: AppColors.APP_TASK_HEAD_COLOR)
+                              color: AppColors.APP_BLACK)
                           ),
                         ),
                         trailing:
                         Text(index==0?'65%':'10%', style:
-                        TextStyle(fontWeight: FontWeight.w500,
+                        TextStyle(fontWeight: FontWeight.w400,
                             fontSize: 16,
-                            color: AppColors.APP_TASK_HEAD_COLOR)
+                            color: AppColors.APP_BLACK)
                         ),
                       ),
                     );

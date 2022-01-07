@@ -59,6 +59,7 @@ class SurveyDetailsModel {
 class Question {
   int? _templateid;
   int? _questionId;
+  int? _nextQuestionId;
   String? _question;
   String? _questionType;
   String? _url;
@@ -71,6 +72,7 @@ class Question {
 
   int? get templateid => _templateid;
   int? get questionId => _questionId;
+  int? get nextQuestionId => _nextQuestionId;
   String? get question => _question;
   String? get questionType => _questionType;
   String? get url => _url;
@@ -84,6 +86,7 @@ class Question {
   Question({
       int? templateid,
       int? questionId,
+      int? nextQuestionId,
       String? question,
       String? questionType,
       String? url,
@@ -108,6 +111,7 @@ class Question {
   Question.fromJson(dynamic json) {
     _templateid = json['templateid'];
     _questionId = json['questionId'];
+    _nextQuestionId = json['nextQuestionId'];
     _question = json['question'];
     _questionType = json['questionType'];
     _url = json['url'];
@@ -134,6 +138,7 @@ class Question {
     var map = <String, dynamic>{};
     map['templateid'] = _templateid;
     map['questionId'] = _questionId;
+    map['nextQuestionId'] = _nextQuestionId;
     map['question'] = _question;
     map['questionType'] = _questionType;
     map['url'] = _url;

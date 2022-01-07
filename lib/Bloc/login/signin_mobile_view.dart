@@ -70,7 +70,7 @@ class SigninState extends State<SigninView> {
           return Scaffold(
             appBar: AppBar(
               title: Text(AppStrings.APP_NAME),
-              backgroundColor: Theme.of(context).primaryColorDark,
+              backgroundColor: AppColors.APP_BLUE,
               centerTitle: true,
               /* automaticallyImplyLeading: true,
             leading: IconButton(
@@ -85,7 +85,7 @@ class SigninState extends State<SigninView> {
               },
             )*/
             ),
-            backgroundColor: Theme.of(context).primaryColorDark,
+            backgroundColor: AppColors.APP_BLUE,
             body: Center(
               child: Column(
                 children: <Widget>[

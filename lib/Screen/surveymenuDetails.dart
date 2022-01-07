@@ -61,7 +61,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
     surveyDetailsModel = SurveyDetailsModel.fromJson(
         json.decode(utf8.decode(response!.bodyBytes)));
 
-    if (surveyDetailsModel.question!.questionType.toString() == "video") {
+    if (surveyDetailsModel.question==null||surveyDetailsModel.question!.questionType.toString() == "video") {
       videoPlayerController = VideoPlayerController.network(
           surveyDetailsModel.question!.url.toString())
         ..addListener(() => setState(() {
@@ -200,7 +200,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                   //     softWrap: false,
                   //     maxLines: 3,
                   //     style: TextStyle(
-                  //         fontFamily: "OpenSans",
+                  //         fontFamily: "Poppins",
                   //         fontSize: 20,
                   //         fontWeight: FontWeight.w500),
                   //   ),
@@ -225,7 +225,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                           maxLines: 3,
                           textAlign: TextAlign.end,
                           style: TextStyle(
-                              fontFamily: "OpenSans",
+                              fontFamily: "Poppins",
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
                               color: AppColors.APP_LIGHT_BLUE),
@@ -265,10 +265,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                         maxLines: 3,
                         textAlign: TextAlign.end,
                         style: TextStyle(
-                            fontFamily: "OpenSans",
+                            fontFamily: "Poppins",
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: AppColors.APP_TEXT_SCHRS_COLOR),
+                            color: AppColors.APP_BLACK),
                       ),
                     ),
                   ),
@@ -289,10 +289,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                       softWrap: false,
                       maxLines: 3,
                       style: TextStyle(
-                          fontFamily: "OpenSans",
-                          fontSize: 13,
+                          fontFamily: "Poppins",
+                          fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.APP_QUESTION_COLOR
+                          color: AppColors.APP_BLACK
                       ),
                     ),
                   ),
@@ -435,10 +435,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                 .option!,
                                                             style: TextStyle(
                                                                 fontFamily:
-                                                                    "OpenSans",
-                                                                fontSize: 13,
+                                                                    "Poppins",
+                                                                fontSize: 15,
                                                                 fontWeight:
-                                                                    FontWeight.w400,
+                                                                    FontWeight.w500,
                                                                 color:
                                                                     Colors.black),
                                                           ),
@@ -501,7 +501,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                     child: Text(
                                                       i.option!,
                                                       style: TextStyle(
-                                                        fontFamily: "OpenSans",
+                                                        fontFamily: "Poppins",
                                                         fontSize: 16,
                                                         fontWeight: FontWeight.bold,
                                                       ),
@@ -532,8 +532,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                               .toString(),
                                                           style: TextStyle(
                                                               fontFamily:
-                                                                  "OpenSans",
-                                                              fontSize: 13,
+                                                                  "Poppins",
+                                                              fontSize: 15,
                                                               fontWeight:
                                                                   FontWeight.w500)),
                                                       trailing: Container(
@@ -687,14 +687,25 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             padding: EdgeInsets.all(8.0),
                             onPressed: () async {
                               if (isFullNameChangeBtnState) {
-                                Navigator.of(context)
-                                    .pushReplacement(
-                                      new MaterialPageRoute(
-                                          builder: (_) =>
-                                              new ScreenCheckSuccess()),
-                                    )
-                                    .then((val) => getsurvey());
+                                if(surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId){
+                                  Navigator.of(context)
+                                      .pushReplacement(
+                                    new MaterialPageRoute(
+                                        builder: (_) =>
+                                        new ScreenCheckSuccess()),
+                                  )
+                                      .then((val) => getsurvey());
 
+                                }else{
+                                  Navigator.of(context)
+                                      .pushReplacement(
+                                    new MaterialPageRoute(
+                                        builder: (_) =>
+                                        new SurveymenuDetails(questionId: surveyDetailsModel.question!.nextQuestionId.toString())),
+                                  )
+                                      .then((val) => getsurvey());
+                                }
+                                
                                 // CoolAlert.show(
                                 //     context: context,
                                 //     type: CoolAlertType.success,
@@ -711,7 +722,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 10),
                                 child: Text(
-                                  (widget != null) ? "Submit" : "Submit",
+                                  (surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId) ? "Submit" : "Next",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),

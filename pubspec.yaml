@@ -87,6 +87,7 @@ dependencies:
   pie_chart: ^5.1.0
   percent_indicator: ^3.4.0
   lottie: ^1.2.1
+  font_awesome_flutter: ^9.2.0
 
 dev_dependencies:
   change_app_package_name: ^1.0.0
@@ -119,6 +120,22 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf
+    - family: Nunito
+      fonts:
+            - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+            - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
+              weight: 600
+            - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+              weight: 700
+    - family: Nunito
+      fonts:
+            - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+              weight: 300
+            - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+              weight: 500
+            - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+              weight: 700
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/sticker/

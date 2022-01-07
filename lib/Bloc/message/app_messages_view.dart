@@ -100,24 +100,24 @@ class AppMessagesViewState extends State<AppMessagesView> {
   Widget build(BuildContext context) {
     globalcontext = context;
     return Scaffold(
-        appBar: AppBar(
-            title: StreamBuilder<Object>(
-                stream: appBloc.titleStream,
-                initialData: AppStrings.APP_MESSAGES_TITLE,
-                builder: (context, snapshot) {
-                  return Text(snapshot.data.toString());
-                }),
-            centerTitle: true,
-            automaticallyImplyLeading: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-//              Navigator.pushReplacementNamed(
-//                  context, AppRoutes.APP_ROUTE_MY_DASHBOARD);
-                Navigator.pop(context);
-              },
-            )),
-        backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+//         appBar: AppBar(
+//             title: StreamBuilder<Object>(
+//                 stream: appBloc.titleStream,
+//                 initialData: AppStrings.APP_MESSAGES_TITLE,
+//                 builder: (context, snapshot) {
+//                   return Text(snapshot.data.toString());
+//                 }),
+//             centerTitle: true,
+//             automaticallyImplyLeading: true,
+//             leading: IconButton(
+//               icon: Icon(Icons.arrow_back),
+//               onPressed: () {
+// //              Navigator.pushReplacementNamed(
+// //                  context, AppRoutes.APP_ROUTE_MY_DASHBOARD);
+//                 Navigator.pop(context);
+//               },
+//             )),
+        backgroundColor: AppColors.APP_WHITE,
         body: BlocListener<AppMessagesBloc, AppMessagesState>(
           listener: (context, state) {},
           child: BlocBuilder<AppMessagesBloc, AppMessagesState>(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ACI/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,6 +58,9 @@ class IShareAppDrawer extends StatelessWidget {
             AsyncSnapshot<CreateEditProfileModel>? snapshot) {
           if (snapshot!.hasData) {
             return new UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                    color: AppColors.APP_BLUE,
+                    borderRadius: BorderRadius.circular(0.0)),
                 accountName: new Text(
                   snapshot.data!.firstName.toString(),
                   style: new TextStyle(
@@ -94,14 +98,16 @@ class IShareAppDrawer extends StatelessWidget {
                 width: 20,
                 height: 20,
               )
-            : new Icon(d.icon),
+            : new Icon(d.icon,color: AppColors.APP_BLUE,),
         // leading:  Image(image:AssetImage("images/photo_avatar.png"),width: 20,height: 20,),
         title: new Text(
           d.title!,
-          style: new TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w400,
-              fontFamily: "OpenSans"),
+          style: kSubtitleTextSyule1.copyWith(
+              fontWeight: FontWeight.bold,
+              height: 1.5,
+              color: AppColors.APP_BLUE
+
+          ),
         ),
         // selected: i == _selectedIndex,
         onTap: () async {

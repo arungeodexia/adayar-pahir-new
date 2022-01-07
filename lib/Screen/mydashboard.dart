@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ACI/Screen/Careteam.dart';
+import 'package:ACI/Screen/Homepage/dash3.dart';
 import 'package:ACI/Screen/MyHomePageACI.dart';
 import 'package:ACI/Screen/surveymenu.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -31,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'add_resorce.dart';
+import 'dash1.dart';
 import 'favourites_page.dart';
 
 class Mydashboard extends StatefulWidget {
@@ -345,6 +348,7 @@ class _MydashboardState extends State<Mydashboard> {
       onWillPop: onWillPop,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColors.APP_BLUE1,
           title: StreamBuilder<Object>(
               stream: appBloc.titleStream,
               initialData: "Home",
@@ -352,6 +356,7 @@ class _MydashboardState extends State<Mydashboard> {
                 return Text(snapshot.data.toString());
               }),
           centerTitle: true,
+          elevation: 5,
           actions: <Widget>[
             // GestureDetector(
             //   child: Padding(
@@ -389,6 +394,9 @@ class _MydashboardState extends State<Mydashboard> {
         ),
         drawer: IShareAppDrawer(),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          fixedColor: Colors.white,
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           // this will be set when a new tab is tapped
@@ -488,9 +496,9 @@ class _MydashboardState extends State<Mydashboard> {
   }
 
   final List<Widget> _children = [
-    MyHomePageACI(),
-    Surveymenu(),
-    ChatList(globalPhoneNo, 'name'),
+    DashboardThreePage(),
+    Careteam(),
+    AppMessagesView(),
     FavouritesPage(),
   ];
 

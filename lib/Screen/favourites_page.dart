@@ -103,6 +103,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   Container _buildHomePageData(
       List<Resources> resources, BuildContext context) {
+    return Container();
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -

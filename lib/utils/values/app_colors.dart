@@ -10,11 +10,11 @@ class AppColors {
   static const Color ACCENT_COLOR = APP_BLUE;
 
 
-  static const Color APP_BLUE = Color(0xFF0C6291);
-  static const Color APP_BLUE_10 = Color(0xFF02457A);
-  static const Color APP_LIGHT_BLUE = Color(0xFF3098FB);
+  static const Color APP_BLUE = Color(0xFF2B4D9A);
+  static const Color APP_BLUE_10 = Color(0xFF2B4D9A);
+  static const Color APP_LIGHT_BLUE = Color(0xFF2B4D9A);
   static const Color APP_LIGHT_BLUE_10 = Color(0xFFBCE0FD);
-  static const Color APP_LIGHT_BLUE_20 = Color(0xFF2699FB);
+  static const Color APP_LIGHT_BLUE_20 = Color(0xFF2B4D9A);
   static const Color APP_LIGHT_BLUE_30 = Color(0xFFBCD4E1);
 
 
@@ -57,5 +57,7 @@ class AppColors {
   static const Color APP_TEXT_DATETIME_COLOR = Color(0xFF868683);
   static const Color APP_QUESTION_COLOR = Color(0xFF716E6A);
   static const Color APP_ANSWER_COLOR = Color(0xFF969794);
+  static const Color APP_LIGHT_YELLOW = Color(0xFFF7C24C);
+  static const Color APP_BLUE1 = Color(0xFF2B4D9A);
 
 }

@@ -167,7 +167,7 @@ class ContactSyncState extends State<ContactSyncView> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 title: Text(AppStrings.CONTACT_SYNC_TITLE),
-                backgroundColor: Theme.of(context).primaryColorDark,
+                backgroundColor: AppColors.APP_BLUE,
                 centerTitle: true,
                 actions: [
                   // data: ThemeData(
@@ -207,7 +207,7 @@ class ContactSyncState extends State<ContactSyncView> {
                 ),
                 automaticallyImplyLeading: false),
             floatingActionButton: new FloatingActionButton.extended(
-              backgroundColor: Theme.of(context).primaryColorDark,
+              backgroundColor: AppColors.APP_BLUE,
               onPressed: _onSubmit,
               icon: Icon(Icons.contacts),
               label: Text(floatingButtonLabel),

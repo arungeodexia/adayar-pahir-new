@@ -444,7 +444,7 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 title: Text(AppStrings.APP_NAME),
-                backgroundColor: Theme.of(context).primaryColorDark,
+                backgroundColor: AppColors.APP_BLUE,
                 centerTitle: true,
                 automaticallyImplyLeading: true,
                 leading: IconButton(
@@ -453,7 +453,7 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
                     Navigator.of(context).pop();
                   },
                 )),
-            backgroundColor: Theme.of(context).primaryColorDark,
+            backgroundColor: AppColors.APP_BLUE,
             body: Container(
                 child: Column(
               children: <Widget>[

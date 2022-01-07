@@ -1,10 +1,12 @@
 // @dart=2.9
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -46,6 +48,10 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: AppColors.APP_BLUE, // status bar color
+  ));
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
@@ -93,6 +99,17 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
           providers: _multiBlocProviders(),
           child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+
+            theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              fontFamily: "Poppins",
+              primarySwatch: Colors.blue,
+              appBarTheme: AppBarTheme(
+                backgroundColor: AppColors.APP_BLUE,
+                elevation: 0
+              )
+            ),
             title: 'ACI',
             home: Auth(),
           )),

@@ -53,7 +53,7 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
     super.initState();
     initializeDateFormatting();
     DateTime now = DateTime.now();
-    formattedDate = DateFormat(' MMMM d ').format(now);
+    formattedDate = DateFormat(' MMMM d, yyyy').format(now);
     month = DateFormat('kk:mm a').format(now);
   }
 
@@ -98,9 +98,10 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     right: 0,
                     bottom: 0,
                   ),
-                  child: Text(formattedDate +" at "+month,
+                  child: Text(formattedDate +"  "+month,
                       style:
-                          TextStyle(fontWeight:FontWeight.w500,fontSize: 15,color: AppColors.APP_TEXT_DATETIME_COLOR)),
+                          TextStyle(                        fontFamily: "Poppins",
+                              fontWeight:FontWeight.w500,fontSize: 15,color: AppColors.APP_BLUE)),
                 ),
               ),
               Center(
@@ -117,9 +118,9 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     softWrap: false,
                     maxLines: 3,
                     style: TextStyle(
-                        fontFamily: "OpenSans",
+                        fontFamily: "Poppins",
                         fontSize: 13,
-                        fontWeight: FontWeight.w500,color: AppColors.APP_SCREENINGCHECK_PARAGRAPH_COLOR),
+                        fontWeight: FontWeight.w500,color: AppColors.APP_BLUE),
                   ),
                 ),
               ),
@@ -144,9 +145,10 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     child: Text(
                       "About Screen Check",
                       style: TextStyle(
+                          fontFamily: "Poppins",
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
-                          color: AppColors.APP_BTN_COLOR),
+                          color: AppColors.APP_BLUE),
                       textAlign: TextAlign.start,
                     )),
               ),
@@ -162,9 +164,10 @@ class _ScreenCheckSuccessState extends State<ScreenCheckSuccess> {
                     child: Text(
                       "      All patients are required to complete the screening checks till the surgery day.It is very important that you provide accurate information",
                       style: TextStyle(
+                        fontFamily: "Poppins",
                         fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                          color: AppColors.APP_TEXT_SCHRS_COLOR
+                          fontSize: 14,
+                          color: AppColors.APP_BLUE
                       ),
                     )),
               ),

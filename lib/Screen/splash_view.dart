@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ACI/utils/values/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class SplashState extends State<SplashView>
   Widget build(BuildContext context) {
     globalcontext = context;
     return Scaffold(
-    backgroundColor: Theme.of(context).primaryColorDark,
+    backgroundColor: AppColors.APP_BLUE,
     body: Stack(
       children: [
         Center(
