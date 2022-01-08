@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ACI/Model/task_details.dart';
 import 'package:ACI/Screen/surveymenuDetails.dart';
@@ -62,6 +63,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
   bool isload = false;
   TaskDetails taskDetails=TaskDetails();
   String taskpercentage="0%";
+  String expiry="0";
 
 
   @override
@@ -70,7 +72,8 @@ class _ScreenCheckState extends State<ScreenCheck> {
     initializeDateFormatting();
     DateTime now = DateTime.now();
     formattedDate = DateFormat(' MMMM d, yyyy').format(now);
-    month = DateFormat('kk:mm a').format(now);
+    month = DateFormat('kk:mm a').format(now).toLowerCase();
+
     // month=DateFormat('MMMM').format(now);
     // date=DateFormat('d').format(now);
     getsurvey();
@@ -89,9 +92,31 @@ class _ScreenCheckState extends State<ScreenCheck> {
     taskDetails = TaskDetails.fromJson(
         json.decode(utf8.decode(response!.bodyBytes)));
     taskpercentage="0."+taskDetails.completionPercentage.toString().replaceAll("%", "");
+    // DateTime date1 = DateTime.parse("2020-01-09 23:00:00.299871");
+    // DateTime date2 = DateTime.parse("2020-01-10 00:00:00.299871");
+    // log(daysBetween(date1, date2).toString());
+    // //the birthday's date
+    if(taskDetails.expiry !=null){
+     try{
+       var split=taskDetails.expiry!.split("-");
+       final birthday = DateTime(int.parse(split[0]), int.parse(split[1]), int.parse(split[2]));
+       final date3 = DateTime.now();
+       final difference = date3.difference(birthday).inDays;
+       expiry=difference.toString();
+       log(difference.toString());
+       log(int.parse(split[2]).toString()+ int.parse(split[1]).toString()+ int.parse(split[0]).toString());
+     }catch(e){
+
+     }
+    }
     setState(() {
       isload = false;
     });
+  }
+  int daysBetween(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
   }
   Widget buildLoading() {
     return Container(
@@ -177,7 +202,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     bottom: 15,
                   ),
                   child: Text(
-                    "Screening Check Results exipres in ${taskDetails.expiry.toString()} days",
+                    "Screening Check Results exipres in ${expiry} days",
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 3,
