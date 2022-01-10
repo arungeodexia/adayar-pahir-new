@@ -12,6 +12,7 @@ bool isResource = false;
 String globalCountryCode = "";
 String globalPhoneNo = "";
 int globalUserId = 0;
+int globalTaskID = 0;
 String globalResourceId = "";
 String globalSearchData = "";
 String timezone = 'Unknown';

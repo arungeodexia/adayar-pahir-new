@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ACI/Model/SurveyModel.dart';
 import 'package:ACI/Model/survey_details_model.dart';
@@ -16,6 +17,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+
+import 'ScreenCheck.dart';
 
 class SurveymenuDetails extends StatefulWidget {
   final String questionId;
@@ -554,30 +557,25 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                               return GestureDetector(
                                                                 onTap: () {
                                                                   setState(() {
-                                                                    isFullNameChangeBtnState =
-                                                                        true;
-                                                                    for (int j = 0;
-                                                                        j <
-                                                                            surveyDetailsModel
-                                                                                .question!
-                                                                                .choices![index]
-                                                                                .options!
-                                                                                .length;
-                                                                        j++) {
-                                                                      surveyDetailsModel
-                                                                          .question!
-                                                                          .choices![
-                                                                              index]
-                                                                          .options![
-                                                                              j]
-                                                                          .selct = -1;
+                                                                    for (int j = 0; j < surveyDetailsModel.question!.choices![index].options!.length; j++) {
+                                                                      surveyDetailsModel.question!.choices![index].options![j].selct = -1;
                                                                     }
-                                                                    surveyDetailsModel
-                                                                        .question!
-                                                                        .choices![
-                                                                            index]
-                                                                        .options![i]
-                                                                        .selct = 0;
+                                                                    surveyDetailsModel.question!.choices![index].options![i].selct = 0;
+                                                                    int selection=0;
+                                                                    for(int k = 0; k < surveyDetailsModel.question!.choices!.length; k++){
+                                                                      for(int l = 0; l < surveyDetailsModel.question!.choices![l].options!.length; l++){
+                                                                        if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                          selection=selection+1;
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                    if(selection==surveyDetailsModel.question!.choices!.length){
+                                                                      isFullNameChangeBtnState = true;
+                                                                    }else{
+                                                                      isFullNameChangeBtnState = false;
+                                                                    }
+                                                                    log(selection.toString());
+                                                                    log(surveyDetailsModel.question!.choices!.length.toString());
                                                                   });
                                                                 },
                                                                 child: Column(
@@ -688,13 +686,12 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             onPressed: () async {
                               if (isFullNameChangeBtnState) {
                                 if(surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId){
-                                  Navigator.of(context)
-                                      .pushReplacement(
-                                    new MaterialPageRoute(
-                                        builder: (_) =>
-                                        new ScreenCheckSuccess()),
-                                  )
-                                      .then((val) => getsurvey());
+                                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                                    title: "Successful",
+                                    id: globalTaskID.toString(),
+                                    page: "1",
+                                  )),)
+                                      .then((val)=>getsurvey());
 
                                 }else{
                                   Navigator.of(context)

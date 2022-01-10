@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,8 @@ import 'package:http/http.dart' as http;
 class ScreenCheck extends StatefulWidget {
   final String title;
   final String id;
-  ScreenCheck({Key? key, required this.title, required this.id}) : super(key: key);
+  final String page;
+  ScreenCheck({Key? key, required this.title, required this.id, required this.page}) : super(key: key);
 
   @override
   _ScreenCheckState createState() {
@@ -146,7 +148,18 @@ class _ScreenCheckState extends State<ScreenCheck> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              widget.page=="1"?              Padding(
+          padding: const EdgeInsets.only(
+            left: 25,
+            top: 15,
+            right: 15,
+            bottom: 0,
+          ),
+          child: Center(
+            child:
+            Lottie.asset('assets/success.json',repeat: false,height: 150),
+          ),
+        ):Padding(
                 padding: const EdgeInsets.only(
                   left: 25,
                   top: 15,
@@ -287,22 +300,27 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                 textColor: AppColors.APP_WHITE,
                                 padding: EdgeInsets.all(8.0),
                                 onPressed: () async {
-                                  Navigator.of(context)
-                                      .pushReplacement(
-                                        new MaterialPageRoute(
-                                            builder: (_) =>
-                                                new SurveymenuDetails(
-                                                  questionId:"1",
-                                                )),
-                                      )
-                                      .then((val) => getsurvey());
+                                  if(widget.page=="1"){
+                                    Navigator.of(context).pop();
+                                  }else{
+                                    Navigator.of(context)
+                                        .pushReplacement(
+                                      new MaterialPageRoute(
+                                          builder: (_) =>
+                                          new SurveymenuDetails(
+                                            questionId:"1",
+                                          )),
+                                    )
+                                        .then((val) => getsurvey());
+                                  }
+
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10),
                                     child: Text(
-                                      (widget != null)
-                                          ? "Continue "+widget.title
+                                      (widget.page=="1")
+                                          ? "OK"
                                           : "Continue "+widget.title,
                                       style: kSubtitleTextSyule1.copyWith(
                                           fontWeight: FontWeight.bold,

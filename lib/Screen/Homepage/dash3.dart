@@ -241,9 +241,10 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
                         title: taskmodel.tasks![index].taskTitle.toString(),
                         id: taskmodel.tasks![index].taskId.toString(),
+                        page: "0",
                       )),)
                           .then((val)=>getsurvey());
-
+                      globalTaskID=taskmodel.tasks![index].taskId!;
                     },
                     title: Padding(
                       padding: const EdgeInsets.only(left: 20),
