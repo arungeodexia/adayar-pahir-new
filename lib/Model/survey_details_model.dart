@@ -64,6 +64,8 @@ class Question {
   String? _questionType;
   String? _url;
   String? _answerType;
+  String? _completionProgress;
+  String? _expiryDate;
   List<Options>? _options;
   List<Choices>? _choices;
   bool? _consolidateOptions;
@@ -77,6 +79,8 @@ class Question {
   String? get questionType => _questionType;
   String? get url => _url;
   String? get answerType => _answerType;
+  String? get completionProgress => _completionProgress;
+  String? get expiryDate => _expiryDate;
   List<Choices>? get choices => _choices;
   List<Options>? get options => _options;
   bool? get consolidateOptions => _consolidateOptions;
@@ -91,6 +95,8 @@ class Question {
       String? questionType,
       String? url,
       String? answerType,
+      String? completionProgress,
+      String? expiryDate,
       List<Choices>? choices,
       bool? consolidateOptions,
       bool? hasNext,
@@ -101,6 +107,8 @@ class Question {
     _questionType = questionType;
     _url = url;
     _answerType = answerType;
+    _completionProgress = completionProgress;
+    _expiryDate = expiryDate;
     _choices = choices;
     _options = options;
     _consolidateOptions = consolidateOptions;
@@ -116,6 +124,8 @@ class Question {
     _questionType = json['questionType'];
     _url = json['url'];
     _answerType = json['answerType'];
+    _completionProgress = json['completionProgress'];
+    _expiryDate = json['expiryDate'];
     if (json['choices'] != null) {
       _choices = [];
       json['choices'].forEach((v) {
@@ -143,6 +153,8 @@ class Question {
     map['questionType'] = _questionType;
     map['url'] = _url;
     map['answerType'] = _answerType;
+    map['completionProgress'] = _completionProgress;
+    map['expiryDate'] = _expiryDate;
     if (_choices != null) {
       map['choices'] = _choices?.map((v) => v.toJson()).toList();
     }

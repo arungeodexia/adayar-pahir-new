@@ -113,8 +113,8 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   child: CircleAvatar(
                       radius: 38.0,
                       backgroundColor: AppColors.APP_LIGHT_BLUE,
-                      backgroundImage:  userImage.toString()!="null"&&userImage != ""
-                          ? NetworkImage(userImage.toString())
+                      backgroundImage:  appointmentDetails.picture.toString()!="null"&&appointmentDetails.picture != ""
+                          ? NetworkImage(appointmentDetails.picture.toString())
                           : AssetImage("images/photo_avatar.png") as ImageProvider),
                 ),
 
@@ -304,7 +304,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   padding: const EdgeInsets.all(3),
                   child: Center(
                     child: Text(
-                      "Clinic Visit",
+                      appointmentDetails.appointmentType.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,
@@ -320,7 +320,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   padding: const EdgeInsets.all(3),
                   child: Center(
                     child: Text(
-                      "Today",
+                      appointmentDetails.appointmentDateFormatted.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,
@@ -336,7 +336,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   padding: const EdgeInsets.all(3),
                   child: Center(
                     child: Text(
-                      "10.26 am",
+                      appointmentDetails.appointmentTime.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,
@@ -352,7 +352,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   padding: const EdgeInsets.all(3),
                   child: Center(
                     child: Text(
-                      "20 minutes appointment",
+                      appointmentDetails.appointmentDuration.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,

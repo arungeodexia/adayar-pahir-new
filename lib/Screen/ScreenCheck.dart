@@ -215,7 +215,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                     bottom: 15,
                   ),
                   child: Text(
-                    "Screening Check Results exipres in ${expiry} days",
+                    "Screening Check Results exipres in ${expiry.replaceAll("-", "")} days",
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 3,

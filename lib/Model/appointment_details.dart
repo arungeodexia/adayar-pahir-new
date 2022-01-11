@@ -1,4 +1,9 @@
 /// appointmentId : 1
+/// appointmentType : "Clinic Visit"
+/// appointmentDate : "20-01-2022"
+/// appointmentDateFormatted : "20 Jan 2022"
+/// appointmentTime : "10.30 am"
+/// appointmentDuration : "20 Minutes"
 /// name : "Dr. Melinda Rose"
 /// institute : "Cancer Institue"
 /// designation : "M.B.B.S., M.D"
@@ -10,15 +15,27 @@
 class AppointmentDetails {
   AppointmentDetails({
       int? appointmentId, 
+      String? appointmentType, 
+      String? appointmentDate, 
+      String? appointmentDateFormatted, 
+      String? appointmentTime, 
+      String? appointmentDuration, 
       String? name, 
-      String? institute, 
+      String? picture,
+      String? institute,
       String? designation, 
       String? address, 
       String? phone1, 
       dynamic phone2, 
       String? email,}){
     _appointmentId = appointmentId;
+    _appointmentType = appointmentType;
+    _appointmentDate = appointmentDate;
+    _appointmentDateFormatted = appointmentDateFormatted;
+    _appointmentTime = appointmentTime;
+    _appointmentDuration = appointmentDuration;
     _name = name;
+    _picture = picture;
     _institute = institute;
     _designation = designation;
     _address = address;
@@ -29,7 +46,13 @@ class AppointmentDetails {
 
   AppointmentDetails.fromJson(dynamic json) {
     _appointmentId = json['appointmentId'];
+    _appointmentType = json['appointmentType'];
+    _appointmentDate = json['appointmentDate'];
+    _appointmentDateFormatted = json['appointmentDateFormatted'];
+    _appointmentTime = json['appointmentTime'];
+    _appointmentDuration = json['appointmentDuration'];
     _name = json['name'];
+    _picture = json['picture'];
     _institute = json['institute'];
     _designation = json['designation'];
     _address = json['address'];
@@ -38,7 +61,13 @@ class AppointmentDetails {
     _email = json['email'];
   }
   int? _appointmentId;
+  String? _appointmentType;
+  String? _appointmentDate;
+  String? _appointmentDateFormatted;
+  String? _appointmentTime;
+  String? _appointmentDuration;
   String? _name;
+  String? _picture;
   String? _institute;
   String? _designation;
   String? _address;
@@ -47,7 +76,13 @@ class AppointmentDetails {
   String? _email;
 
   int? get appointmentId => _appointmentId;
+  String? get appointmentType => _appointmentType;
+  String? get appointmentDate => _appointmentDate;
+  String? get appointmentDateFormatted => _appointmentDateFormatted;
+  String? get appointmentTime => _appointmentTime;
+  String? get appointmentDuration => _appointmentDuration;
   String? get name => _name;
+  String? get picture => _picture;
   String? get institute => _institute;
   String? get designation => _designation;
   String? get address => _address;
@@ -58,7 +93,13 @@ class AppointmentDetails {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['appointmentId'] = _appointmentId;
+    map['appointmentType'] = _appointmentType;
+    map['appointmentDate'] = _appointmentDate;
+    map['appointmentDateFormatted'] = _appointmentDateFormatted;
+    map['appointmentTime'] = _appointmentTime;
+    map['appointmentDuration'] = _appointmentDuration;
     map['name'] = _name;
+    map['picture'] = _picture;
     map['institute'] = _institute;
     map['designation'] = _designation;
     map['address'] = _address;

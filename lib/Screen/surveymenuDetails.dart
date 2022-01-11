@@ -49,6 +49,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
   late Duration videoLength;
   late Duration videoPosition;
   double volume = 0.5;
+  String taskpercentage="0%";
+  String expiry="0";
+
+
 
   @override
   void initState() {
@@ -63,6 +67,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
         await resourceRepository.getSurveyDetails(widget.questionId.toString());
     surveyDetailsModel = SurveyDetailsModel.fromJson(
         json.decode(utf8.decode(response!.bodyBytes)));
+    taskpercentage="0."+surveyDetailsModel.question!.completionProgress.toString().replaceAll("%", "");
+
+    if(surveyDetailsModel.question!.expiryDate !=null){
+      try{
+        var split=surveyDetailsModel.question!.expiryDate!.split("-");
+        final birthday = DateTime(int.parse(split[2]), int.parse(split[1]), int.parse(split[0]));
+        final date3 = DateTime.now();
+        final difference = date3.difference(birthday).inDays;
+        expiry=difference.toString();
+        log(difference.toString());
+        log(int.parse(split[2]).toString()+ int.parse(split[1]).toString()+ int.parse(split[0]).toString());
+      }catch(e){
+
+      }
+    }
 
     if (surveyDetailsModel.question==null||surveyDetailsModel.question!.questionType.toString() == "video") {
       videoPlayerController = VideoPlayerController.network(
@@ -246,7 +265,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                       lineHeight: 20.0,
                       leading: new Text(""),
                       trailing: new Text(""),
-                      percent: 0.45,
+                      percent:double.parse(taskpercentage),
                       center: Text(""),
                       linearStrokeCap: LinearStrokeCap.roundAll,
                       progressColor: AppColors.APP_LIGHT_BLUE,
@@ -262,7 +281,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                         bottom: 10,
                       ),
                       child: Text(
-                        "Screen Check Result will expires in 12 days",
+                        "Screening Check Results exipres in ${expiry.replaceAll("-", "")} days",
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
                         maxLines: 3,
