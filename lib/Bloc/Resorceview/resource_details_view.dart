@@ -201,7 +201,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
           ),
           title: StreamBuilder<Object>(
               stream: appBloc.titleStream,
-              initialData: "Resource Detail",
+              initialData: "Doctor Details",
               builder: (context, snapshot) {
                 return Text(snapshot.data!.toString(),
                     style: TextStyle(fontWeight: FontWeight.bold));
@@ -416,7 +416,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                             backgroundImage: (resourceDetail != null &&
                                     resourceDetail.profilePicture != null)
                                 ? NetworkImage(
-                                    (resourceDetail.profilePicture!.toString()))
+                                    resourceDetail.profilePicture!.toString())
                                 : AssetImage("images/photo_avatar.png")
                                     as ImageProvider,
                             radius: 50,

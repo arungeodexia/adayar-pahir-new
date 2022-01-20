@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               fontFamily: "Poppins",
-              primarySwatch: Colors.blue,
+              // primarySwatch: Colors.,
               appBarTheme: AppBarTheme(
                 backgroundColor: AppColors.APP_BLUE,
                 elevation: 0
