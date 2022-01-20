@@ -583,121 +583,17 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                               fontSize: 15,
                                                               fontWeight:
                                                                   FontWeight.w500)),
-                                                      subtitle: Container(
-                                                        margin: EdgeInsets.only(top: 20),
-                                                        height: surveyDetailsModel
-                                                            .question!
-                                                            .choices![index]
-                                                            .options!
-                                                            .length>2?100:50,
-                                                        // width: 50,
-                                                        child: GridView.builder(
-
-                                                          // physics: NeverScrollableScrollPhysics(),
-                                                            itemCount:
-                                                                surveyDetailsModel
-                                                                    .question!
-                                                                    .choices![index]
-                                                                    .options!
-                                                                    .length,
-                                                            itemBuilder:
-                                                                (BuildContext
-                                                                        context,
-                                                                    int i) {
-                                                              return Container(
-                                                                child: GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(() {
-                                                                      for (int j = 0; j < surveyDetailsModel.question!.choices![index].options!.length; j++) {
-                                                                        surveyDetailsModel.question!.choices![index].options![j].selct = -1;
-                                                                      }
-                                                                      surveyDetailsModel.question!.choices![index].options![i].selct = 0;
-                                                                      int selection=0;
-                                                                      for(int k = 0; k < surveyDetailsModel.question!.choices!.length; k++){
-                                                                        for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
-                                                                          if(surveyDetailsModel.question!.choices![k].options![l].select==0){
-                                                                            selection=selection+1;
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                      if(selection==surveyDetailsModel.question!.choices!.length){
-                                                                        isFullNameChangeBtnState = true;
-                                                                      }else{
-                                                                        isFullNameChangeBtnState = false;
-                                                                      }
-                                                                      log(selection.toString());
-                                                                      log(surveyDetailsModel.question!.choices!.length.toString());
-                                                                    });
-                                                                  },
-                                                                  child: Row(
-                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                                    children: [
-                                                                      // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
-                                                                      Padding(
-                                                                        padding:  EdgeInsets.only(left: 2.0,right: 5),
-                                                                        child: Image
-                                                                            .asset(
-                                                                          surveyDetailsModel.question!.choices![index].options![i].select ==
-                                                                              0
-                                                                              ? 'images/radioonbutton.png'
-                                                                              : 'images/radiobutton.png',
-                                                                          width: 25,
-                                                                          height: 25,
-                                                                        ),
-                                                                      ),
-                                                                      Center(
-                                                                        child: Container(
-                                                                          width: MediaQuery.of(context).size.width/3.5,
-                                                                          // height: 50,
-                                                                          padding: const EdgeInsets.only(left: 4.0,right: 10),
-                                                                          child: Text(
-                                                                            surveyDetailsModel.question!.choices![index].options![i].option!,
-                                                                            style: TextStyle(
-                                                                              fontFamily: "Poppins",
-                                                                              fontSize: 15,
-                                                                              fontWeight: FontWeight.bold,
-                                                                            ),
-                                                                            textAlign: TextAlign.center,
-                                                                            // overflow: TextOverflow.ellipsis,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-
-
-
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-
-                                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 2,mainAxisSpacing: 0,
-                                                        crossAxisSpacing: 0,
-                                                        mainAxisExtent: 40,
-                                                        crossAxisCount:  surveyDetailsModel
-                                                            .question!
-                                                            .choices![index]
-                                                            .options!
-                                                            .length>3?2:2),
-
-                                                        ),
-                                                      ),
                                                       // subtitle: Container(
+                                                      //   margin: EdgeInsets.only(top: 20),
                                                       //   height: surveyDetailsModel
                                                       //       .question!
                                                       //       .choices![index]
                                                       //       .options!
-                                                      //       .length>3?140:80,
-                                                      //   child: ListView.builder(
-                                                      //     padding: EdgeInsets.all(10),
-                                                      //     physics: NeverScrollableScrollPhysics(),
-                                                      //     scrollDirection: surveyDetailsModel
-                                                      //         .question!
-                                                      //         .choices![index]
-                                                      //         .options!
-                                                      //         .length>3?Axis.vertical:Axis.horizontal,
-                                                      //       shrinkWrap: true,
+                                                      //       .length>2?100:50,
+                                                      //   // width: 50,
+                                                      //   child: GridView.builder(
+                                                      //
+                                                      //     // physics: NeverScrollableScrollPhysics(),
                                                       //       itemCount:
                                                       //           surveyDetailsModel
                                                       //               .question!
@@ -734,20 +630,12 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       //               });
                                                       //             },
                                                       //             child: Row(
-                                                      //               crossAxisAlignment: surveyDetailsModel
-                                                      //                   .question!
-                                                      //                   .choices![index]
-                                                      //                   .options!
-                                                      //                   .length>3?CrossAxisAlignment.start:CrossAxisAlignment.center,
-                                                      //               mainAxisAlignment:surveyDetailsModel
-                                                      //                   .question!
-                                                      //                   .choices![index]
-                                                      //                   .options!
-                                                      //                   .length>3? MainAxisAlignment.start:MainAxisAlignment.center,
+                                                      //               crossAxisAlignment: CrossAxisAlignment.center,
+                                                      //               mainAxisAlignment: MainAxisAlignment.end,
                                                       //               children: [
                                                       //                 // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
                                                       //                 Padding(
-                                                      //                   padding:  EdgeInsets.only(left: 2.0,right: 5,bottom: 10),
+                                                      //                   padding:  EdgeInsets.only(left: 2.0,right: 5),
                                                       //                   child: Image
                                                       //                       .asset(
                                                       //                     surveyDetailsModel.question!.choices![index].options![i].select ==
@@ -758,19 +646,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       //                     height: 25,
                                                       //                   ),
                                                       //                 ),
-                                                      //                 Container(
-                                                      //                   // width: 70,
-                                                      //                   // height: 50,
-                                                      //                   padding: const EdgeInsets.only(left: 4.0,right: 10),
-                                                      //                   child: Text(
-                                                      //                     surveyDetailsModel.question!.choices![index].options![i].option!,
-                                                      //                     style: TextStyle(
-                                                      //                       fontFamily: "Poppins",
-                                                      //                       fontSize: 15,
-                                                      //                       fontWeight: FontWeight.bold,
+                                                      //                 Center(
+                                                      //                   child: Container(
+                                                      //                     width: MediaQuery.of(context).size.width/3.5,
+                                                      //                     // height: 50,
+                                                      //                     padding: const EdgeInsets.only(left: 4.0,right: 10),
+                                                      //                     child: Text(
+                                                      //                       surveyDetailsModel.question!.choices![index].options![i].option!,
+                                                      //                       style: TextStyle(
+                                                      //                         fontFamily: "Poppins",
+                                                      //                         fontSize: 15,
+                                                      //                         fontWeight: FontWeight.bold,
+                                                      //                       ),
+                                                      //                       textAlign: TextAlign.center,
+                                                      //                       // overflow: TextOverflow.ellipsis,
                                                       //                     ),
-                                                      //                     textAlign: TextAlign.center,
-                                                      //                     // overflow: TextOverflow.ellipsis,
                                                       //                   ),
                                                       //                 ),
                                                       //
@@ -780,8 +670,118 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       //             ),
                                                       //           ),
                                                       //         );
-                                                      //       },),
+                                                      //       },
+                                                      //
+                                                      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 2,mainAxisSpacing: 0,
+                                                      //   crossAxisSpacing: 0,
+                                                      //   mainAxisExtent: 40,
+                                                      //   crossAxisCount:  surveyDetailsModel
+                                                      //       .question!
+                                                      //       .choices![index]
+                                                      //       .options!
+                                                      //       .length>3?2:2),
+                                                      //
+                                                      //   ),
                                                       // ),
+                                                      subtitle: Container(
+                                                        height: surveyDetailsModel
+                                                            .question!
+                                                            .choices![index]
+                                                            .options!
+                                                            .length*50/1.3,
+                                                        child: ListView.builder(
+                                                          padding: EdgeInsets.all(10),
+                                                          physics: NeverScrollableScrollPhysics(),
+                                                          scrollDirection: surveyDetailsModel
+                                                              .question!
+                                                              .choices![index]
+                                                              .options!
+                                                              .length>2?Axis.vertical:Axis.horizontal,
+                                                            shrinkWrap: true,
+                                                            itemCount:
+                                                                surveyDetailsModel
+                                                                    .question!
+                                                                    .choices![index]
+                                                                    .options!
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int i) {
+                                                              return Container(
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(() {
+                                                                      for (int j = 0; j < surveyDetailsModel.question!.choices![index].options!.length; j++) {
+                                                                        surveyDetailsModel.question!.choices![index].options![j].selct = -1;
+                                                                      }
+                                                                      surveyDetailsModel.question!.choices![index].options![i].selct = 0;
+                                                                      int selection=0;
+                                                                      for(int k = 0; k < surveyDetailsModel.question!.choices!.length; k++){
+                                                                        for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
+                                                                          if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                            selection=selection+1;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                      if(selection==surveyDetailsModel.question!.choices!.length){
+                                                                        isFullNameChangeBtnState = true;
+                                                                      }else{
+                                                                        isFullNameChangeBtnState = false;
+                                                                      }
+                                                                      log(selection.toString());
+                                                                      log(surveyDetailsModel.question!.choices!.length.toString());
+                                                                    });
+                                                                  },
+                                                                  child: Row(
+                                                                    crossAxisAlignment: surveyDetailsModel
+                                                                        .question!
+                                                                        .choices![index]
+                                                                        .options!
+                                                                        .length>2?CrossAxisAlignment.start:CrossAxisAlignment.center,
+                                                                    mainAxisAlignment:surveyDetailsModel
+                                                                        .question!
+                                                                        .choices![index]
+                                                                        .options!
+                                                                        .length>2? MainAxisAlignment.start:MainAxisAlignment.center,
+                                                                    children: [
+                                                                      // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
+                                                                      Padding(
+                                                                        padding:  EdgeInsets.only(left: 2.0,right: 5,bottom: 10),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          surveyDetailsModel.question!.choices![index].options![i].select ==
+                                                                              0
+                                                                              ? 'images/radioonbutton.png'
+                                                                              : 'images/radiobutton.png',
+                                                                          width: 25,
+                                                                          height: 25,
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        // width: 70,
+                                                                        // height: 50,
+                                                                        padding: const EdgeInsets.only(left: 4.0,right: 10),
+                                                                        child: Text(
+                                                                          surveyDetailsModel.question!.choices![index].options![i].option!,
+                                                                          style: TextStyle(
+                                                                            fontFamily: "Poppins",
+                                                                            fontSize: 15,
+                                                                            fontWeight: FontWeight.bold,
+                                                                          ),
+                                                                          textAlign: TextAlign.center,
+                                                                          // overflow: TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+
+
+
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },),
+                                                      ),
 
                                                     );
                                                   }),
