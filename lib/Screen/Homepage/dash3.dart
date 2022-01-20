@@ -4,6 +4,7 @@
   */
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ACI/Model/appointment_details.dart';
 import 'package:ACI/Model/taksmodel.dart';
@@ -58,6 +59,9 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
   }
   void getsurvey() async {
     isload = true;
+    setState(() {
+
+    });
     http.Response? response =
     await resourceRepository.getTasks();
     taskmodel = Taksmodel.fromJson(
@@ -225,11 +229,11 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       color: AppColors.APP_BLUE1),
                 )),
           ),
-          taskmodel.tasks!=null?ListView.builder(
+          taskmodel.tasks!=null||taskmodel.tasks!.length.toString()!="0"?ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              // physics: NeverScrollableScrollPhysics(),
-              physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              physics: NeverScrollableScrollPhysics(),
+              // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               itemCount: taskmodel.tasks!.length,
               itemBuilder: (BuildContext context,
                   int index) {
@@ -311,7 +315,8 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       style: kSubtitleTextSyule1.copyWith(
                           fontWeight: FontWeight.bold,
                           height: 1.5,
-                          color: Colors.white
+                          color: Colors.white,
+                        fontSize: 22
                       ),
                     ),
                   ),
@@ -327,7 +332,9 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       style: kSubtitleTextSyule1.copyWith(
                           fontWeight: FontWeight.w600,
                           height: 1.5,
-                          color: Colors.white
+                          color: Colors.white,
+                          fontSize: 18
+
                       ),
                     ),
                   ),
@@ -343,7 +350,8 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       style: kSubtitleTextSyule1.copyWith(
                           fontWeight: FontWeight.w600,
                           height: 1.5,
-                          color: Colors.white
+                          color: Colors.white,
+                          fontSize: 18
                       ),
                     ),
                   ),

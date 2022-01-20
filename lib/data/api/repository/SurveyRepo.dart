@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:ACI/Model/AnswerModel.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -63,9 +64,9 @@ class SurveyRepo {
           Uri.parse(
               '${AppStrings.BASE_URL}/api/v1/appointment/1'),
            );
-      log(response.body);
-      print(response.request!.headers);
-      log(response.request!.url.toString());;
+      // log(response.body);
+      // print(response.request!.headers);
+      // log(response.request!.url.toString());;
       return response;
     } on SocketException {
       return null;
@@ -78,9 +79,9 @@ class SurveyRepo {
           Uri.parse(
               '${AppStrings.BASE_URL}/api/v1/tasks'),
            );
-      log(response.body);
-      print(response.request!.headers);
-      log(response.request!.url.toString());;
+      // log(response.body);
+      // print(response.request!.headers);
+      // log(response.request!.url.toString());;
       return response;
     } on SocketException {
       return null;
@@ -92,6 +93,36 @@ class SurveyRepo {
       http.Response response = await client.get(
           Uri.parse(
               '${AppStrings.BASE_URL}/api/v1/task/${taskId}'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> getorgchannelmember() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.get(
+          Uri.parse(
+              '${AppStrings.BASE_URL}/api/v1/admin/org-channel-member/organization/1/channel/1'),
+           );
+      log(response.body);
+      print(response.request!.headers);
+      log(response.request!.url.toString());;
+      return response;
+    } on SocketException {
+      return null;
+    }
+  }
+  Future<http.Response?> submitanswers(String questionId,AnswerModel answerModel) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      http.Response response = await client.post(
+          Uri.parse(
+              '${AppStrings.BASE_URL}/api/v1/answer/user/${globalCurrentUserId}/question/${questionId}'),body: jsonEncode(answerModel)
            );
       log(response.body);
       print(response.request!.headers);

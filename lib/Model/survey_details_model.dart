@@ -260,7 +260,7 @@ class Options {
   dynamic? _url;
   int? _select=-1;
 
-  String? get optionId => _optionId;
+  dynamic? get optionId => _optionId;
   String? get option => _option;
   int? get select => _select;
   dynamic? get url => _url;

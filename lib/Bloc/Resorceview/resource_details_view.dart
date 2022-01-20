@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:ACI/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -281,7 +282,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
       child: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          // height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -292,101 +293,101 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                     color: Colors.blue,
                     height: 70.0,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 70),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 8.0),
-                            child: (resourceDetail != null &&
-                                    resourceDetail.isMyResource != null &&
-                                    resourceDetail
-                                        .isMyResource!) //resourceDetail.isMyResource != null &&
-                                ? Column(
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        child:
-                                            //(resourceDetail.favorite == 1)
-                                            (resourceDetail.favorite==1)
-                                                ? Icon(
-                                                    Icons.favorite,
-                                                    size: 30,
-                                                    color: Colors.red,
-                                                  )
-                                                : Icon(
-                                                    Icons.favorite_border,
-                                                    size: 30,
-                                                    color: Colors.red,
-                                                  ),
-                                        onTap: () {
-                                          // AddResourceModel updateResource = resourceDetail;
-                                          ResourceResults updateResource =
-                                              resourceDetail;
-
-                                          if (updateResource.favorite == 0)
-                                            updateResource.favorite = 1;
-                                          else
-                                            updateResource.favorite = 0;
-
-                                          BlocProvider.of<ResourceViewBloc>(context).add(UpdateResourceDetails(updateResource));
-
-                                          setState(() {
-                                            isFavorite = !isFavorite;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        "Favorite",
-                                        style: TextStyle(fontSize: 10),
-                                      )
-                                    ],
-                                  )
-                                : Column(
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        child: Icon(
-                                          Icons.add_circle,
-                                          size: 30,
-                                          color: AppColors.APP_GREEN,
-                                        ),
-                                        onTap: () {
-                                          ResourceResults addResource =
-                                              resourceDetail;
-                                          addResource.favorite = 0;
-                                          if (addResource.lastName == null) {
-                                            addResource.lastName = "";
-                                          }
-
-                                          AddUpdateReviewModel
-                                              addUpdateReviewModel =
-                                              new AddUpdateReviewModel();
-                                          addUpdateReviewModel.review = "";
-                                          addUpdateReviewModel.rating = 0;
-                                          ResourceRepo repo=ResourceRepo();
-                                          repo.addreviewresource(addResource, "", addUpdateReviewModel);
-                                          resourceDetail.isMyResource=true;
-                                          setState(() {
-                                            try {
-
-                                            } on Exception catch (exception) {
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        "Add Resource",
-                                        style: TextStyle(fontSize: 10),
-                                      )
-                                    ],
-                                  ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 70),
+                  //   child: Container(
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: <Widget>[
+                  //         Padding(
+                  //           padding: EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 8.0),
+                  //           child: (resourceDetail != null &&
+                  //                   resourceDetail.isMyResource != null &&
+                  //                   resourceDetail
+                  //                       .isMyResource!) //resourceDetail.isMyResource != null &&
+                  //               ? Column(
+                  //                   children: <Widget>[
+                  //                     GestureDetector(
+                  //                       child:
+                  //                           //(resourceDetail.favorite == 1)
+                  //                           (resourceDetail.favorite==1)
+                  //                               ? Icon(
+                  //                                   Icons.favorite,
+                  //                                   size: 30,
+                  //                                   color: Colors.red,
+                  //                                 )
+                  //                               : Icon(
+                  //                                   Icons.favorite_border,
+                  //                                   size: 30,
+                  //                                   color: Colors.red,
+                  //                                 ),
+                  //                       onTap: () {
+                  //                         // AddResourceModel updateResource = resourceDetail;
+                  //                         ResourceResults updateResource =
+                  //                             resourceDetail;
+                  //
+                  //                         if (updateResource.favorite == 0)
+                  //                           updateResource.favorite = 1;
+                  //                         else
+                  //                           updateResource.favorite = 0;
+                  //
+                  //                         BlocProvider.of<ResourceViewBloc>(context).add(UpdateResourceDetails(updateResource));
+                  //
+                  //                         setState(() {
+                  //                           isFavorite = !isFavorite;
+                  //                         });
+                  //                       },
+                  //                     ),
+                  //                     Text(
+                  //                       "Favorite",
+                  //                       style: TextStyle(fontSize: 10),
+                  //                     )
+                  //                   ],
+                  //                 )
+                  //               : Column(
+                  //                   children: <Widget>[
+                  //                     GestureDetector(
+                  //                       child: Icon(
+                  //                         Icons.add_circle,
+                  //                         size: 30,
+                  //                         color: AppColors.APP_GREEN,
+                  //                       ),
+                  //                       onTap: () {
+                  //                         ResourceResults addResource =
+                  //                             resourceDetail;
+                  //                         addResource.favorite = 0;
+                  //                         if (addResource.lastName == null) {
+                  //                           addResource.lastName = "";
+                  //                         }
+                  //
+                  //                         AddUpdateReviewModel
+                  //                             addUpdateReviewModel =
+                  //                             new AddUpdateReviewModel();
+                  //                         addUpdateReviewModel.review = "";
+                  //                         addUpdateReviewModel.rating = 0;
+                  //                         ResourceRepo repo=ResourceRepo();
+                  //                         repo.addreviewresource(addResource, "", addUpdateReviewModel);
+                  //                         resourceDetail.isMyResource=true;
+                  //                         setState(() {
+                  //                           try {
+                  //
+                  //                           } on Exception catch (exception) {
+                  //                           }
+                  //                         });
+                  //                       },
+                  //                     ),
+                  //                     Text(
+                  //                       "Add Resource",
+                  //                       style: TextStyle(fontSize: 10),
+                  //                     )
+                  //                   ],
+                  //                 ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned.fill(
                     child: Align(
                         alignment: Alignment.topCenter,
@@ -415,7 +416,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                             backgroundImage: (resourceDetail != null &&
                                     resourceDetail.profilePicture != null)
                                 ? NetworkImage(
-                                    (resourceDetail.profilePicture!))
+                                    (resourceDetail.profilePicture!.toString()))
                                 : AssetImage("images/photo_avatar.png")
                                     as ImageProvider,
                             radius: 50,
@@ -504,46 +505,46 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Visibility(
-                                  //visible: true,
-                                  visible: (resourceDetail != null &&
-                                          resourceDetail.channelDetails !=
-                                              null &&
-                                          resourceDetail.channelDetails!
-                                                  .channelIcon! !=
-                                              null &&
-                                          resourceDetail.channelDetails!
-                                                  .channelIcon! !=
-                                              "")
-                                      ? true
-                                      : false,
-                                  child: Column(children: <Widget>[
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    CircleAvatar(
-                                      backgroundImage: (resourceDetail !=
-                                                  null &&
-                                              resourceDetail.channelDetails !=
-                                                  null &&
-                                              resourceDetail.channelDetails!
-                                                      .channelIcon !=
-                                                  null &&
-                                              resourceDetail.channelDetails!
-                                                      .channelIcon !=
-                                                  "")
-                                          ? NetworkImage((resourceDetail
-                                              .channelDetails!.channelIcon!))
-                                          : AssetImage(
-                                                  "images/photo_avatar.png")
-                                              as ImageProvider,
-                                      radius: 25,
-                                    ),
-                                    SizedBox(
-                                      height: 7,
-                                    ),
-                                  ]),
-                                ),
+                                // Visibility(
+                                //   //visible: true,
+                                //   visible: (resourceDetail != null &&
+                                //           resourceDetail.channelDetails !=
+                                //               null &&
+                                //           resourceDetail.channelDetails!
+                                //                   .channelIcon! !=
+                                //               null &&
+                                //           resourceDetail.channelDetails!
+                                //                   .channelIcon! !=
+                                //               "")
+                                //       ? true
+                                //       : false,
+                                //   child: Column(children: <Widget>[
+                                //     SizedBox(
+                                //       height: 5,
+                                //     ),
+                                //     CircleAvatar(
+                                //       backgroundImage: (resourceDetail !=
+                                //                   null &&
+                                //               resourceDetail.channelDetails !=
+                                //                   null &&
+                                //               resourceDetail.channelDetails!
+                                //                       .channelIcon !=
+                                //                   null &&
+                                //               resourceDetail.channelDetails!
+                                //                       .channelIcon !=
+                                //                   "")
+                                //           ? NetworkImage((resourceDetail
+                                //               .channelDetails!.channelIcon!))
+                                //           : AssetImage(
+                                //                   "images/photo_avatar.png")
+                                //               as ImageProvider,
+                                //       radius: 25,
+                                //     ),
+                                //     SizedBox(
+                                //       height: 7,
+                                //     ),
+                                //   ]),
+                                // ),
                                 SizedBox(
                                   height: 5,
                                 ),
@@ -736,8 +737,36 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                 ),
               ),
               SizedBox(
-                height: 4,
+                height: 10,
               ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0,top: 8),
+                    child: Text("Notes", style:
+                    kSubtitleTextSyule1.copyWith(
+                        fontWeight: FontWeight.w500,
+                        height: 1,
+                        color: Colors.black
+                    ),
+                        textAlign: TextAlign.left
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0,top: 10),
+                child: Text(resourceDetail.notes.toString(), style:
+                kSubtitleTextSyule1.copyWith(
+                    fontWeight: FontWeight.w200,
+                    height: 1,
+                    color: Colors.black
+                ),
+                ),
+              )
               //////Show reviews list
             ],
           ),

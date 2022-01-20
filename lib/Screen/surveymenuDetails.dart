@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:ACI/Model/AnswerModel.dart';
 import 'package:ACI/Model/SurveyModel.dart';
 import 'package:ACI/Model/survey_details_model.dart';
 import 'package:ACI/Screen/ScreenCheckSuccess.dart';
@@ -19,6 +20,7 @@ import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 
 import 'ScreenCheck.dart';
+import 'mydashboard.dart';
 
 class SurveymenuDetails extends StatefulWidget {
   final String questionId;
@@ -67,7 +69,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
         await resourceRepository.getSurveyDetails(widget.questionId.toString());
     surveyDetailsModel = SurveyDetailsModel.fromJson(
         json.decode(utf8.decode(response!.bodyBytes)));
-    taskpercentage="0."+surveyDetailsModel.question!.completionProgress.toString().replaceAll("%", "");
+    if(surveyDetailsModel.question!=null){
+      taskpercentage="0."+surveyDetailsModel.question!.completionProgress.toString().replaceAll("%", "");
+
+    }
 
     if(surveyDetailsModel.question!.expiryDate !=null){
       try{
@@ -111,6 +116,12 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () =>                       Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,)
+            ,
+          ),
           title: Text('Task'),
           centerTitle: true,
           backgroundColor: AppColors.APP_BLUE,
@@ -229,8 +240,12 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                   // ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      // Navigator.of(context).pop();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,);
+
                     },
+
                     child: Container(
                       width: MediaQuery.of(context).size.width / 1.1,
                       child: Padding(
@@ -306,7 +321,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                       bottom: 15,
                     ),
                     child: Text(
-                      "1." + surveyDetailsModel.question!.question.toString(),
+                      surveyDetailsModel.question!.question.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,
@@ -345,7 +360,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                         )
                       : surveyDetailsModel.question!.questionType.toString() ==
                               "video"
-                          ? Container(
+                          ?
+                  Container(
                               padding: EdgeInsets.all(4),
                               width: MediaQuery.of(context).size.width,
                               height: 200,
@@ -615,48 +631,6 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                         height: 25,
                                                                       ),
                                                                     ),
-                                                                    // Radio(
-                                                                    //     value: 0,
-                                                                    //     groupValue: surveyDetailsModel
-                                                                    //         .question!
-                                                                    //         .choices![
-                                                                    //             index]
-                                                                    //         .options![
-                                                                    //             i]
-                                                                    //         .select,
-                                                                    //     onChanged:
-                                                                    //         (onChanged) {
-                                                                    //       print(surveyDetailsModel
-                                                                    //           .question!
-                                                                    //           .choices![
-                                                                    //               index]
-                                                                    //           .options!
-                                                                    //           .length);
-                                                                    //       print(i
-                                                                    //           .toString());
-                                                                    //       setState(
-                                                                    //           () {
-                                                                    //         isFullNameChangeBtnState =
-                                                                    //             true;
-                                                                    //         for (int j =
-                                                                    //                 0;
-                                                                    //             j < surveyDetailsModel.question!.choices![index].options!.length;
-                                                                    //             j++) {
-                                                                    //           surveyDetailsModel
-                                                                    //               .question!
-                                                                    //               .choices![index]
-                                                                    //               .options![j]
-                                                                    //               .selct = -1;
-                                                                    //         }
-                                                                    //         surveyDetailsModel
-                                                                    //             .question!
-                                                                    //             .choices![
-                                                                    //                 index]
-                                                                    //             .options![
-                                                                    //                 i]
-                                                                    //             .selct = 0;
-                                                                    //       });
-                                                                    //     }),
                                                                   ],
                                                                 ),
                                                               );
@@ -704,24 +678,67 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             padding: EdgeInsets.all(8.0),
                             onPressed: () async {
                               if (isFullNameChangeBtnState) {
-                                if(surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId){
-                                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                                    title: "Successful",
-                                    id: globalTaskID.toString(),
-                                    page: "1",
-                                  )),)
-                                      .then((val)=>getsurvey());
-
-                                }else{
-                                  Navigator.of(context)
-                                      .pushReplacement(
-                                    new MaterialPageRoute(
-                                        builder: (_) =>
-                                        new SurveymenuDetails(questionId: surveyDetailsModel.question!.nextQuestionId.toString())),
-                                  )
-                                      .then((val) => getsurvey());
+                                Answer answers=Answer();
+                                AnswerModel answermodel=AnswerModel(answers: []);
+                                List<Answer> answerslist=[];
+                              if(surveyDetailsModel.question!.answerType == "radio"){
+                                  answers.questionId=surveyDetailsModel.question!.questionId!;
+                                  for (int j = 0; j < surveyDetailsModel.question!.options!.length; j++) {
+                                    if(surveyDetailsModel.question!.options![j].select == 0){
+                                      answermodel.answers.add(Answer(optionId: int.parse(surveyDetailsModel.question!.options![j].optionId.toString()),optionNotes: "",questionId: int.parse(surveyDetailsModel.question!.questionId.toString())));
+                                    }
+                                  }
+                                }else if(surveyDetailsModel.question!.answerType == "choices"){
+                                  for(int i=0;i<surveyDetailsModel.question!.choices!.length;i++){
+                                    for(int k=0;k<surveyDetailsModel.question!.choices![i].options!.length;k++){
+                                      if(surveyDetailsModel.question!.choices![i].options![k].select==0){
+                                        answermodel.answers.add(Answer(optionId: int.parse(surveyDetailsModel.question!.choices![i].options![k].optionId.toString()),optionNotes: "",questionId: int.parse(surveyDetailsModel.question!.choices![i].questionId.toString())));
+                                      }
+                                    }
+                                  }
                                 }
-                                
+
+                                log(answermodel.toJson().toString());
+                                http.Response? response = await  resourceRepository.submitanswers(surveyDetailsModel.question!.questionId.toString(), answermodel);
+                                if(response!.statusCode==200){
+                                  if(surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId){
+                                    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                                      title: "Successful",
+                                      id: globalTaskID.toString(),
+                                      page: "1",
+                                    )),)
+                                        .then((val)=>getsurvey());                                if(surveyDetailsModel.question!.nextQuestionId==surveyDetailsModel.question!.questionId){
+                                      // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                                      //   title: "Successful",
+                                      //   id: globalTaskID.toString(),
+                                      //   page: "1",
+                                      // )),)
+                                      //     .then((val)=>getsurvey());
+
+                                    }else{
+                                      Navigator.of(context)
+                                          .pushReplacement(
+                                        new MaterialPageRoute(
+                                            builder: (_) =>
+                                            new SurveymenuDetails(questionId: surveyDetailsModel.question!.nextQuestionId.toString())),
+                                      )
+                                          .then((val) => getsurvey());
+                                    }
+
+
+                                  }else{
+                                    Navigator.of(context)
+                                        .pushReplacement(
+                                      new MaterialPageRoute(
+                                          builder: (_) =>
+                                          new SurveymenuDetails(questionId: surveyDetailsModel.question!.nextQuestionId.toString())),
+                                    )
+                                        .then((val) => getsurvey());
+                                  }
+
+                                }
+
+
                                 // CoolAlert.show(
                                 //     context: context,
                                 //     type: CoolAlertType.success,

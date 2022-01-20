@@ -11,10 +11,10 @@ import 'package:ACI/utils/values/app_colors.dart';
 import 'package:ACI/utils/values/app_strings.dart';
 
 final List<String> imgList = [
-  "https://d2c56lckh61bcl.cloudfront.net/live/covid_splash1.jpg",
-  "https://d2c56lckh61bcl.cloudfront.net/live/covid_splash2.jpg",
-  "https://d2c56lckh61bcl.cloudfront.net/live/covid_splash3.jpg",
-  'https://d2c56lckh61bcl.cloudfront.net/live/covid_splash4.jpg'
+  "https://d2c56lckh61bcl.cloudfront.net/live/aci_splash1.jpg",
+  "https://d2c56lckh61bcl.cloudfront.net/live/aci_splash2.jpg",
+  "https://d2c56lckh61bcl.cloudfront.net/live/aci_splash3.jpg",
+  'https://d2c56lckh61bcl.cloudfront.net/live/aci_splash4.jpg'
 ];
 
 class LoginInitView extends StatefulWidget {

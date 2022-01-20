@@ -117,7 +117,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
 //                 Navigator.pop(context);
 //               },
 //             )),
-        backgroundColor: AppColors.APP_WHITE,
+        backgroundColor: AppColors.APP_LIGHT_BLUE_30,
         body: BlocListener<AppMessagesBloc, AppMessagesState>(
           listener: (context, state) {},
           child: BlocBuilder<AppMessagesBloc, AppMessagesState>(
@@ -462,13 +462,24 @@ class AppMessagesViewState extends State<AppMessagesView> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  String share = ''' 
+                                  if(messageList.messages![index].messageBody!.contentType ==
+                                      "plain"){
+                                    String share = ''' 
 ${messageList.messages![index].messageTitle}
 
-${messageList.messages![index].messageBody!.contentUri!}
 ''';
 
-                                  Share.share(share);
+                                    Share.share(share);
+                                  }else{
+                                    String share = ''' 
+${messageList.messages![index].messageTitle}
+
+${messageList.messages![index].messageBody!.contentUri!.toString()}
+''';
+
+                                    Share.share(share);
+                                  }
+
                                   String response =
                                   await resourceRepository.shareApi(
                                       messageList
@@ -634,8 +645,7 @@ ${messageList.messages![index].messageBody!.contentUri!}
               .toString(),
           message: messageList.messages![index].messageBody!.message.toString(),
           image: messageList.messages![index].orgLogo.toString(),
-          date:
-          messageList.messages![index].messageBody!.messageSent.toString(),
+          date: messageList.messages![index].messageBody!.messageSent.toString(),
           orgName: messageList.messages![index].orgName.toString(),
         ),
       );
@@ -728,7 +738,7 @@ class DialogOverlayState extends State<DialogOverlay>
                               Padding(
                                   padding: EdgeInsets.all(3.0),
                                   child: CircleAvatar(
-                                    backgroundImage: ((widget.image != null &&
+                                    backgroundImage: ((widget.image != "null" &&
                                         widget.image != "")
                                         ? NetworkImage(widget.image!)
                                         : AssetImage("images/photo_avatar.png")
@@ -814,7 +824,7 @@ class DialogOverlayState extends State<DialogOverlay>
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                (widget.date != null && widget.date != "")
+                                (widget.date != "null" && widget.date != "")
                                     ? widget.date!
                                     : "",
                                 textAlign: TextAlign.right,

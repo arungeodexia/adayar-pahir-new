@@ -526,9 +526,11 @@ class _MydashboardState extends State<Mydashboard> {
       //{orgName: The+RISE+USA, orgLogo: https://d1rtv5ttcyt7b.cloudfront.net/app/1596688715903_rise.png,
       //print("msgData :==>"+msgData);
 
-      //print("contentURI :==>"+contentURI);
-      print("globalISPNPageOpened :==>" + globalISPNPageOpened.toString());
-      if (globalISPNPageOpened) Navigator.of(context).pop();
+      // print("contentURI :==>"+msgData);
+      // print("contentURI :==>"+contentType);
+      // print("contentURI :==>"+messageTitle);
+      // print("globalISPNPageOpened :==>" + globalISPNPageOpened.toString());
+      // if (globalISPNPageOpened) Navigator.of(context).pop();
 
       if (contentType == "pdf") {
         msgData = orgChannelName + "  Has sent a PDF.Do you want to open?  ";
@@ -542,10 +544,10 @@ class _MydashboardState extends State<Mydashboard> {
 
       CoolAlert.show(
           context: context,
-          type: CoolAlertType.confirm,
-          text: msgData,
+          type: contentType == "plain"?CoolAlertType.info:CoolAlertType.confirm,
+          text: contentType == "plain"?msgData.replaceAll("+", " "):msgData,
           title: messageTitle,
-          confirmBtnText: "Proceed",
+          confirmBtnText: contentType == "plain"?"OK":"Proceed",
           loopAnimation: true,
           onConfirmBtnTap: () async {
             Navigator.of(context).pop();
