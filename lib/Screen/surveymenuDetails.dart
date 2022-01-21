@@ -509,7 +509,117 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                         ),
                                       ),
                                   )
-                                  : Container(),
+                                  : surveyDetailsModel.question!.answerType == "checkbox"
+                                  ?Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                                color: AppColors.APP_LIGHT_BLUE_50,
+                                child: Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 20,left: 20,bottom: 20),
+                                    // height: 200.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        physics:
+                                        NeverScrollableScrollPhysics(),
+                                        // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                                        itemCount: surveyDetailsModel
+                                            .question!.options!.length,
+                                        itemBuilder: (BuildContext context,
+                                            int index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              isFullNameChangeBtnState = true;
+                                              // for (int j = 0;j < surveyDetailsModel.question!.options!.length; j++) {
+                                              //   surveyDetailsModel.question!.options![j].selct = -1;
+                                              // }
+                                              if(surveyDetailsModel.question!.options![index].select==0){
+                                                surveyDetailsModel.question!.options![index].selct = -1;
+                                              }else{
+                                                surveyDetailsModel.question!.options![index].selct = 0;
+                                              }
+                                              setState(() {});
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(5),
+                                              child: Row(
+                                                children: [
+                                                  CachedNetworkImage(
+                                                    width: 50,
+                                                    height: 50,
+                                                    fit: BoxFit.cover,
+                                                    imageUrl:
+                                                    surveyDetailsModel
+                                                        .question!
+                                                        .options![index]
+                                                        .url
+                                                        .toString(),
+                                                    placeholder:
+                                                        (context, url) =>
+                                                        Center(
+                                                          child: Container(
+                                                              width: 30,
+                                                              height: 30,
+                                                              child:
+                                                              new CircularProgressIndicator()),
+                                                        ),
+                                                    errorWidget: (context,
+                                                        url, error) =>
+                                                    new Icon(
+                                                      Icons.error,
+                                                      size: 30,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 50,
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    width:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                        2.8,
+                                                    child: Text(
+                                                      surveyDetailsModel
+                                                          .question!
+                                                          .options![index]
+                                                          .option!,
+                                                      style: TextStyle(
+                                                          fontFamily:
+                                                          "Poppins",
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                          color:
+                                                          Colors.black),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Image.asset(
+                                                    surveyDetailsModel
+                                                        .question!
+                                                        .options![
+                                                    index]
+                                                        .select ==
+                                                        0
+                                                        ? 'images/checkbox_checked.png'
+                                                        : 'images/checkbox.png',
+                                                    width: 25,
+                                                    height: 25,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              ):Container(),
                             ],
                           ),
                       ),
@@ -683,7 +793,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       //
                                                       //   ),
                                                       // ),
-                                                      subtitle: Container(
+                                                      subtitle:  surveyDetailsModel
+                                                          .question!
+                                                          .choices![index].answerType=="radio"?
+                                                      Container(
                                                         height: surveyDetailsModel
                                                             .question!
                                                             .choices![index]
@@ -718,8 +831,20 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       surveyDetailsModel.question!.choices![index].options![i].selct = 0;
                                                                       int selection=0;
                                                                       for(int k = 0; k < surveyDetailsModel.question!.choices!.length; k++){
-                                                                        for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
-                                                                          if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                        if(surveyDetailsModel.question!.choices![k].answerType=="radio"){
+                                                                          for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
+                                                                            if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                              selection=selection+1;
+                                                                            }
+                                                                          }
+                                                                        }else if(surveyDetailsModel.question!.choices![k].answerType=="checkbox"){
+                                                                          int check=0;
+                                                                          for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
+                                                                            if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                              check=1;
+                                                                            }
+                                                                          }
+                                                                          if(check==1){
                                                                             selection=selection+1;
                                                                           }
                                                                         }
@@ -761,7 +886,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       Container(
                                                                         // width: 70,
                                                                         // height: 50,
-                                                                        padding: const EdgeInsets.only(left: 4.0,right: 10),
+                                                                        padding: const EdgeInsets.only(left: 4.0,right: 10,bottom: 5,top: 3),
                                                                         child: Text(
                                                                           surveyDetailsModel.question!.choices![index].options![i].option!,
                                                                           style: TextStyle(
@@ -781,7 +906,124 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                 ),
                                                               );
                                                             },),
-                                                      ),
+                                                      ):surveyDetailsModel
+                                                          .question!
+                                                          .choices![index].answerType=="checkbox"?Container(
+                                                        height: surveyDetailsModel
+                                                            .question!
+                                                            .choices![index]
+                                                            .options!
+                                                            .length*50/1.3,
+                                                        child: ListView.builder(
+                                                          padding: EdgeInsets.all(10),
+                                                          physics: NeverScrollableScrollPhysics(),
+                                                          scrollDirection: surveyDetailsModel
+                                                              .question!
+                                                              .choices![index]
+                                                              .options!
+                                                              .length>2?Axis.vertical:Axis.horizontal,
+                                                            shrinkWrap: true,
+                                                            itemCount:
+                                                                surveyDetailsModel
+                                                                    .question!
+                                                                    .choices![index]
+                                                                    .options!
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int i) {
+                                                              return Container(
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(() {
+                                                                      // for (int j = 0; j < surveyDetailsModel.question!.choices![index].options!.length; j++) {
+                                                                      //   surveyDetailsModel.question!.choices![index].options![j].selct = -1;
+                                                                      // }
+                                                                      // surveyDetailsModel.question!.choices![index].options![i].selct = 0;
+                                                                      if(surveyDetailsModel.question!.choices![index].options![i].select == 0){
+                                                                        surveyDetailsModel.question!.choices![index].options![i].selct = -1;
+                                                                      }else{
+                                                                        surveyDetailsModel.question!.choices![index].options![i].selct = 0;
+                                                                      }
+                                                                      int selection=0;
+                                                                      for(int k = 0; k < surveyDetailsModel.question!.choices!.length; k++){
+                                                                        if(surveyDetailsModel.question!.choices![k].answerType=="radio"){
+                                                                          for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
+                                                                            if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                              selection=selection+1;
+                                                                            }
+                                                                          }
+                                                                        }else if(surveyDetailsModel.question!.choices![k].answerType=="checkbox"){
+                                                                          int check=0;
+                                                                          for(int l = 0; l < surveyDetailsModel.question!.choices![k].options!.length; l++){
+                                                                            if(surveyDetailsModel.question!.choices![k].options![l].select==0){
+                                                                              check=1;
+                                                                            }
+                                                                          }
+                                                                          if(check==1){
+                                                                            selection=selection+1;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                      if(selection==surveyDetailsModel.question!.choices!.length){
+                                                                        isFullNameChangeBtnState = true;
+                                                                      }else{
+                                                                        isFullNameChangeBtnState = false;
+                                                                      }
+                                                                      log(selection.toString());
+                                                                      log(surveyDetailsModel.question!.choices!.length.toString());
+                                                                    });
+                                                                  },
+                                                                  child: Row(
+                                                                    crossAxisAlignment: surveyDetailsModel
+                                                                        .question!
+                                                                        .choices![index]
+                                                                        .options!
+                                                                        .length>2?CrossAxisAlignment.start:CrossAxisAlignment.center,
+                                                                    mainAxisAlignment:surveyDetailsModel
+                                                                        .question!
+                                                                        .choices![index]
+                                                                        .options!
+                                                                        .length>2? MainAxisAlignment.start:MainAxisAlignment.center,
+                                                                    children: [
+                                                                      // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
+                                                                      Padding(
+                                                                        padding:  EdgeInsets.only(left: 2.0,right: 5,bottom: 10),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          surveyDetailsModel.question!.choices![index].options![i].select ==
+                                                                              0
+                                                                              ? 'images/checkbox_checked.png'
+                                                                              : 'images/checkbox.png',
+                                                                          width: 25,
+                                                                          height: 25,
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        // width: 70,
+                                                                        // height: 50,
+                                                                        padding: const EdgeInsets.only(left: 4.0,right: 20,top: 5,bottom: 10),
+                                                                        child: Text(
+                                                                          surveyDetailsModel.question!.choices![index].options![i].option!,
+                                                                          style: TextStyle(
+                                                                            fontFamily: "Poppins",
+                                                                            fontSize: 15,
+                                                                            fontWeight: FontWeight.bold,
+                                                                          ),
+                                                                          textAlign: TextAlign.center,
+                                                                          // overflow: TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+
+
+
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },),
+                                                      ):Container(),
 
                                                     );
                                                   }),
