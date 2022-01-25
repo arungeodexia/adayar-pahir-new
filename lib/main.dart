@@ -30,6 +30,7 @@ import 'package:ACI/Screen/splash_view.dart';
 import 'package:ACI/SimpleBlocObserver.dart';
 import 'package:ACI/Auth_bloc.dart';
 import 'package:ACI/data/globals.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -92,6 +93,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return EasyLocalization(
       supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
       path: 'i18n', // <-- change the path of the translation files
@@ -104,6 +107,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               fontFamily: "Poppins",
+                textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+                  bodyText1: GoogleFonts.oswald(textStyle: textTheme.bodyText1),
+                ),
               // primarySwatch: Colors.,
               appBarTheme: AppBarTheme(
                 backgroundColor: AppColors.APP_BLUE,

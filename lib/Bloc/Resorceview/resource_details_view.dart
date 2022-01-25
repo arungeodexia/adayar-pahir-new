@@ -455,7 +455,8 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                       ? resourceDetail.skill!
                                       : "",
                                   style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
                                       color: AppColors.APP_BLACK_10),
                                 ),
                                 SizedBox(
@@ -469,7 +470,8 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                                         "${(resourceDetail.city == null) ? "" : "${resourceDetail.city.toString()}, ${resourceDetail.state.toString()}"}",
                                         style: TextStyle(
                                             color: AppColors.APP_BLACK_10,
-                                            fontSize: 10),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14),
                                       ),
                                       SizedBox(
                                         height: 2,
@@ -747,7 +749,8 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                     kSubtitleTextSyule1.copyWith(
                         fontWeight: FontWeight.w500,
                         height: 1,
-                        color: Colors.black
+                        color: Colors.black,
+                      fontSize: 19
                     ),
                         textAlign: TextAlign.left
                     ),
@@ -758,12 +761,13 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
                 height: 0,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0,top: 10),
+                padding: const EdgeInsets.only(left: 12.0,top: 10,bottom: 20),
                 child: Text(resourceDetail.notes.toString(), style:
                 kSubtitleTextSyule1.copyWith(
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w300,
                     height: 1,
-                    color: Colors.black
+                    color: Colors.black,
+                  fontSize: 14,letterSpacing: 1,wordSpacing: 1
                 ),
                 ),
               )

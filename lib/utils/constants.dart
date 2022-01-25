@@ -16,13 +16,13 @@ const kHeadingextStyle = TextStyle(
   fontSize: 28,
   color: kTextColor,
   fontWeight: FontWeight.bold,
-    fontFamily: "Poppins"
+    // fontFamily: "Poppins"
 
 );
 const kSubheadingextStyle = TextStyle(
   fontSize: 24,
   color: AppColors.APP_BLUE,
-  fontFamily: "Poppins",
+  // fontFamily: "Poppins",
 
   height: 2,
 );
@@ -31,20 +31,20 @@ const kTitleTextStyle = TextStyle(
   fontSize: 20,
   color: kTextColor,
   fontWeight: FontWeight.bold,
-    fontFamily: "Poppins"
+    // fontFamily: "Poppins"
 
 );
 
 const kSubtitleTextSyule = TextStyle(
   fontSize: 18,
   color: kTextColor,
-    fontFamily: "Poppins"
+    // fontFamily: "Poppins"
 
   // fontWeight: FontWeight.bold,
 );
 const kSubtitleTextSyule1 = TextStyle(
   fontSize: 16,
   color: AppColors.APP_BLUE,
-  fontFamily: "Poppins"
+  // fontFamily: "Poppins"
   // fontWeight: FontWeight.bold,
 );

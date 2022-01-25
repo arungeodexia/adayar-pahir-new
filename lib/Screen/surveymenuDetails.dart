@@ -805,11 +805,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                         child: ListView.builder(
                                                           padding: EdgeInsets.all(10),
                                                           physics: NeverScrollableScrollPhysics(),
-                                                          scrollDirection: surveyDetailsModel
-                                                              .question!
-                                                              .choices![index]
-                                                              .options!
-                                                              .length>2?Axis.vertical:Axis.horizontal,
+                                                          scrollDirection: Axis.vertical,
                                                             shrinkWrap: true,
                                                             itemCount:
                                                                 surveyDetailsModel
@@ -859,16 +855,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                     });
                                                                   },
                                                                   child: Row(
-                                                                    crossAxisAlignment: surveyDetailsModel
-                                                                        .question!
-                                                                        .choices![index]
-                                                                        .options!
-                                                                        .length>2?CrossAxisAlignment.start:CrossAxisAlignment.center,
-                                                                    mainAxisAlignment:surveyDetailsModel
-                                                                        .question!
-                                                                        .choices![index]
-                                                                        .options!
-                                                                        .length>2? MainAxisAlignment.start:MainAxisAlignment.center,
+                                                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                                                    mainAxisAlignment:MainAxisAlignment.start,
                                                                     children: [
                                                                       // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
                                                                       Padding(
@@ -917,11 +905,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                         child: ListView.builder(
                                                           padding: EdgeInsets.all(10),
                                                           physics: NeverScrollableScrollPhysics(),
-                                                          scrollDirection: surveyDetailsModel
-                                                              .question!
-                                                              .choices![index]
-                                                              .options!
-                                                              .length>2?Axis.vertical:Axis.horizontal,
+                                                          scrollDirection: Axis.vertical,
                                                             shrinkWrap: true,
                                                             itemCount:
                                                                 surveyDetailsModel
@@ -976,16 +960,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                     });
                                                                   },
                                                                   child: Row(
-                                                                    crossAxisAlignment: surveyDetailsModel
-                                                                        .question!
-                                                                        .choices![index]
-                                                                        .options!
-                                                                        .length>2?CrossAxisAlignment.start:CrossAxisAlignment.center,
-                                                                    mainAxisAlignment:surveyDetailsModel
-                                                                        .question!
-                                                                        .choices![index]
-                                                                        .options!
-                                                                        .length>2? MainAxisAlignment.start:MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    mainAxisAlignment:MainAxisAlignment.start,
                                                                     children: [
                                                                       // Text(surveyDetailsModel.question!.choices![index].options![i].option.toString()),
                                                                       Padding(
