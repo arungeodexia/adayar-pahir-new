@@ -208,7 +208,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
           //     ),
           //   ],
           // ),
-          Padding(
+          appointmentDetails.name.toString()=="null"?Container():Padding(
             padding: EdgeInsets.only(top: 7, bottom: 7,left: 40,right: 40),
             child: Divider(
               height: 5,
@@ -588,12 +588,10 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
   }
   Container _buildHeaderNoAppointment() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 32.0),
+      padding: const EdgeInsets.fromLTRB(10, 10.0, 10, 10.0),
+      margin: const EdgeInsets.all(10, ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-        ),
+        borderRadius: BorderRadius.circular(15),
         color: AppColors.APP_BLUE1,
       ),
       child: Column(

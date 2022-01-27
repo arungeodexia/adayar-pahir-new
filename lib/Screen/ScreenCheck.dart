@@ -93,17 +93,21 @@ class _ScreenCheckState extends State<ScreenCheck> {
     isload = true;
     http.Response? response =
         await resourceRepository.getTasksDetails(widget.id);
-    taskDetails =
-        TaskDetails.fromJson(json.decode(utf8.decode(response!.bodyBytes)));
-    if (int.parse(
-            taskDetails.completionPercentage.toString().replaceAll("%", "")) >=
-        100) {
-      taskpercentage = "0.99999";
-      isFullNameChangeBtnState = false;
-    } else {
-      taskpercentage = "0." +
-          taskDetails.completionPercentage.toString().replaceAll("%", "");
+    if(response!.statusCode==200){
+      taskDetails =
+          TaskDetails.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      if (int.parse(
+          taskDetails.completionPercentage.toString().replaceAll("%", "")) >=
+          100) {
+        taskpercentage = "0.99999";
+        isFullNameChangeBtnState = false;
+      } else {
+        taskpercentage = "0." +
+            taskDetails.completionPercentage.toString().replaceAll("%", "");
+      }
+
     }
+
     // DateTime date1 = DateTime.parse("2020-01-09 23:00:00.299871");
     // DateTime date2 = DateTime.parse("2020-01-10 00:00:00.299871");
     // log(daysBetween(date1, date2).toString());
@@ -164,7 +168,11 @@ class _ScreenCheckState extends State<ScreenCheck> {
       body: isload
           ? buildLoading()
           : taskDetails.description == null
-              ? Container()
+              ? Center(
+       child: Text("Something went wrong",style:ktextstyle.copyWith(
+           fontSize: 15
+       ),)
+      )
               : Container(
                   child: SingleChildScrollView(
                     child: Column(
@@ -199,8 +207,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                     lineWidth: 15.0,
                                     percent: double.parse(taskpercentage),
                                     center: new Text(
-                                      taskDetails.completionPercentage
-                                          .toString(),
+                                      taskDetails.completionPercentage.toString(),
                                       style: kSubtitleTextSyule.copyWith(
                                           fontWeight: FontWeight.bold,
                                           height: 1.5,

@@ -141,7 +141,7 @@ class EditProfileState extends State<EditProfileView> {
     createEditProfileModel.skillTags =
         notesInputController.text.toString().trim();
 
-    //createEditProfileModel.profilePicture = "";
+    createEditProfileModel.profilePicture = profileData.profilePicture;
     createEditProfileModel.city = cityInputController.text.toString().trim();
     createEditProfileModel.state = stateInputController.text.toString().trim();
     createEditProfileModel.accessToken = "";
@@ -245,6 +245,7 @@ class EditProfileState extends State<EditProfileView> {
       profileData=CreateEditProfileModel.fromJson(json.decode(profiledata));
       fullNameInputController.text=profileData.firstName.toString();
       emailInputController.text=profileData.email.toString();
+      alternateMobileInputController.text=profileData.alternativeMobile.toString();
       notesInputController.text=profileData.notes.toString();
       cityInputController.text=profileData.city.toString();
       stateInputController.text=profileData.state.toString();

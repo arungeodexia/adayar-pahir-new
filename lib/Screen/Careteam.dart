@@ -50,8 +50,11 @@ class _CareteamState extends State<Careteam> {
     isload = true;
     http.Response? response =
     await resourceRepository.getorgchannelmember();
-    careTeamModel = CareTeamModel.fromJson(
-        json.decode(utf8.decode(response!.bodyBytes)));
+    if(response!.statusCode==200){
+      careTeamModel = CareTeamModel.fromJson(
+          json.decode(utf8.decode(response!.bodyBytes)));
+    }
+
 
 
     setState(() {
@@ -93,7 +96,11 @@ class _CareteamState extends State<Careteam> {
     // TODO: implement build
     return Scaffold(
       backgroundColor: AppColors.APP_WHITE,
-      body: isload?buildLoading():_buildBody(context),
+      body: isload?buildLoading():careTeamModel.orgMembers==null?Center(
+          child: Text("Something went wrong",style: ktextstyle.copyWith(
+            fontSize: 15
+          ),)
+      ):_buildBody(context),
     );
   }
   Widget _buildBody(BuildContext context) {
@@ -238,43 +245,43 @@ class _CareteamState extends State<Careteam> {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: AppStrings.isRedirectFromResourceSearchList,resoruceid: careTeamModel.orgMembers![index].orgMemberId.toString(),resorucetype: "internal-channel",)),);
                     },
-                    leading:
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: GestureDetector(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: CachedNetworkImage(
-                            imageUrl: careTeamModel.orgMembers![index].profilePictureLink.toString(),
-                            placeholder: (context, url) => Container(
-                              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-                              child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  child: Center(
-                                      child: new CircleAvatar(
-                                        backgroundImage: AssetImage("images/photo_avatar.png"),
-                                      ))),
-                            ),
-                            errorWidget: (context, url, error) => CircleAvatar(
-                              child: Icon(Icons.person),
-                            ),
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // leading:  Container(
-                    //   margin: EdgeInsets.all(8),
-                    //   child: CircleAvatar(
-                    //       radius: 20.0,
-                    //       backgroundColor: AppColors.APP_LIGHT_BLUE,
-                    //       backgroundImage:  careTeamModel.orgMembers![index].profilePictureLink.toString()!="null"&&careTeamModel.orgMembers![index].profilePictureLink.toString() != ""
-                    //           ? NetworkImage(careTeamModel.orgMembers![index].profilePictureLink.toString())
-                    //           : AssetImage("images/photo_avatar.png") as ImageProvider),
+                    // leading: Padding(
+                    //   padding: const EdgeInsets.all(4.0),
+                    //   child: GestureDetector(
+                    //     child: ClipRRect(
+                    //       borderRadius: BorderRadius.circular(24.0),
+                    //       child: CachedNetworkImage(
+                    //         useOldImageOnUrlChange: false,
+                    //         imageUrl: careTeamModel.orgMembers![index].profilePictureLink.toString(),
+                    //         placeholder: (context, url) => Container(
+                    //           transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+                    //           child: Container(
+                    //               width: 60,
+                    //               height: 60,
+                    //               child: Center(
+                    //                   child: new CircleAvatar(
+                    //                     backgroundImage: AssetImage("images/photo_avatar.png"),
+                    //                   ))),
+                    //         ),
+                    //         errorWidget: (context, url, error) => CircleAvatar(
+                    //           child: Icon(Icons.person),
+                    //         ),
+                    //         width: 50,
+                    //         height: 50,
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //     ),
+                    //   ),
                     // ),
+                    leading:  Container(
+                      margin: EdgeInsets.all(8),
+                      child: CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: AppColors.APP_LIGHT_BLUE,
+                          backgroundImage:  careTeamModel.orgMembers![index].profilePictureLink.toString()!="null"&&careTeamModel.orgMembers![index].profilePictureLink.toString() != ""
+                              ? NetworkImage(careTeamModel.orgMembers![index].profilePictureLink.toString())
+                              : AssetImage("images/photo_avatar.png") as ImageProvider),
+                    ),
                     title: Padding(
                       padding: const EdgeInsets.only(left: 0),
                       child: Text(careTeamModel.orgMembers![index].firstName.toString(), style:

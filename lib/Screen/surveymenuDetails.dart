@@ -8,6 +8,7 @@ import 'package:ACI/Screen/ScreenCheckSuccess.dart';
 import 'package:ACI/data/api/repository/SurveyRepo.dart';
 import 'package:ACI/data/globals.dart';
 import 'package:ACI/data/sp/shared_keys.dart';
+import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:ACI/utils/values/app_strings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -68,8 +69,11 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
     isload = true;
     http.Response? response =
         await resourceRepository.getSurveyDetails(widget.questionId.toString());
-    surveyDetailsModel = SurveyDetailsModel.fromJson(
-        json.decode(utf8.decode(response!.bodyBytes)));
+
+    if(response!.statusCode==200){
+      surveyDetailsModel = SurveyDetailsModel.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
+    }
     if(surveyDetailsModel.question!=null){
       taskpercentage="0."+surveyDetailsModel.question!.completionProgress.toString().replaceAll("%", "");
 
@@ -133,7 +137,11 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
           backgroundColor: AppColors.APP_BLUE,
           automaticallyImplyLeading: true,
         ),
-        body: isload ? buildLoading() : survey(itemHeight,itemWidth));
+        body: isload ? buildLoading() : surveyDetailsModel.userName.toString()=="null"?Center(
+            child: Text("Something went wrong",style: ktextstyle.copyWith(
+                fontSize: 15
+            ),)
+        ):survey(itemHeight,itemWidth));
   }
 
   getuserName() async {

@@ -28,6 +28,7 @@ class ProfileRepo {
   Future<http.Response?> createProfile(String filePath,
       {required CreateEditProfileModel createEditProfileModel}) async {
     try {
+      log(createEditProfileModel.toJson().toString());
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       if (filePath != "") {

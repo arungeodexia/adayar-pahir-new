@@ -762,13 +762,17 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0,top: 10,bottom: 20),
-                child: Text(resourceDetail.notes.toString(), style:
-                kSubtitleTextSyule1.copyWith(
-                    fontWeight: FontWeight.w300,
-                    height: 1,
-                    color: Colors.black,
-                  fontSize: 14,letterSpacing: 1,wordSpacing: 1
-                ),
+                child: Text(resourceDetail.notes.toString(),
+                  style: TextStyle(
+                    color: AppColors.APP_BLACK_10,
+                    fontWeight: FontWeight.w500,letterSpacing: 1,wordSpacing: 1,
+                    fontSize: 14),
+                // style:kSubtitleTextSyule1.copyWith(
+                //     fontWeight: FontWeight.w200,
+                //     height: 1,
+                //     color: Colors.black,
+                //   fontSize: 13,letterSpacing: 1,wordSpacing: 1
+                // ),
                 ),
               )
               //////Show reviews list
