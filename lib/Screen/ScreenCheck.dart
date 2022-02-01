@@ -150,241 +150,245 @@ class _ScreenCheckState extends State<ScreenCheck> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () =>                       Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,)
-          ,
+    return Hero(
+      tag: widget.id,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () =>                       Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,)
+            ,
+          ),
+          centerTitle: true, // this is all you need
+          title: Text(
+            widget.title,
+            style: kSubheadingextStyle.copyWith(color: AppColors.APP_WHITE),
+          ),
+          // leading: Icon(FontAwesomeIcons.solidArrowAltCircleLeft,color: AppColors.APP_BLUE,),
         ),
-        centerTitle: true, // this is all you need
-        title: Text(
-          widget.title,
-          style: kSubheadingextStyle.copyWith(color: AppColors.APP_WHITE),
-        ),
-        // leading: Icon(FontAwesomeIcons.solidArrowAltCircleLeft,color: AppColors.APP_BLUE,),
-      ),
-      body: isload
-          ? buildLoading()
-          : taskDetails.description == null
-              ? Center(
-       child: Text("Something went wrong",style:ktextstyle.copyWith(
-           fontSize: 15
-       ),)
-      )
-              : Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        widget.page == "1"
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 25,
-                                  top: 15,
-                                  right: 15,
-                                  bottom: 0,
-                                ),
-                                child: Center(
-                                  child: Lottie.asset('assets/success.json',
-                                      repeat: false, height: 150),
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 25,
-                                  top: 15,
-                                  right: 15,
-                                  bottom: 0,
-                                ),
-                                child: Center(
-                                  child: new CircularPercentIndicator(
-                                    radius: 150.0,
-                                    animation: true,
-                                    animationDuration: 1200,
-                                    lineWidth: 15.0,
-                                    percent: double.parse(taskpercentage),
-                                    center: new Text(
-                                      taskDetails.completionPercentage.toString(),
-                                      style: kSubtitleTextSyule.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          height: 1.5,
-                                          color: AppColors.APP_BLUE,
-                                          fontSize: 25),
+        body: isload
+            ? buildLoading()
+            : taskDetails.description == null
+                ? Center(
+         child: Text("Something went wrong",style:ktextstyle.copyWith(
+             fontSize: 15
+         ),)
+        )
+                : Container(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          widget.page == "1"
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 25,
+                                    top: 15,
+                                    right: 15,
+                                    bottom: 0,
+                                  ),
+                                  child: Center(
+                                    child: Lottie.asset('assets/success.json',
+                                        repeat: false, height: 150),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 25,
+                                    top: 15,
+                                    right: 15,
+                                    bottom: 0,
+                                  ),
+                                  child: Center(
+                                    child: new CircularPercentIndicator(
+                                      radius: 150.0,
+                                      animation: true,
+                                      animationDuration: 1200,
+                                      lineWidth: 15.0,
+                                      percent: double.parse(taskpercentage),
+                                      center: new Text(
+                                        taskDetails.completionPercentage.toString(),
+                                        style: kSubtitleTextSyule.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.5,
+                                            color: AppColors.APP_BLUE,
+                                            fontSize: 25),
+                                      ),
+                                      circularStrokeCap: CircularStrokeCap.butt,
+                                      backgroundColor: AppColors.APP_LIGHT_BLUE,
+                                      progressColor: AppColors.APP_GREEN,
                                     ),
-                                    circularStrokeCap: CircularStrokeCap.butt,
-                                    backgroundColor: AppColors.APP_LIGHT_BLUE,
-                                    progressColor: AppColors.APP_GREEN,
                                   ),
                                 ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 0,
+                                top: 25,
+                                right: 0,
+                                bottom: 0,
                               ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 0,
-                              top: 25,
-                              right: 0,
-                              bottom: 0,
-                            ),
-                            child: Text(
-                              formattedDate + " at " + month,
-                              style: kTitleTextStyle.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.5,
-                                  color: AppColors.APP_BLUE),
+                              child: Text(
+                                formattedDate + " at " + month,
+                                style: kTitleTextStyle.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.5,
+                                    color: AppColors.APP_BLUE),
+                              ),
                             ),
                           ),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 25,
-                              top: 7,
-                              right: 15,
-                              bottom: 15,
-                            ),
-                            child: Text(
-                              "Screening Check Results exipres in ${expiry.replaceAll("-", "")} days",
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              maxLines: 3,
-                              style: kSubtitleTextSyule1.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.5,
-                                  color: AppColors.APP_BLUE,
-                                  fontSize: 12),
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 5,
-                          thickness: 1,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 7, bottom: 0),
-                          child: Container(
+                          Center(
+                            child: Padding(
                               padding: const EdgeInsets.only(
                                 left: 25,
                                 top: 7,
                                 right: 15,
-                                bottom: 0,
-                              ),
-                              // decoration: BoxDecoration(
-                              //     color: AppColors.APP_LIGHT_BLUE,
-                              //     borderRadius: BorderRadius.only(
-                              //         bottomRight: Radius.circular(16.0),
-                              //         topRight: Radius.circular(16.0))),
-                              child: Text(
-                                "About ${widget.title}",
-                                style: kTitleTextStyle.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    height: 1.5,
-                                    color: AppColors.APP_BLUE),
-                                textAlign: TextAlign.start,
-                              )),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 7, bottom: 0),
-                          child: Container(
-                              padding: const EdgeInsets.only(
-                                left: 25,
-                                top: 0,
-                                right: 15,
-                                bottom: 7,
+                                bottom: 15,
                               ),
                               child: Text(
-                                taskDetails.description.toString(),
+                                "Screening Check Results exipres in ${expiry.replaceAll("-", "")} days",
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                maxLines: 3,
                                 style: kSubtitleTextSyule1.copyWith(
                                     fontWeight: FontWeight.w600,
                                     height: 1.5,
                                     color: AppColors.APP_BLUE,
-                                    fontSize: 15),
-                              )),
-                        ),
-                        Container(
-                          // color: AppColors.APP_WHITE,
-                          padding:
-                              const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
-                          child: Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Flexible(
-                                child: SizedBox(
-                                    width: double.infinity,
-                                    child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20, right: 20),
-                                        child: RaisedButton(
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      8.0),
-                                              side: BorderSide(
-                                                  color: AppColors.APP_BLUE)),
-                                          color: ((isFullNameChangeBtnState))
-                                              ? AppColors.APP_BLUE
-                                              : widget.page == "1"
-                                                  ? AppColors.APP_BLUE
-                                                  : AppColors.APP_LIGHT_GREY,
-                                          textColor: AppColors.APP_WHITE,
-                                          padding: EdgeInsets.all(8.0),
-                                          onPressed: () async {
-
-                                              if (widget.page == "1") {
-                                                // Navigator.of(context).pop();
-                                                Navigator.of(context)
-                                                    .pushAndRemoveUntil(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Mydashboard()),
-                                                  (Route<dynamic> route) =>
-                                                      false,
-                                                );
-                                              } else {
-                                                if (isFullNameChangeBtnState) {
-                                                  Navigator.of(context)
-                                                      .pushReplacement(
-                                                        new MaterialPageRoute(
-                                                            builder: (_) =>
-                                                                new SurveymenuDetails(
-                                                                  questionId: taskDetails
-                                                                      .nextQuestionId
-                                                                      .toString(),
-                                                                )),
-                                                      )
-                                                      .then(
-                                                          (val) => getsurvey());
-                                                }
-                                              }
-
-                                          },
-                                          child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, bottom: 10),
-                                              child: Text(
-                                                (widget.page == "1")
-                                                    ? "OK"
-                                                    : "Continue ",
-                                                style: kSubtitleTextSyule1
-                                                    .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        height: 1.5,
-                                                        color: Colors.white),
-                                              )),
-                                        ))),
-                                flex: 1,
+                                    fontSize: 12),
                               ),
-                            ],
-                          )),
-                        )
-                      ],
+                            ),
+                          ),
+                          Divider(
+                            height: 5,
+                            thickness: 1,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 7, bottom: 0),
+                            child: Container(
+                                padding: const EdgeInsets.only(
+                                  left: 25,
+                                  top: 7,
+                                  right: 15,
+                                  bottom: 0,
+                                ),
+                                // decoration: BoxDecoration(
+                                //     color: AppColors.APP_LIGHT_BLUE,
+                                //     borderRadius: BorderRadius.only(
+                                //         bottomRight: Radius.circular(16.0),
+                                //         topRight: Radius.circular(16.0))),
+                                child: Text(
+                                  "About ${widget.title}",
+                                  style: kTitleTextStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.5,
+                                      color: AppColors.APP_BLUE),
+                                  textAlign: TextAlign.start,
+                                )),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 7, bottom: 0),
+                            child: Container(
+                                padding: const EdgeInsets.only(
+                                  left: 25,
+                                  top: 0,
+                                  right: 15,
+                                  bottom: 7,
+                                ),
+                                child: Text(
+                                  taskDetails.description.toString(),
+                                  style: kSubtitleTextSyule1.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.5,
+                                      color: AppColors.APP_BLUE,
+                                      fontSize: 15),
+                                )),
+                          ),
+                          Container(
+                            // color: AppColors.APP_WHITE,
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 20.0),
+                            child: Center(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Flexible(
+                                  child: SizedBox(
+                                      width: double.infinity,
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, right: 20),
+                                          child: RaisedButton(
+                                            shape: new RoundedRectangleBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(
+                                                        8.0),
+                                                side: BorderSide(
+                                                    color: AppColors.APP_BLUE)),
+                                            color: ((isFullNameChangeBtnState))
+                                                ? AppColors.APP_BLUE
+                                                : widget.page == "1"
+                                                    ? AppColors.APP_BLUE
+                                                    : AppColors.APP_LIGHT_GREY,
+                                            textColor: AppColors.APP_WHITE,
+                                            padding: EdgeInsets.all(8.0),
+                                            onPressed: () async {
+
+                                                if (widget.page == "1") {
+                                                  // Navigator.of(context).pop();
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Mydashboard()),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  );
+                                                } else {
+                                                  if (isFullNameChangeBtnState) {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                          new MaterialPageRoute(
+
+                                                              builder: (_) =>
+                                                                  new SurveymenuDetails(
+                                                                    questionId: taskDetails
+                                                                        .nextQuestionId
+                                                                        .toString(),
+                                                                  )),
+                                                        )
+                                                        .then(
+                                                            (val) => getsurvey());
+                                                  }
+                                                }
+
+                                            },
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, bottom: 10),
+                                                child: Text(
+                                                  (widget.page == "1")
+                                                      ? "OK"
+                                                      : "Continue ",
+                                                  style: kSubtitleTextSyule1
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          height: 1.5,
+                                                          color: Colors.white),
+                                                )),
+                                          ))),
+                                  flex: 1,
+                                ),
+                              ],
+                            )),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
+      ),
     );
   }
 }

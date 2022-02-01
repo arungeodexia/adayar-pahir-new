@@ -17,6 +17,7 @@ import 'package:ACI/utils/constants.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -62,11 +63,15 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     setState(() {
 
     });
+    await EasyLoading.show(status: 'Loading...',maskType: EasyLoadingMaskType.black);
     http.Response? response =
     await resourceRepository.getTasks();
     if(response!.statusCode==200){
       taskmodel = Taksmodel.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
+      EasyLoading.showSuccess('Successful');
+    }else{
+      EasyLoading.showError('API Exception');
     }
 
     http.Response? response1 = await resourceRepository.getAppointments();
@@ -78,17 +83,17 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     log("tasks"+taskmodel.tasks.toString()+"tasks");
 
 
+
     setState(() {
       isload = false;
     });
   }
   Widget buildLoading() {
     return Container(
-      height:
-      MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+      height: MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
+      // child: Center(
+      //   child: CircularProgressIndicator(),
+      // ),
     );
   }
 
@@ -245,36 +250,39 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
               itemCount: taskmodel.tasks!.length,
               itemBuilder: (BuildContext context,
                   int index) {
-                return Card(
-                  color: AppColors.APP_BLUE1,
-                  child: ListTile(
+                return Hero(
+                  tag: taskmodel.tasks![index].taskId.toString(),
+                  child: Card(
+                    color: AppColors.APP_BLUE1,
+                    child: ListTile(
 
-                    onTap: (){
-                      Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                        title: taskmodel.tasks![index].taskTitle.toString(),
-                        id: taskmodel.tasks![index].taskId.toString(),
-                        page: "0",
-                      )),)
-                          .then((val)=>getsurvey());
-                      globalTaskID=taskmodel.tasks![index].taskId!;
-                    },
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(taskmodel.tasks![index].taskTitle.toString(), style:
+                      onTap: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                          title: taskmodel.tasks![index].taskTitle.toString(),
+                          id: taskmodel.tasks![index].taskId.toString(),
+                          page: "0",
+                        )),)
+                            .then((val)=>getsurvey());
+                        globalTaskID=taskmodel.tasks![index].taskId!;
+                      },
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(taskmodel.tasks![index].taskTitle.toString(), style:
+                        kSubtitleTextSyule1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            height: 1.5,
+                            color: Colors.white
+                        ),
+                        ),
+                      ),
+                      trailing:
+                      Text(taskmodel.tasks![index].completionPercentage.toString(), style:
                       kSubtitleTextSyule1.copyWith(
                           fontWeight: FontWeight.w600,
                           height: 1.5,
                           color: Colors.white
                       ),
                       ),
-                    ),
-                    trailing:
-                    Text(taskmodel.tasks![index].completionPercentage.toString(), style:
-                    kSubtitleTextSyule1.copyWith(
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                        color: Colors.white
-                    ),
                     ),
                   ),
                 );
@@ -494,6 +502,12 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                     ),
                     SizedBox(width: 20,),
 
+
+
+                  ],
+                ),
+                Row(
+                  children: [
                     Icon(Icons.date_range,color: Colors.white),
                     SizedBox(width: 10,),
 
@@ -509,8 +523,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontSize: 15
                       ),
                     ),
-                    SizedBox(width: 40,),
-
+                    SizedBox(width: 10,),
                   ],
                 )
               ],

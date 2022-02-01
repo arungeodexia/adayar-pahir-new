@@ -278,505 +278,508 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
       }
     }
 
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          // height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    color: Colors.blue,
-                    height: 70.0,
-                  ),
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 70),
-                  //   child: Container(
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: <Widget>[
-                  //         Padding(
-                  //           padding: EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 8.0),
-                  //           child: (resourceDetail != null &&
-                  //                   resourceDetail.isMyResource != null &&
-                  //                   resourceDetail
-                  //                       .isMyResource!) //resourceDetail.isMyResource != null &&
-                  //               ? Column(
-                  //                   children: <Widget>[
-                  //                     GestureDetector(
-                  //                       child:
-                  //                           //(resourceDetail.favorite == 1)
-                  //                           (resourceDetail.favorite==1)
-                  //                               ? Icon(
-                  //                                   Icons.favorite,
-                  //                                   size: 30,
-                  //                                   color: Colors.red,
-                  //                                 )
-                  //                               : Icon(
-                  //                                   Icons.favorite_border,
-                  //                                   size: 30,
-                  //                                   color: Colors.red,
-                  //                                 ),
-                  //                       onTap: () {
-                  //                         // AddResourceModel updateResource = resourceDetail;
-                  //                         ResourceResults updateResource =
-                  //                             resourceDetail;
-                  //
-                  //                         if (updateResource.favorite == 0)
-                  //                           updateResource.favorite = 1;
-                  //                         else
-                  //                           updateResource.favorite = 0;
-                  //
-                  //                         BlocProvider.of<ResourceViewBloc>(context).add(UpdateResourceDetails(updateResource));
-                  //
-                  //                         setState(() {
-                  //                           isFavorite = !isFavorite;
-                  //                         });
-                  //                       },
-                  //                     ),
-                  //                     Text(
-                  //                       "Favorite",
-                  //                       style: TextStyle(fontSize: 10),
-                  //                     )
-                  //                   ],
-                  //                 )
-                  //               : Column(
-                  //                   children: <Widget>[
-                  //                     GestureDetector(
-                  //                       child: Icon(
-                  //                         Icons.add_circle,
-                  //                         size: 30,
-                  //                         color: AppColors.APP_GREEN,
-                  //                       ),
-                  //                       onTap: () {
-                  //                         ResourceResults addResource =
-                  //                             resourceDetail;
-                  //                         addResource.favorite = 0;
-                  //                         if (addResource.lastName == null) {
-                  //                           addResource.lastName = "";
-                  //                         }
-                  //
-                  //                         AddUpdateReviewModel
-                  //                             addUpdateReviewModel =
-                  //                             new AddUpdateReviewModel();
-                  //                         addUpdateReviewModel.review = "";
-                  //                         addUpdateReviewModel.rating = 0;
-                  //                         ResourceRepo repo=ResourceRepo();
-                  //                         repo.addreviewresource(addResource, "", addUpdateReviewModel);
-                  //                         resourceDetail.isMyResource=true;
-                  //                         setState(() {
-                  //                           try {
-                  //
-                  //                           } on Exception catch (exception) {
-                  //                           }
-                  //                         });
-                  //                       },
-                  //                     ),
-                  //                     Text(
-                  //                       "Add Resource",
-                  //                       style: TextStyle(fontSize: 10),
-                  //                     )
-                  //                   ],
-                  //                 ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  Positioned.fill(
-                    child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 20.0, top: 20.0),
-                          /*child: CircleAvatar(
-                              backgroundImage: (resourceDetail != null &&
-                                  resourceDetail.profilePicture != null &&
-                                  resourceDetail.resourceType == null &&
-                                  resourceDetail.resourceType ==
-                                      AppStrings
-                                          .RESOURCE_LIST_RESOURCE_TYPE_EXTERNAL)
-                                  ? NetworkImage(resourceDetail.profilePicture)
-                                  : (((resourceDetail.profilePicture !=
-                                  null &&
-                                  resourceDetail.profilePicture !=
-                                      ""))
-                                  //? MemoryImage(base64Decode(resourceDetail.profilePicture))
-                                  ? NetworkImage((resourceDetail.profilePicture))
-                                  : AssetImage("images/photo_avatar.png")),
-                              radius: 50,
-                            ),*/
-
-                          child: CircleAvatar(
-                            backgroundImage: (resourceDetail != null &&
-                                    resourceDetail.profilePicture != null)
-                                ? NetworkImage(
-                                    resourceDetail.profilePicture!.toString())
-                                : AssetImage("images/photo_avatar.png")
-                                    as ImageProvider,
-                            radius: 50,
-                          ),
-                        )),
-                  ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Stack(
-                        children: <Widget>[
-                          Padding(
+    return Hero(
+      tag: widget.resoruceid,
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      color: Colors.blue,
+                      height: 70.0,
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 70),
+                    //   child: Container(
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: <Widget>[
+                    //         Padding(
+                    //           padding: EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 8.0),
+                    //           child: (resourceDetail != null &&
+                    //                   resourceDetail.isMyResource != null &&
+                    //                   resourceDetail
+                    //                       .isMyResource!) //resourceDetail.isMyResource != null &&
+                    //               ? Column(
+                    //                   children: <Widget>[
+                    //                     GestureDetector(
+                    //                       child:
+                    //                           //(resourceDetail.favorite == 1)
+                    //                           (resourceDetail.favorite==1)
+                    //                               ? Icon(
+                    //                                   Icons.favorite,
+                    //                                   size: 30,
+                    //                                   color: Colors.red,
+                    //                                 )
+                    //                               : Icon(
+                    //                                   Icons.favorite_border,
+                    //                                   size: 30,
+                    //                                   color: Colors.red,
+                    //                                 ),
+                    //                       onTap: () {
+                    //                         // AddResourceModel updateResource = resourceDetail;
+                    //                         ResourceResults updateResource =
+                    //                             resourceDetail;
+                    //
+                    //                         if (updateResource.favorite == 0)
+                    //                           updateResource.favorite = 1;
+                    //                         else
+                    //                           updateResource.favorite = 0;
+                    //
+                    //                         BlocProvider.of<ResourceViewBloc>(context).add(UpdateResourceDetails(updateResource));
+                    //
+                    //                         setState(() {
+                    //                           isFavorite = !isFavorite;
+                    //                         });
+                    //                       },
+                    //                     ),
+                    //                     Text(
+                    //                       "Favorite",
+                    //                       style: TextStyle(fontSize: 10),
+                    //                     )
+                    //                   ],
+                    //                 )
+                    //               : Column(
+                    //                   children: <Widget>[
+                    //                     GestureDetector(
+                    //                       child: Icon(
+                    //                         Icons.add_circle,
+                    //                         size: 30,
+                    //                         color: AppColors.APP_GREEN,
+                    //                       ),
+                    //                       onTap: () {
+                    //                         ResourceResults addResource =
+                    //                             resourceDetail;
+                    //                         addResource.favorite = 0;
+                    //                         if (addResource.lastName == null) {
+                    //                           addResource.lastName = "";
+                    //                         }
+                    //
+                    //                         AddUpdateReviewModel
+                    //                             addUpdateReviewModel =
+                    //                             new AddUpdateReviewModel();
+                    //                         addUpdateReviewModel.review = "";
+                    //                         addUpdateReviewModel.rating = 0;
+                    //                         ResourceRepo repo=ResourceRepo();
+                    //                         repo.addreviewresource(addResource, "", addUpdateReviewModel);
+                    //                         resourceDetail.isMyResource=true;
+                    //                         setState(() {
+                    //                           try {
+                    //
+                    //                           } on Exception catch (exception) {
+                    //                           }
+                    //                         });
+                    //                       },
+                    //                     ),
+                    //                     Text(
+                    //                       "Add Resource",
+                    //                       style: TextStyle(fontSize: 10),
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    Positioned.fill(
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 55.0, right: 55.0, top: 125.0, bottom: 5),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                    margin: const EdgeInsets.all(0.0),
-                                    padding: const EdgeInsets.all(0.0),
-                                    child: Text(
-                                      (resourceDetail.firstName! != null)
-                                          ? resourceDetail.firstName!
-                                          : "",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontFamily: "OpenSans",
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.APP_BLACK_20),
-                                    )),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  (resourceDetail.skill! != null)
-                                      ? resourceDetail.skill!
-                                      : "",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.APP_BLACK_10),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Visibility(
-                                  visible: true,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Text(
-                                        "${(resourceDetail.city == null) ? "" : "${resourceDetail.city.toString()}, ${resourceDetail.state.toString()}"}",
+                                left: 20.0, right: 20.0, top: 20.0),
+                            /*child: CircleAvatar(
+                                backgroundImage: (resourceDetail != null &&
+                                    resourceDetail.profilePicture != null &&
+                                    resourceDetail.resourceType == null &&
+                                    resourceDetail.resourceType ==
+                                        AppStrings
+                                            .RESOURCE_LIST_RESOURCE_TYPE_EXTERNAL)
+                                    ? NetworkImage(resourceDetail.profilePicture)
+                                    : (((resourceDetail.profilePicture !=
+                                    null &&
+                                    resourceDetail.profilePicture !=
+                                        ""))
+                                    //? MemoryImage(base64Decode(resourceDetail.profilePicture))
+                                    ? NetworkImage((resourceDetail.profilePicture))
+                                    : AssetImage("images/photo_avatar.png")),
+                                radius: 50,
+                              ),*/
+
+                            child: CircleAvatar(
+                              backgroundImage: (resourceDetail != null &&
+                                      resourceDetail.profilePicture != null)
+                                  ? NetworkImage(
+                                      resourceDetail.profilePicture!.toString())
+                                  : AssetImage("images/photo_avatar.png")
+                                      as ImageProvider,
+                              radius: 50,
+                            ),
+                          )),
+                    ),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 55.0, right: 55.0, top: 125.0, bottom: 5),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                      margin: const EdgeInsets.all(0.0),
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Text(
+                                        (resourceDetail.firstName! != null)
+                                            ? resourceDetail.firstName!
+                                            : "",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            color: AppColors.APP_BLACK_10,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14),
+                                            fontFamily: "OpenSans",
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.APP_BLACK_20),
+                                      )),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    (resourceDetail.skill! != null)
+                                        ? resourceDetail.skill!
+                                        : "",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.APP_BLACK_10),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Visibility(
+                                    visible: true,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Text(
+                                          "${(resourceDetail.city == null) ? "" : "${resourceDetail.city.toString()}, ${resourceDetail.state.toString()}"}",
+                                          style: TextStyle(
+                                              color: AppColors.APP_BLACK_10,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Visibility(
+                                    //visible: (resourceDetail != null &&resourceDetail.channelDetails !=null &&resourceDetail.channelDetails.showRating !=null)
+                                    visible: (showRatingVal == 1) ? true : false,
+
+                                    child: Column(children: <Widget>[
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      RatingBarIndicator(
+                                        rating: ((resourceDetail.rating != null)
+                                            ? resourceDetail.rating!.toDouble()
+                                            : 0),
+                                        itemBuilder: (context, index) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        itemCount: 5,
+                                        itemSize: 20.0,
+                                        direction: Axis.horizontal,
                                       ),
                                       SizedBox(
-                                        height: 2,
+                                        height: 5,
                                       ),
-                                    ],
+                                    ]),
                                   ),
-                                ),
-                                Visibility(
-                                  //visible: (resourceDetail != null &&resourceDetail.channelDetails !=null &&resourceDetail.channelDetails.showRating !=null)
-                                  visible: (showRatingVal == 1) ? true : false,
-
-                                  child: Column(children: <Widget>[
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    RatingBarIndicator(
-                                      rating: ((resourceDetail.rating != null)
-                                          ? resourceDetail.rating!.toDouble()
-                                          : 0),
-                                      itemBuilder: (context, index) => Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      itemCount: 5,
-                                      itemSize: 20.0,
-                                      direction: Axis.horizontal,
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                  ]),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                // Visibility(
-                                //   //visible: true,
-                                //   visible: (resourceDetail != null &&
-                                //           resourceDetail.channelDetails !=
-                                //               null &&
-                                //           resourceDetail.channelDetails!
-                                //                   .channelIcon! !=
-                                //               null &&
-                                //           resourceDetail.channelDetails!
-                                //                   .channelIcon! !=
-                                //               "")
-                                //       ? true
-                                //       : false,
-                                //   child: Column(children: <Widget>[
-                                //     SizedBox(
-                                //       height: 5,
-                                //     ),
-                                //     CircleAvatar(
-                                //       backgroundImage: (resourceDetail !=
-                                //                   null &&
-                                //               resourceDetail.channelDetails !=
-                                //                   null &&
-                                //               resourceDetail.channelDetails!
-                                //                       .channelIcon !=
-                                //                   null &&
-                                //               resourceDetail.channelDetails!
-                                //                       .channelIcon !=
-                                //                   "")
-                                //           ? NetworkImage((resourceDetail
-                                //               .channelDetails!.channelIcon!))
-                                //           : AssetImage(
-                                //                   "images/photo_avatar.png")
-                                //               as ImageProvider,
-                                //       radius: 25,
-                                //     ),
-                                //     SizedBox(
-                                //       height: 7,
-                                //     ),
-                                //   ]),
-                                // ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  // Visibility(
+                                  //   //visible: true,
+                                  //   visible: (resourceDetail != null &&
+                                  //           resourceDetail.channelDetails !=
+                                  //               null &&
+                                  //           resourceDetail.channelDetails!
+                                  //                   .channelIcon! !=
+                                  //               null &&
+                                  //           resourceDetail.channelDetails!
+                                  //                   .channelIcon! !=
+                                  //               "")
+                                  //       ? true
+                                  //       : false,
+                                  //   child: Column(children: <Widget>[
+                                  //     SizedBox(
+                                  //       height: 5,
+                                  //     ),
+                                  //     CircleAvatar(
+                                  //       backgroundImage: (resourceDetail !=
+                                  //                   null &&
+                                  //               resourceDetail.channelDetails !=
+                                  //                   null &&
+                                  //               resourceDetail.channelDetails!
+                                  //                       .channelIcon !=
+                                  //                   null &&
+                                  //               resourceDetail.channelDetails!
+                                  //                       .channelIcon !=
+                                  //                   "")
+                                  //           ? NetworkImage((resourceDetail
+                                  //               .channelDetails!.channelIcon!))
+                                  //           : AssetImage(
+                                  //                   "images/photo_avatar.png")
+                                  //               as ImageProvider,
+                                  //       radius: 25,
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 7,
+                                  //     ),
+                                  //   ]),
+                                  // ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              resourceDetail.displayPhoneNumber!.toString()=="false"
-                  ? Container(): Text(
-                "${(resourceDetail.countryCode == null && resourceDetail.mobile == null) ? "" : " Mobile : ${resourceDetail.countryCode.toString()}" " ${resourceDetail.mobile.toString()}"}",
-                style: TextStyle(
-                    color: AppColors.APP_BLACK_10,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
-              ),
-              SizedBox(
-                height: 7,
-              ),
-              Container(
-                child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 12,
-                                ),
-                                resourceDetail.allowCall!.toString()=="false"
-                                    ? Container(): GestureDetector(
-                                  child: Image(
-                                      image: AssetImage(
-                                          'images/icon_call_new1.png'),
+                          ],
+                        ))
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                resourceDetail.displayPhoneNumber!.toString()=="false"
+                    ? Container(): Text(
+                  "${(resourceDetail.countryCode == null && resourceDetail.mobile == null) ? "" : " Mobile : ${resourceDetail.countryCode.toString()}" " ${resourceDetail.mobile.toString()}"}",
+                  style: TextStyle(
+                      color: AppColors.APP_BLACK_10,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+                SizedBox(
+                  height: 7,
+                ),
+                Container(
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  resourceDetail.allowCall!.toString()=="false"
+                                      ? Container(): GestureDetector(
+                                    child: Image(
+                                        image: AssetImage(
+                                            'images/icon_call_new1.png'),
+                                        width: 40,
+                                        height: 40),
+                                    onTap: () =>
+                                        contactOptions("phone", resourceDetail),
+                                  ),
+                                  resourceDetail.allowSms!.toString()=="false"
+                                      ? Container(): SizedBox(
+                                    width: 20,
+                                  ),
+                                  resourceDetail.allowSms!.toString()=="false"
+                                      ? Container():GestureDetector(
+                                    child: Image(
+                                      image:
+                                          AssetImage('images/icon_sms_new.png'),
                                       width: 40,
-                                      height: 40),
-                                  onTap: () =>
-                                      contactOptions("phone", resourceDetail),
-                                ),
-                                resourceDetail.allowSms!.toString()=="false"
-                                    ? Container(): SizedBox(
-                                  width: 20,
-                                ),
-                                resourceDetail.allowSms!.toString()=="false"
-                                    ? Container():GestureDetector(
-                                  child: Image(
-                                    image:
-                                        AssetImage('images/icon_sms_new.png'),
-                                    width: 40,
-                                    height: 40,
+                                      height: 40,
+                                    ),
+                                    onTap: () =>
+                                        contactOptions("sms", resourceDetail),
                                   ),
-                                  onTap: () =>
-                                      contactOptions("sms", resourceDetail),
-                                ),
-                                resourceDetail.allowChat!.toString()=="false"
-                                    ? Container():SizedBox(
-                                  width: 20,
-                                ),
-                                resourceDetail.allowChat!.toString()=="false"
-                                    ? Container():GestureDetector(
-                                  child: CircleAvatar(
-                                    child: Icon(Icons.message),
+                                  resourceDetail.allowChat!.toString()=="false"
+                                      ? Container():SizedBox(
+                                    width: 20,
                                   ),
-                                  onTap: () =>
-                                      contactOptions("chat", resourceDetail),
-                                ),
-                                resourceDetail.allowEmail!.toString()=="false"
-                                    ? Container():SizedBox(
-                                  width: 20,
-                                ),
-                                resourceDetail.allowEmail!.toString()=="false"
-                                    ? Container():GestureDetector(
-                                  child: Image(
-                                    image: (gresourceDetail != null &&
-                                            gresourceDetail.email != null &&
-                                            gresourceDetail.email != "")
-                                        ? AssetImage('images/icon_mail_new.png')
-                                        : AssetImage(
-                                            'images/icon_mail_new_gray.png'),
-                                    width: 40,
-                                    height: 40,
+                                  resourceDetail.allowChat!.toString()=="false"
+                                      ? Container():GestureDetector(
+                                    child: CircleAvatar(
+                                      child: Icon(Icons.message),
+                                    ),
+                                    onTap: () =>
+                                        contactOptions("chat", resourceDetail),
                                   ),
-                                  onTap: () =>
-                                      contactOptions("mail", resourceDetail),
-                                ),
-                                resourceDetail.allowWhatsapp!.toString()=="false"
-                                    ? Container(): SizedBox(
-                                  width: 20,
-                                ),
-                                resourceDetail.allowWhatsapp!.toString()=="false"
-                                    ? Container(): GestureDetector(
-                                  child: Image(
-                                    image: AssetImage(
-                                        'images/icon_whatsapp_new2.png'),
-                                    width: 45,
-                                    height: 45,
+                                  resourceDetail.allowEmail!.toString()=="false"
+                                      ? Container():SizedBox(
+                                    width: 20,
                                   ),
-                                  onTap: () => contactOptions(
-                                      "whatsApp", resourceDetail),
-                                ),
-                                resourceDetail.allowCalendar!.toString()=="false"
-                                    ? Container():SizedBox(
-                                  width: 20,
-                                ),
-                                resourceDetail.allowCalendar!.toString()=="false"
-                                    ? Container():GestureDetector(
-                                  child: Image(
-                                    image:
-                                        AssetImage('images/icon_calendar.png'),
-                                    width: 45,
-                                    height: 45,
+                                  resourceDetail.allowEmail!.toString()=="false"
+                                      ? Container():GestureDetector(
+                                    child: Image(
+                                      image: (gresourceDetail != null &&
+                                              gresourceDetail.email != null &&
+                                              gresourceDetail.email != "")
+                                          ? AssetImage('images/icon_mail_new.png')
+                                          : AssetImage(
+                                              'images/icon_mail_new_gray.png'),
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    onTap: () =>
+                                        contactOptions("mail", resourceDetail),
                                   ),
-                                  onTap: () => contactOptions(
-                                      "calendar", resourceDetail),
-                                ),
-                              ],
-                            ),
-                            Visibility(
-                                visible: false,
+                                  resourceDetail.allowWhatsapp!.toString()=="false"
+                                      ? Container(): SizedBox(
+                                    width: 20,
+                                  ),
+                                  resourceDetail.allowWhatsapp!.toString()=="false"
+                                      ? Container(): GestureDetector(
+                                    child: Image(
+                                      image: AssetImage(
+                                          'images/icon_whatsapp_new2.png'),
+                                      width: 45,
+                                      height: 45,
+                                    ),
+                                    onTap: () => contactOptions(
+                                        "whatsApp", resourceDetail),
+                                  ),
+                                  resourceDetail.allowCalendar!.toString()=="false"
+                                      ? Container():SizedBox(
+                                    width: 20,
+                                  ),
+                                  resourceDetail.allowCalendar!.toString()=="false"
+                                      ? Container():GestureDetector(
+                                    child: Image(
+                                      image:
+                                          AssetImage('images/icon_calendar.png'),
+                                      width: 45,
+                                      height: 45,
+                                    ),
+                                    onTap: () => contactOptions(
+                                        "calendar", resourceDetail),
+                                  ),
+                                ],
+                              ),
+                              Visibility(
+                                  visible: false,
 //                               visible: (getReferredByName(resourceDetail) != "")
 //                                   ? true
 //                                   : false,
-                                child: Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
-                                    child: GestureDetector(
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                            "Show Reviews",
-                                            style: TextStyle(
-                                                color:
-                                                    AppColors.APP_LIGHT_BLUE_20,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                          SizedBox(
-                                            width: 7,
-                                          ),
-                                        ],
-                                      ),
-                                      onTap: () {
-                                        /*  Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ResourceReviewsListView(
-                                              resourceDetail: editResourceDetail),
+                                  child: Padding(
+                                      padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+                                      child: GestureDetector(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              "Show Reviews",
+                                              style: TextStyle(
+                                                  color:
+                                                      AppColors.APP_LIGHT_BLUE_20,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            SizedBox(
+                                              width: 7,
+                                            ),
+                                          ],
                                         ),
-                                      );*/
-                                      },
-                                    ))),
-                          ],
-                        ))),
-              ),
+                                        onTap: () {
+                                          /*  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ResourceReviewsListView(
+                                                resourceDetail: editResourceDetail),
+                                          ),
+                                        );*/
+                                        },
+                                      ))),
+                            ],
+                          ))),
+                ),
 
-              Visibility(
-                visible: (resourceDetail.review != null &&
-                        resourceDetail.review != "")
-                    ? true
-                    : false,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          (resourceDetail.review != null)
-                              ? resourceDetail.review!
-                              : "",
-                          style: TextStyle(
-                              color: AppColors.APP_BLACK_10,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 11),
-                        ),
-                      ]),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0,top: 8),
-                    child: Text("Notes", style:
-                    kSubtitleTextSyule1.copyWith(
-                        fontWeight: FontWeight.w500,
-                        height: 1,
-                        color: Colors.black,
-                      fontSize: 19
-                    ),
-                        textAlign: TextAlign.left
-                    ),
+                Visibility(
+                  visible: (resourceDetail.review != null &&
+                          resourceDetail.review != "")
+                      ? true
+                      : false,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 3,
+                          ),
+                          Text(
+                            (resourceDetail.review != null)
+                                ? resourceDetail.review!
+                                : "",
+                            style: TextStyle(
+                                color: AppColors.APP_BLACK_10,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 11),
+                          ),
+                        ]),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0,top: 10,bottom: 20),
-                child: Text(resourceDetail.notes.toString(),
-                  style: TextStyle(
-                    color: AppColors.APP_BLACK_10,
-                    fontWeight: FontWeight.w500,letterSpacing: 1,wordSpacing: 1,
-                    fontSize: 14),
-                // style:kSubtitleTextSyule1.copyWith(
-                //     fontWeight: FontWeight.w200,
-                //     height: 1,
-                //     color: Colors.black,
-                //   fontSize: 13,letterSpacing: 1,wordSpacing: 1
-                // ),
                 ),
-              )
-              //////Show reviews list
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0,top: 8),
+                      child: Text("Notes", style:
+                      kSubtitleTextSyule1.copyWith(
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          color: Colors.black,
+                        fontSize: 19
+                      ),
+                          textAlign: TextAlign.left
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0,top: 10,bottom: 20),
+                  child: Text(resourceDetail.notes.toString(),
+                    style: TextStyle(
+                      color: AppColors.APP_BLACK_10,
+                      fontWeight: FontWeight.w500,letterSpacing: 1,wordSpacing: 1,
+                      fontSize: 14),
+                  // style:kSubtitleTextSyule1.copyWith(
+                  //     fontWeight: FontWeight.w200,
+                  //     height: 1,
+                  //     color: Colors.black,
+                  //   fontSize: 13,letterSpacing: 1,wordSpacing: 1
+                  // ),
+                  ),
+                )
+                //////Show reviews list
+              ],
+            ),
           ),
         ),
       ),

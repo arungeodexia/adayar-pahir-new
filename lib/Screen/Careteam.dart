@@ -238,67 +238,70 @@ class _CareteamState extends State<Careteam> {
               itemCount: careTeamModel.orgMembers!.length,
               itemBuilder: (BuildContext context,
                   int index) {
-                return Card(
-                  color: AppColors.APP_BLUE1,
-                  child: ListTile(
-                    onTap: (){
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: AppStrings.isRedirectFromResourceSearchList,resoruceid: careTeamModel.orgMembers![index].orgMemberId.toString(),resorucetype: "internal-channel",)),);
-                    },
-                    // leading: Padding(
-                    //   padding: const EdgeInsets.all(4.0),
-                    //   child: GestureDetector(
-                    //     child: ClipRRect(
-                    //       borderRadius: BorderRadius.circular(24.0),
-                    //       child: CachedNetworkImage(
-                    //         useOldImageOnUrlChange: false,
-                    //         imageUrl: careTeamModel.orgMembers![index].profilePictureLink.toString(),
-                    //         placeholder: (context, url) => Container(
-                    //           transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-                    //           child: Container(
-                    //               width: 60,
-                    //               height: 60,
-                    //               child: Center(
-                    //                   child: new CircleAvatar(
-                    //                     backgroundImage: AssetImage("images/photo_avatar.png"),
-                    //                   ))),
-                    //         ),
-                    //         errorWidget: (context, url, error) => CircleAvatar(
-                    //           child: Icon(Icons.person),
-                    //         ),
-                    //         width: 50,
-                    //         height: 50,
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    leading:  Container(
-                      margin: EdgeInsets.all(8),
-                      child: CircleAvatar(
-                          radius: 20.0,
-                          backgroundColor: AppColors.APP_LIGHT_BLUE,
-                          backgroundImage:  careTeamModel.orgMembers![index].profilePictureLink.toString()!="null"&&careTeamModel.orgMembers![index].profilePictureLink.toString() != ""
-                              ? NetworkImage(careTeamModel.orgMembers![index].profilePictureLink.toString())
-                              : AssetImage("images/photo_avatar.png") as ImageProvider),
-                    ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 0),
-                      child: Text(careTeamModel.orgMembers![index].firstName.toString(), style:
-                      kSubtitleTextSyule1.copyWith(
-                          fontWeight: FontWeight.w600,
-                          height: 1.5,
-                          color: Colors.white,
-                      ),maxLines: 1,
+                return Hero(
+                  tag: careTeamModel.orgMembers![index].orgMemberId.toString(),
+                  child: Card(
+                    color: AppColors.APP_BLUE1,
+                    child: ListTile(
+                      onTap: (){
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ResourceDetailsView(isRedirectFrom: AppStrings.isRedirectFromResourceSearchList,resoruceid: careTeamModel.orgMembers![index].orgMemberId.toString(),resorucetype: "internal-channel",)),);
+                      },
+                      // leading: Padding(
+                      //   padding: const EdgeInsets.all(4.0),
+                      //   child: GestureDetector(
+                      //     child: ClipRRect(
+                      //       borderRadius: BorderRadius.circular(24.0),
+                      //       child: CachedNetworkImage(
+                      //         useOldImageOnUrlChange: false,
+                      //         imageUrl: careTeamModel.orgMembers![index].profilePictureLink.toString(),
+                      //         placeholder: (context, url) => Container(
+                      //           transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+                      //           child: Container(
+                      //               width: 60,
+                      //               height: 60,
+                      //               child: Center(
+                      //                   child: new CircleAvatar(
+                      //                     backgroundImage: AssetImage("images/photo_avatar.png"),
+                      //                   ))),
+                      //         ),
+                      //         errorWidget: (context, url, error) => CircleAvatar(
+                      //           child: Icon(Icons.person),
+                      //         ),
+                      //         width: 50,
+                      //         height: 50,
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      leading:  Container(
+                        margin: EdgeInsets.all(8),
+                        child: CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: AppColors.APP_LIGHT_BLUE,
+                            backgroundImage:  careTeamModel.orgMembers![index].profilePictureLink.toString()!="null"&&careTeamModel.orgMembers![index].profilePictureLink.toString() != ""
+                                ? NetworkImage(careTeamModel.orgMembers![index].profilePictureLink.toString())
+                                : AssetImage("images/photo_avatar.png") as ImageProvider),
                       ),
-                    ),
-                    subtitle:
-                    Text(careTeamModel.orgMembers![index].city.toString(), style:
-                    kSubtitleTextSyule1.copyWith(
-                        fontWeight: FontWeight.w500,
-                        height: 1,
-                        color: Colors.white70
-                    ),
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 0),
+                        child: Text(careTeamModel.orgMembers![index].firstName.toString(), style:
+                        kSubtitleTextSyule1.copyWith(
+                            fontWeight: FontWeight.w600,
+                            height: 1.5,
+                            color: Colors.white,
+                        ),maxLines: 1,
+                        ),
+                      ),
+                      subtitle:
+                      Text(careTeamModel.orgMembers![index].city.toString(), style:
+                      kSubtitleTextSyule1.copyWith(
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          color: Colors.white70
+                      ),
+                      ),
                     ),
                   ),
                 );

@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ACI/Bloc/Myhomepage/myhomepage_bloc.dart';
@@ -118,6 +119,7 @@ class MyApp extends StatelessWidget {
             ),
             title: 'ACI',
             home: Auth(),
+            builder: EasyLoading.init(),
           )),
     );
   }
