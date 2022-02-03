@@ -63,15 +63,15 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     setState(() {
 
     });
-    await EasyLoading.show(status: 'Loading...',maskType: EasyLoadingMaskType.black);
+    // await EasyLoading.show(status: 'Loading...',maskType: EasyLoadingMaskType.black);
     http.Response? response =
     await resourceRepository.getTasks();
     if(response!.statusCode==200){
       taskmodel = Taksmodel.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
-      EasyLoading.showSuccess('Successful');
+      // EasyLoading.showSuccess('Successful');
     }else{
-      EasyLoading.showError('API Exception');
+      // EasyLoading.showError('API Exception');
     }
 
     http.Response? response1 = await resourceRepository.getAppointments();
@@ -91,9 +91,9 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
   Widget buildLoading() {
     return Container(
       height: MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
-      // child: Center(
-      //   child: CircularProgressIndicator(),
-      // ),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 

@@ -345,7 +345,34 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                           color: AppColors.APP_BLACK
                       ),
                     ),
+                  ),Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.APP_LIGHT_BLUE_50,
+                        borderRadius: BorderRadius.circular(5.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        top: 7,
+                        right: 15,
+                        bottom: 7,
+                      ),
+                      child: Text(
+                       "     "+ surveyDetailsModel.topText.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 3,
+                        style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.APP_BLUE,
+                          letterSpacing: 1,
+                          wordSpacing: 1
+                        ),
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 10,),
                   surveyDetailsModel.question!.questionType.toString() ==
                           "image"
                       ? Container(
