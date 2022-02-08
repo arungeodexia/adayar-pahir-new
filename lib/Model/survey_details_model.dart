@@ -61,6 +61,7 @@ class Question {
   int? _questionId;
   int? _nextQuestionId;
   String? _question;
+  String? _questionDescription;
   String? _questionType;
   String? _url;
   String? _answerType;
@@ -76,6 +77,7 @@ class Question {
   int? get questionId => _questionId;
   int? get nextQuestionId => _nextQuestionId;
   String? get question => _question;
+  String? get questionDescription => _questionDescription;
   String? get questionType => _questionType;
   String? get url => _url;
   String? get answerType => _answerType;
@@ -92,6 +94,7 @@ class Question {
       int? questionId,
       int? nextQuestionId,
       String? question,
+      String? questionDescription,
       String? questionType,
       String? url,
       String? answerType,
@@ -104,6 +107,7 @@ class Question {
     _templateid = templateid;
     _questionId = questionId;
     _question = question;
+    _questionDescription = questionDescription;
     _questionType = questionType;
     _url = url;
     _answerType = answerType;
@@ -121,6 +125,7 @@ class Question {
     _questionId = json['questionId'];
     _nextQuestionId = json['nextQuestionId'];
     _question = json['question'];
+    _questionDescription = json['questionDescription'];
     _questionType = json['questionType'];
     _url = json['url'];
     _answerType = json['answerType'];
@@ -150,6 +155,7 @@ class Question {
     map['questionId'] = _questionId;
     map['nextQuestionId'] = _nextQuestionId;
     map['question'] = _question;
+    map['questionDescription'] = _questionDescription;
     map['questionType'] = _questionType;
     map['url'] = _url;
     map['answerType'] = _answerType;

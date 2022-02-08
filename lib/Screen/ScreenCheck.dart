@@ -162,7 +162,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
           ),
           centerTitle: true, // this is all you need
           title: Text(
-            widget.title,
+            widget.title=="null"?taskDetails.taskTitle.toString():widget.title.toString(),
             style: kSubheadingextStyle.copyWith(color: AppColors.APP_WHITE),
           ),
           // leading: Icon(FontAwesomeIcons.solidArrowAltCircleLeft,color: AppColors.APP_BLUE,),
@@ -279,7 +279,7 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                 //         bottomRight: Radius.circular(16.0),
                                 //         topRight: Radius.circular(16.0))),
                                 child: Text(
-                                  "About ${widget.title}",
+                                  "About ${widget.title=="null"?taskDetails.taskTitle.toString():widget.title.toString()}",
                                   style: kTitleTextStyle.copyWith(
                                       fontWeight: FontWeight.bold,
                                       height: 1.5,

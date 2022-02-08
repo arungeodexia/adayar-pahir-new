@@ -345,19 +345,19 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                           color: AppColors.APP_BLACK
                       ),
                     ),
-                  ),Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.APP_LIGHT_BLUE_50,
-                        borderRadius: BorderRadius.circular(5.0)),
+                  ),surveyDetailsModel.question!.questionDescription.toString()=="null"?Container():Container(
+                    // decoration: BoxDecoration(
+                    //     color: AppColors.APP_LIGHT_BLUE_50,
+                    //     borderRadius: BorderRadius.circular(5.0)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 10,
-                        top: 7,
+                        top: 0,
                         right: 15,
                         bottom: 7,
                       ),
                       child: Text(
-                       "     "+ surveyDetailsModel.topText.toString(),
+                       "     "+ surveyDetailsModel.question!.questionDescription.toString(),
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
                         maxLines: 3,
@@ -365,9 +365,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             fontFamily: "Poppins",
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.APP_BLUE,
-                          letterSpacing: 1,
-                          wordSpacing: 1
+                            color: AppColors.APP_BLACK,
+                          wordSpacing: 0.6
                         ),
                       ),
                     ),

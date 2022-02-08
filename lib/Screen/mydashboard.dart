@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:ACI/Screen/Careteam.dart';
 import 'package:ACI/Screen/Homepage/dash3.dart';
+import 'package:ACI/Screen/otp_verify_form.dart';
 import 'package:ACI/Screen/surveymenu.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,6 +32,7 @@ import 'package:ACI/utils/values/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'ScreenCheck.dart';
 import 'add_resorce.dart';
 import 'dash1.dart';
 import 'favourites_page.dart';
@@ -230,10 +232,40 @@ class _MydashboardState extends State<Mydashboard> {
               );
             }
           } else {}
-        } else {
+        } else if (message.data['title'].toString().contains('Your doctor wants you to fill')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          print(msgObject['taskId'].toString());
+          CoolAlert.show(
+              context: context,
+              type: CoolAlertType.confirm,
+              title: msgObject['title'].toString(),
+              text: message.data['title'],
+              confirmBtnText: "Proceed",
+              cancelBtnText: "Do it Later!!",
+              loopAnimation: true,
+              onCancelBtnTap: ()async{
+                Navigator.of(context).pop();
+
+              },
+              onConfirmBtnTap: () async {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                  title: msgObject['title'].toString(),
+                  id: msgObject['taskId'].toString(),
+                  page: "0",
+                )),)
+                    .then((val)=>getVersionNumber());
+                globalTaskID=int.parse(msgObject['taskId'].toString());
+
+              });
+    } else {
           if (Platform.isIOS) {
             // _navigateToItemDetailIOS(context, message, false);
             // messageHdlrForIOS(message);
+            messageHdlrForAndroid(message.data, false);
+
           } else {
             messageHdlrForAndroid(message.data, false);
             // if (!globalAndroidIsOnMsgExecuted) {
@@ -263,10 +295,39 @@ class _MydashboardState extends State<Mydashboard> {
             });
             Map<String, dynamic> row = {};
           } else {}
+        }  else if (message.data['title'].toString().contains('Your doctor wants you to fill')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          print(msgObject['taskId'].toString());
+          CoolAlert.show(
+              context: context,
+              type: CoolAlertType.confirm,
+              title: msgObject['title'].toString(),
+              text: message.data['title'],
+              confirmBtnText: "Proceed",
+              cancelBtnText: "Do it Later!!",
+              loopAnimation: true,
+              onCancelBtnTap: ()async{
+                Navigator.of(context).pop();
+              },
+              onConfirmBtnTap: () async {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                  title: msgObject['title'].toString(),
+                  id: msgObject['taskId'].toString(),
+                  page: "0",
+                )),)
+                    .then((val)=>getVersionNumber());
+                globalTaskID=int.parse(msgObject['taskId'].toString());
+
+              });
         } else {
           if (Platform.isIOS) {
             // _navigateToItemDetailIOS(context, message, false);
             // messageHdlrForIOS(message);
+            messageHdlrForAndroid(message.data, false);
+
           } else {
             messageHdlrForAndroid(message.data, false);
             // if (!globalAndroidIsOnMsgExecuted) {
@@ -319,10 +380,39 @@ class _MydashboardState extends State<Mydashboard> {
               );
             }
           } else {}
+        }  else if (message.data['title'].toString().contains('Your doctor wants you to fill')) {
+          final dynamic msgBodyData = Uri.decodeFull(message.data['body']);
+          Map<String, dynamic> msgObject = json.decode(msgBodyData);
+          print("msgBodyData froom :==>" + msgBodyData + listKey);
+          print(msgObject['taskId'].toString());
+          CoolAlert.show(
+              context: context,
+              type: CoolAlertType.confirm,
+              title: msgObject['title'].toString(),
+              text: message.data['title'],
+              confirmBtnText: "Proceed",
+              cancelBtnText: "Do it Later!!",
+              loopAnimation: true,
+              onCancelBtnTap: ()async{
+                Navigator.of(context).pop();
+              },
+              onConfirmBtnTap: () async {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
+                  title: msgObject['title'].toString(),
+                  id: msgObject['taskId'].toString(),
+                  page: "0",
+                )),)
+                    .then((val)=>getVersionNumber());
+                globalTaskID=int.parse(msgObject['taskId'].toString());
+
+              });
         } else {
           if (Platform.isIOS) {
             // _navigateToItemDetailIOS(context, message, false);
             // messageHdlrForIOS(message);
+            messageHdlrForAndroid(message.data, false);
+
           } else {
             messageHdlrForAndroid(message.data, false);
             // if (!globalAndroidIsOnMsgExecuted) {
