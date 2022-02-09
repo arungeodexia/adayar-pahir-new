@@ -240,7 +240,7 @@ class _MydashboardState extends State<Mydashboard> {
           CoolAlert.show(
               context: context,
               type: CoolAlertType.confirm,
-              title: msgObject['title'].toString(),
+              title: msgObject['title'].toString().replaceAll("+", " "),
               text: message.data['title'],
               confirmBtnText: "Proceed",
               cancelBtnText: "Do it Later!!",
@@ -252,7 +252,7 @@ class _MydashboardState extends State<Mydashboard> {
               onConfirmBtnTap: () async {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                  title: msgObject['title'].toString(),
+                  title: msgObject['title'].toString().replaceAll("+", " "),
                   id: msgObject['taskId'].toString(),
                   page: "0",
                 )),)
@@ -303,7 +303,7 @@ class _MydashboardState extends State<Mydashboard> {
           CoolAlert.show(
               context: context,
               type: CoolAlertType.confirm,
-              title: msgObject['title'].toString(),
+              title: msgObject['title'].toString().replaceAll("+", " "),
               text: message.data['title'],
               confirmBtnText: "Proceed",
               cancelBtnText: "Do it Later!!",
@@ -314,7 +314,7 @@ class _MydashboardState extends State<Mydashboard> {
               onConfirmBtnTap: () async {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                  title: msgObject['title'].toString(),
+                  title: msgObject['title'].toString().replaceAll("+", " "),
                   id: msgObject['taskId'].toString(),
                   page: "0",
                 )),)
@@ -388,7 +388,7 @@ class _MydashboardState extends State<Mydashboard> {
           CoolAlert.show(
               context: context,
               type: CoolAlertType.confirm,
-              title: msgObject['title'].toString(),
+              title: msgObject['title'].toString().replaceAll("+", " "),
               text: message.data['title'],
               confirmBtnText: "Proceed",
               cancelBtnText: "Do it Later!!",
@@ -399,7 +399,7 @@ class _MydashboardState extends State<Mydashboard> {
               onConfirmBtnTap: () async {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                  title: msgObject['title'].toString(),
+                  title: msgObject['title'].toString().replaceAll("+", " "),
                   id: msgObject['taskId'].toString(),
                   page: "0",
                 )),)
