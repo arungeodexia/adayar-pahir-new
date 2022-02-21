@@ -251,38 +251,38 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                   //         fontWeight: FontWeight.w500),
                   //   ),
                   // ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.of(context).pop();
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,);
-
-                    },
-
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 10,
-                          top: 10,
-                          right: 10,
-                          bottom: 5,
-                        ),
-                        child: Text(
-                          "CANCEL",
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          maxLines: 3,
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              fontFamily: "Poppins",
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.APP_LIGHT_BLUE),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     // Navigator.of(context).pop();
+                  //     Navigator.of(context).pushAndRemoveUntil(
+                  //       MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,);
+                  //
+                  //   },
+                  //
+                  //   child: Container(
+                  //     width: MediaQuery.of(context).size.width / 1.1,
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(
+                  //         left: 10,
+                  //         top: 10,
+                  //         right: 10,
+                  //         bottom: 5,
+                  //       ),
+                  //       child: Text(
+                  //         "CANCEL",
+                  //         overflow: TextOverflow.ellipsis,
+                  //         softWrap: false,
+                  //         maxLines: 3,
+                  //         textAlign: TextAlign.end,
+                  //         style: TextStyle(
+                  //             fontFamily: "Poppins",
+                  //             fontSize: 17,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: AppColors.APP_LIGHT_BLUE),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
 
                   Padding(
                     padding: EdgeInsets.all(15.0),

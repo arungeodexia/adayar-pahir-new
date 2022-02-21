@@ -96,7 +96,7 @@ static const String CONTACT_SYNC_SUCCESSFULLY = "Contacts Synced Sucessfully";
 
   static const String CREATE_PROFILE_TITLE = "Create Profile";
   static const String CREATE_PROFILE_FULLNAME_HINT = "Jane Doe";
-  static const String CREATE_PROFILE_FULLNAME_LABEL = "Full Name";
+  static const String CREATE_PROFILE_FULLNAME_LABEL = "Full Name *";
    static const String CREATE_PROFILE_PROVIDE_SERVICE_LABEL = "I Provide Service ";
 
   static const String CREATE_PROFILE_SKILL_HINT = "Select skill";
@@ -108,7 +108,7 @@ static const String CONTACT_SYNC_SUCCESSFULLY = "Contacts Synced Sucessfully";
   static const String CREATE_PROFILE_ALTERNATE_NUMBER_HINT =
       "+1 (123) 456 7890";
   static const String CREATE_PROFILE_ALTERNATE_NUMBER_LABEL =
-      "Alternate Number (Optional)";
+      "Alternate Number  ";
  static const String CREATE_PROFILE_CITY_LABEL =
       "City";
   static const String CREATE_PROFILE_CITY_HINT =
@@ -122,11 +122,11 @@ static const String CONTACT_SYNC_SUCCESSFULLY = "Contacts Synced Sucessfully";
 
 
   static const String CREATE_PROFILE_EMAIL_HINT = "email@somedomain.com";
-  static const String CREATE_PROFILE_EMAIL_LABEL = "Email (Optional)";
+  static const String CREATE_PROFILE_EMAIL_LABEL = "Email  ";
 
   static const String CREATE_PROFILE_NOTES_HINT =
       "Enter notes";
-  static const String CREATE_PROFILE_NOTES_LABEL = "Notes (Optional)";
+  static const String CREATE_PROFILE_NOTES_LABEL = "Notes  ";
 
  // static const String CREATE_PROFILE_SAVE_BT_LBL = "Save Profile";
   static const String CREATE_PROFILE_SAVE_BT_LBL = "Profile Saved";
@@ -170,16 +170,16 @@ static const String INVALID_EMAIL_ID = "Invalid Email id";
 
   static const String EDIT_PROFILE_ALTERNATE_NUMBER_HINT = "+1(123)456 7890";
   static const String EDIT_PROFILE_ALTERNATE_NUMBER_LABEL =
-      "Alternate Number (Optional)";
+      "Alternate Number  ";
 
   static const String EDIT_PROFILE_EMAIL_HINT = "email@sumdomain.com";
-  static const String EDIT_PROFILE_EMAIL_LABEL = "Email (Optional)";
+  static const String EDIT_PROFILE_EMAIL_LABEL = "Email  ";
 
   static const String EDIT_PROFILE_NOTES_HINT =
       "Enter notes";
-  static const String EDIT_PROFILE_NOTES_LABEL = "Notes (Optional)";
-  static const String MORE_SKILL_LABEL = "More Skills (Optional)";
-  static const String REVIEWS_LABEL = "Review(Optional)";
+  static const String EDIT_PROFILE_NOTES_LABEL = "Notes  ";
+  static const String MORE_SKILL_LABEL = "More Skills  ";
+  static const String REVIEWS_LABEL = "Review ";
 
   static const String EDIT_PROFILE_SWITCH_LABEL = "Switch to User Account";
 
@@ -215,17 +215,17 @@ static const String INVALID_EMAIL_ID = "Invalid Email id";
   static const String ADD_NEW_RESOURCE_ALTERNATE_NUMBER_HINT =
       "+1(123)456 7890";
   static const String ADD_NEW_RESOURCE_ALTERNATE_NUMBER_LABEL =
-      "Alternate Number (Optional)";
+      "Alternate Number  ";
 
   static const String ADD_NEW_RESOURCE_EMAIL_HINT = "email@sumdomain.com";
-  static const String ADD_NEW_RESOURCE_EMAIL_LABEL = "Email (Optional)";
+  static const String ADD_NEW_RESOURCE_EMAIL_LABEL = "Email  ";
 
   static const String ADD_NEW_RESOURCE_RATING_LABEL = "Rating";
 
   static const String ADD_NEW_RESOURCE_NOTES_HINT =
       "Enter notes";
    static const String MORE_SKILL_HINT = "e.g. Landscaping, Moving";
-  static const String ADD_NEW_RESOURCE_NOTES_LABEL = "Notes (Optional)";
+  static const String ADD_NEW_RESOURCE_NOTES_LABEL = "Notes  ";
   static const String REVIEW_HINT = "Review";
 
   static const String ADD_NEW_RESOURCE_SAVE_BT_LBL = "Add Resource";
@@ -240,12 +240,12 @@ static const String UPDATE_RESOURCE_SAVE_BT_LBL = "Update Resource";
   static const String ADD_NEW_RESOURCE_DIAG_FAILURE_BT_LBL = "Ok";
 
   static const String ADD_NEW_RESOURCE_CITY_LABEL =
-      "City (Optional)";
+      "City  ";
   static const String ADD_NEW_RESOURCE_CITY_HINT =
   "e.g San diego";
 
   static const String ADD_NEW_RESOURCE_STATE_LABEL =
-      "State (Optional)";
+      "State  ";
   static const String ADD_NEW_RESOURCE_STATE_HINT =
   "e.g California";
 
@@ -353,7 +353,7 @@ static const String isRedirectFromHomeOrFav = "homPageorFav";
   static const String APP_FEEDBACK_ISSUE_LABEL = "Issue Type";
 
   static const String APP_FEEDBACK_DETAILS_HINT = "Please describe the issue.";
-  static const String APP_FEEDBACK_DETAILS_LABEL = "Details (Optional)";
+  static const String APP_FEEDBACK_DETAILS_LABEL = "Details  ";
 
   //static const String APP_FEEDBACK_SUBMIT_LABEL = "Submit";
   static const String APP_FEEDBACK_SUBMIT_LABEL = "Submitted";

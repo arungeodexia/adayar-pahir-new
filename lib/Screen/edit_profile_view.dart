@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -403,7 +404,7 @@ class EditProfileState extends State<EditProfileView> {
                 CoolAlert.show(
                   context: context,
                   type: CoolAlertType.success,
-                  text: "Your Profile was created successfully!",
+                  text: "Your Profile was Updated successfully!",
                   title: "Success",
                   loopAnimation: true,
                   onConfirmBtnTap: (){
@@ -420,7 +421,7 @@ class EditProfileState extends State<EditProfileView> {
                 CoolAlert.show(
                     context: context,
                     type: CoolAlertType.error,
-                    text: "Your Profile was not creatd successfully!",
+                    text: "Your Profile was not Updated successfully!",
                     title: "Failure",
                     loopAnimation: true,
                     onConfirmBtnTap: (){
@@ -765,9 +766,13 @@ class EditProfileState extends State<EditProfileView> {
                           SizedBox(
                             height: 5,
                           ),
-                          TextField(
+                          TextFormField(
                             controller: alternateMobileInputController,
-                            keyboardType: TextInputType.phone,
+                              keyboardType: const TextInputType.numberWithOptions(
+                                  signed: true,
+                                  decimal: true),
+                              maxLength: 10,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             decoration: InputDecoration(
                                 hintText: AppStrings
                                     .CREATE_PROFILE_ALTERNATE_NUMBER_HINT,
