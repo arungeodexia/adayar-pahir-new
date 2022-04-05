@@ -15,6 +15,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -394,7 +395,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                   child: new CircularProgressIndicator()),
                             ),
                             errorWidget: (context, url, error) =>
-                                new Icon(Icons.error),
+                                Padding(padding: const EdgeInsets.all(8.0), child: Container( width: 30, height: 30,child: Image.asset('images/noimage.png',width: 30,height: 30,)),),
                           ),
                         )
                       : surveyDetailsModel.question!.questionType.toString() ==
@@ -490,10 +491,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                           ),
                                                           errorWidget: (context,
                                                                   url, error) =>
-                                                              new Icon(
-                                                            Icons.error,
-                                                            size: 30,
-                                                          ),
+                                                              Padding(padding: const EdgeInsets.all(8.0), child: Container( width: 30, height: 30,child: Image.asset('images/noimage.png',width: 30,height: 30,)),),
                                                         ),
                                                         SizedBox(
                                                           width: 50,
@@ -565,7 +563,6 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                             int index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              isFullNameChangeBtnState = true;
                                               // for (int j = 0;j < surveyDetailsModel.question!.options!.length; j++) {
                                               //   surveyDetailsModel.question!.options![j].selct = -1;
                                               // }
@@ -574,6 +571,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                               }else{
                                                 surveyDetailsModel.question!.options![index].selct = 0;
                                               }
+
+                                              int check=0;
+
+                                              for(int l = 0; l < surveyDetailsModel.question!.options!.length; l++){
+                                                if(surveyDetailsModel.question!.options![l].select==0){
+                                                  check=1;
+                                                }
+                                              }
+                                              if(check==1){
+                                                isFullNameChangeBtnState = true;
+                                              }else{
+                                                isFullNameChangeBtnState = false;
+
+                                              }
+
                                               setState(() {});
                                             },
                                             child: Container(
@@ -601,10 +613,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                         ),
                                                     errorWidget: (context,
                                                         url, error) =>
-                                                    new Icon(
-                                                      Icons.error,
-                                                      size: 30,
-                                                    ),
+                                                        Padding(padding: const EdgeInsets.all(8.0), child: Container( width: 30, height: 30,child: Image.asset('images/noimage.png',width: 30,height: 30,)),),
                                                   ),
                                                   SizedBox(
                                                     width: 50,
@@ -1148,6 +1157,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                 //       Navigator.of(context).pop();
                                 //       Navigator.of(context).pop();
                                 //     });
+                              }else{
+                                Fluttertoast.showToast(msg: "Please Choose all answer to submit survey");
                               }
                             },
                             child: Padding(

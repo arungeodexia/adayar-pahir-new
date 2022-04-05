@@ -47,7 +47,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     // TODO: implement initState
     super.initState();
     getuserName();
-    getsurvey();
+    getsurvey(true);
   }
 
 
@@ -58,11 +58,13 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
       body: isload?buildLoading():_buildBody(context),
     );
   }
-  void getsurvey() async {
-    isload = true;
-    setState(() {
+  void getsurvey(bool load) async {
+    if(load){
+      isload = load;
+      setState(() {
+      });
+    }
 
-    });
     // await EasyLoading.show(status: 'Loading...',maskType: EasyLoadingMaskType.black);
     http.Response? response =
     await resourceRepository.getTasks();
@@ -81,8 +83,6 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     }
 
     log("tasks"+taskmodel.tasks.toString()+"tasks");
-
-
 
     setState(() {
       isload = false;
@@ -262,7 +262,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           id: taskmodel.tasks![index].taskId.toString(),
                           page: "0",
                         )),)
-                            .then((val)=>getsurvey());
+                            .then((val)=>getsurvey(false));
                         globalTaskID=taskmodel.tasks![index].taskId!;
                       },
                       title: Padding(
