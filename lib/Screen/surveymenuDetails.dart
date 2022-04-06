@@ -359,9 +359,9 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                       ),
                       child: Text(
                        "     "+ surveyDetailsModel.question!.questionDescription.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 3,
+                        // overflow: TextOverflow.ellipsis,
+                        // softWrap: false,
+                        // maxLines: 3,
                         style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 14,
@@ -503,19 +503,24 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       .size
                                                                       .width /
                                                                   2.8,
-                                                          child: Text(
-                                                            surveyDetailsModel
-                                                                .question!
-                                                                .options![index]
-                                                                .option!,
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    "Poppins",
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight.w500,
-                                                                color:
-                                                                    Colors.black),
+                                                          child: Flexible(
+                                                            child: Container(
+                                                              child: Text(
+                                                                surveyDetailsModel
+                                                                    .question!
+                                                                    .options![index]
+                                                                    .option!,
+                                                                
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        "Poppins",
+                                                                    fontSize: 15,
+                                                                    fontWeight:
+                                                                        FontWeight.w500,
+                                                                    color:
+                                                                        Colors.black),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -840,11 +845,11 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                           .question!
                                                           .choices![index].answerType=="radio"?
                                                       Container(
-                                                        height: surveyDetailsModel
-                                                            .question!
-                                                            .choices![index]
-                                                            .options!
-                                                            .length*50/1.3,
+                                                        // height: surveyDetailsModel
+                                                        //     .question!
+                                                        //     .choices![index]
+                                                        //     .options!
+                                                        //     .length*50/1.3,
                                                         child: ListView.builder(
                                                           padding: EdgeInsets.all(10),
                                                           physics: NeverScrollableScrollPhysics(),
@@ -861,6 +866,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                         context,
                                                                     int i) {
                                                               return Container(
+                                                                padding: EdgeInsets.all(5),
                                                                 child: GestureDetector(
                                                                   onTap: () {
                                                                     setState(() {
@@ -914,24 +920,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                           height: 25,
                                                                         ),
                                                                       ),
-                                                                      Container(
-                                                                        // width: 70,
-                                                                        // height: 50,
-                                                                        padding: const EdgeInsets.only(left: 4.0,right: 10,bottom: 5,top: 3),
-                                                                        child: Text(
-                                                                          surveyDetailsModel.question!.choices![index].options![i].option!,
-                                                                          style: TextStyle(
-                                                                            fontFamily: "Poppins",
-                                                                            fontSize: 15,
-                                                                            fontWeight: FontWeight.bold,
+                                                                      Flexible(
+                                                                        child: Container(
+                                                                          padding: const EdgeInsets.only(left: 10.0,right: 10,bottom: 0,top: 3),
+                                                                          child: Text(
+                                                                            surveyDetailsModel.question!.choices![index].options![i].option!,
+                                                                            style: TextStyle(
+                                                                              fontFamily: "Poppins",
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                            textAlign: TextAlign.start,
+                                                                            // overflow: TextOverflow.ellipsis,
                                                                           ),
-                                                                          textAlign: TextAlign.center,
-                                                                          // overflow: TextOverflow.ellipsis,
                                                                         ),
                                                                       ),
-
-
-
                                                                     ],
                                                                   ),
                                                                 ),
@@ -940,11 +943,11 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                       ):surveyDetailsModel
                                                           .question!
                                                           .choices![index].answerType=="checkbox"?Container(
-                                                        height: surveyDetailsModel
-                                                            .question!
-                                                            .choices![index]
-                                                            .options!
-                                                            .length*50/1.3,
+                                                        // height: surveyDetailsModel
+                                                        //     .question!
+                                                        //     .choices![index]
+                                                        //     .options!
+                                                        //     .length*50/1.3,
                                                         child: ListView.builder(
                                                           padding: EdgeInsets.all(10),
                                                           physics: NeverScrollableScrollPhysics(),
@@ -1019,19 +1022,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                           height: 25,
                                                                         ),
                                                                       ),
-                                                                      Container(
-                                                                        // width: 70,
-                                                                        // height: 50,
-                                                                        padding: const EdgeInsets.only(left: 4.0,right: 20,top: 5,bottom: 10),
-                                                                        child: Text(
-                                                                          surveyDetailsModel.question!.choices![index].options![i].option!,
-                                                                          style: TextStyle(
-                                                                            fontFamily: "Poppins",
-                                                                            fontSize: 15,
-                                                                            fontWeight: FontWeight.bold,
+                                                                      Flexible(
+                                                                        child: Container(
+                                                                          // width: 70,
+                                                                          // height: 50,
+                                                                          padding: const EdgeInsets.only(left: 10.0,right: 20,top: 0,bottom: 10),
+                                                                          child: Text(
+                                                                            surveyDetailsModel.question!.choices![index].options![i].option!,
+                                                                            style: TextStyle(
+                                                                              fontFamily: "Poppins",
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                            textAlign: TextAlign.start,
+                                                                            // overflow: TextOverflow.ellipsis,
                                                                           ),
-                                                                          textAlign: TextAlign.center,
-                                                                          // overflow: TextOverflow.ellipsis,
                                                                         ),
                                                                       ),
 
