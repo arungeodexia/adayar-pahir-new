@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:ACI/utils/constants.dart';
+import 'package:ACI/utils/language.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,14 +30,15 @@ class IShareAppDrawer extends StatelessWidget {
   int _selectedIndex = 0;
 
   final userDrawerItems = [
-    new DrawerItem("Home", Icons.home, "/mydashboard"),
-    new DrawerItem("My Profile", Icons.account_circle, "/updateprofile"),
+    new DrawerItem(tr("home"), Icons.home, "/mydashboard"),
+    new DrawerItem(tr("mypro"), Icons.account_circle, "/updateprofile"),
     /*new DrawerItem("Change Number",
         IconData(59504, fontFamily: 'MaterialIcons'), "/updatemobile"),*/
-    new DrawerItem("Set Privacy", Icons.settings, "/privacy"),
+    // new DrawerItem(tr("setpri"), Icons.settings, "/privacy"),
     new DrawerItem(
-        "Privacy & Security", Icons.insert_drive_file, "/mydashboard"),
-    new DrawerItem("Help", Icons.help, "/help"),
+        tr("privacysecurity"), Icons.insert_drive_file, "/privacysecurity"),
+    new DrawerItem(tr("help"), Icons.help, "/help"),
+    new DrawerItem(tr("language"), Icons.translate, "/language"),
     // new DrawerItem(
     //     AppStrings.CONTACT_SYNC_TITLE, Icons.sync, "/contactsyncview"),
   ];
@@ -116,33 +119,40 @@ class IShareAppDrawer extends StatelessWidget {
         ),
         // selected: i == _selectedIndex,
         onTap: () async {
-          if (d.title == "Invite a friend")
+          if (d.route == "Invite a friend")
             shareData();
-          else if (d.title == "Privacy & Security") {
+          else if (d.route == "/privacysecurity") {
             Navigator.pop(context);
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => WebViewExample()));
-          } else if (d.title == "My Profile") {
+          } else if (d.route == "/updateprofile") {
             Navigator.pop(context);
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => EditProfileView(
                       edit: "edit",
                     )));
-          } else if (d.title == "Help") {
+          } else if (d.route == "/help") {
             Navigator.pop(context);
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => HelpView()));
             // Navigator.of(context).push(
             //     MaterialPageRoute(builder: (context) => ContactsPage()));
 
-          } else if (d.title == "Set Privacy") {
+          } else if (d.route == "/privacy") {
             Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => Privacy_Control(
-                        name: "pricay",
+                        name: "/privacy",
                       )),
+            );
+          }else if (d.route == "/language") {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Language(from: "0",)),
             );
           } else if (d.title == AppStrings.CONTACT_SYNC_TITLE) {
             Navigator.pop(context);

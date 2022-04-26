@@ -43,7 +43,7 @@ class _WebViewExampleState extends State<WebViewExample> {
     globalcontext = context;
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Privacy And Security"),
+        title:  Text(tr("privacysecurity")),
         actions: [
         ],
         // This drop down menu demonstrates that Flutter widgets can be shown over the web view.

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class HelpState extends State<HelpView>
     return Container(
       child: Scaffold(
         appBar: AppBar(
-            title: Text(AppStrings.APP_HELP_TITLE),
+            title: Text(tr("help")),
             centerTitle: true,
             automaticallyImplyLeading: true,
             leading: IconButton(

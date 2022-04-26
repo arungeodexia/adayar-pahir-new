@@ -1,4 +1,6 @@
 // @dart=2.9
+import 'package:ACI/translations/codegen_loader.g.dart';
+import 'package:ACI/utils/language.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -51,7 +53,7 @@ void main() async {
   await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.blue, // navigation bar color
+    systemNavigationBarColor: AppColors.APP_BLUE, // navigation bar color
     statusBarColor: AppColors.APP_BLUE, // status bar color
   ));
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -88,7 +90,16 @@ void main() async {
   //       () => runApp( MyApp()),
   //   blocObserver: SimpleBlocObserver(),
   // );
-  runApp(MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: [
+        Locale('en'),
+        Locale('ta'),
+      ],
+      path: 'assets/translations', // <-- change the path of the translation files
+      fallbackLocale: Locale('en'),
+      child: MyApp()
+  ),);
 }
 
 class MyApp extends StatelessWidget {
@@ -96,32 +107,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return EasyLocalization(
-      supportedLocales: [Locale('en', 'US'), Locale('de', 'DE')],
-      path: 'i18n', // <-- change the path of the translation files
-      fallbackLocale: Locale('en', 'US'),
-      child: MultiBlocProvider(
-          providers: _multiBlocProviders(),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-
-            theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white,
-              fontFamily: "Poppins",
-                textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
-                  bodyText1: GoogleFonts.oswald(textStyle: textTheme.bodyText1),
-                ),
-              // primarySwatch: Colors.,
-              appBarTheme: AppBarTheme(
-                backgroundColor: AppColors.APP_BLUE,
-                elevation: 0
-              )
-            ),
-            title: 'ACI',
-            home: Auth(),
-            builder: EasyLoading.init(),
-          )),
-    );
+    return MultiBlocProvider(
+        providers: _multiBlocProviders(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            fontFamily: "Poppins",
+              textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
+                bodyText1: GoogleFonts.oswald(textStyle: textTheme.bodyText1),
+              ),
+            // primarySwatch: Colors.,
+            appBarTheme: AppBarTheme(
+              backgroundColor: AppColors.APP_BLUE,
+              elevation: 0
+            )
+          ),
+          title: 'ACI',
+          home: Auth(),
+          builder: EasyLoading.init(),
+        ));
   }
 
   List<BlocProvider<Bloc>> _multiBlocProviders() {
@@ -162,7 +170,7 @@ class Auth extends StatelessWidget {
               if (weather) {
                 return Mydashboard();
               } else {
-                return LoginInitView();
+                return Language(from: "1");
               }
             }
             if (state is AuthLoadFailure) {

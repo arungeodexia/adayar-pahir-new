@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ACI/utils/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -201,7 +202,7 @@ class ResourceDetailsState extends State<ResourceDetailsView> {
           ),
           title: StreamBuilder<Object>(
               stream: appBloc.titleStream,
-              initialData: "Doctor Details",
+              initialData: tr("docdet"),
               builder: (context, snapshot) {
                 return Text(snapshot.data!.toString(),
                     style: TextStyle(fontWeight: FontWeight.bold));

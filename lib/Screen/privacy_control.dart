@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cool_alert/cool_alert.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -102,7 +103,7 @@ class privacycontrolstate extends State<Privacy_Control> {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           centerTitle: true, // this is all you need
-          title: Text("Privacy Settings"),
+          title: Text(tr("setpri")),
           actions: [
             // createEditProfileModel == null
             //     ? Container()

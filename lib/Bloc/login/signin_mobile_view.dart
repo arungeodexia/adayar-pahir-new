@@ -69,7 +69,7 @@ class SigninState extends State<SigninView> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(AppStrings.APP_NAME),
+              title: Text(tr("appname")),
               backgroundColor: AppColors.APP_BLUE,
               centerTitle: true,
               /* automaticallyImplyLeading: true,
@@ -107,9 +107,9 @@ class SigninState extends State<SigninView> {
                         Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              AppStrings.UPDATE_MOBILE_ENTER_PHNO_TITLE,
+                              tr("phverify"),
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 12,
                                   fontFamily: "OpenSans",
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.APP_BLACK),
@@ -119,10 +119,11 @@ class SigninState extends State<SigninView> {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            AppStrings.UPDATE_MOBILE_ENTER_PHNO_TITLE_DESC,
+                            tr("pahirsms"),
                             style: TextStyle(
                               color: AppColors.APP_BLACK,
                               fontFamily: "OpenSans",
+                              fontSize: 12
                             ),
                             softWrap: true,
                             textAlign: TextAlign.center,
@@ -306,8 +307,7 @@ class SigninState extends State<SigninView> {
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              AppStrings
-                                  .SIGNUP_MOBILE_ENTER_PHNO_LBL_TERMS_TITLE,
+                            tr("agree"),
                               style: TextStyle(
                                   color: AppColors.APP_BLACK,
                                   fontFamily: "OpenSans"),
@@ -329,8 +329,7 @@ class SigninState extends State<SigninView> {
 
                                 child: Center(
                                   child: Text(
-                                    AppStrings
-                                        .SIGNUP_MOBILE_ENTER_PHNO_LBL_TERMS_LINK,
+                                  tr("terms"),
                                     style: TextStyle(
                                         color: AppColors.APP_LIGHT_BLUE,
                                         decoration: TextDecoration.underline),
@@ -389,8 +388,7 @@ class SigninState extends State<SigninView> {
                                         padding: const EdgeInsets.only(
                                             top: 10, bottom: 10),
                                         child: Text(
-                                          AppStrings
-                                              .SIGNUP_MOBILE_CONTINUE_BT_LBL,
+                                        tr("agreecontinue"),
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),

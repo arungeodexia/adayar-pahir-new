@@ -143,6 +143,7 @@ flutter:
     - assets/images/sticker/
     - assets/images/
     - assets/icons/
+    - assets/translations/
     - assets/
     - images/
     - i18n/en-US.json

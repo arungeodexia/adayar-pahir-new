@@ -431,8 +431,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             children: <Widget>[
                               surveyDetailsModel.question!.answerType == "radio"
                                   ? Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                                 color: AppColors.APP_LIGHT_BLUE_50,
                                     child: Center(
                                         child: Container(
@@ -503,23 +502,21 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       .size
                                                                       .width /
                                                                   2.8,
-                                                          child: Flexible(
-                                                            child: Container(
-                                                              child: Text(
-                                                                surveyDetailsModel
-                                                                    .question!
-                                                                    .options![index]
-                                                                    .option!,
-                                                                
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        "Poppins",
-                                                                    fontSize: 15,
-                                                                    fontWeight:
-                                                                        FontWeight.w500,
-                                                                    color:
-                                                                        Colors.black),
-                                                              ),
+                                                          child: Container(
+                                                            child: Text(
+                                                              surveyDetailsModel
+                                                                  .question!
+                                                                  .options![index]
+                                                                  .option!,
+
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      "Poppins",
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight.w500,
+                                                                  color:
+                                                                      Colors.black),
                                                             ),
                                                           ),
                                                         ),

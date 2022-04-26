@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +162,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
           })
           : Center(
         child: Text(
-          'There are no pending messages to read.',
+          tr("nomsg"),
           textAlign: TextAlign.center,
         ),
       ),

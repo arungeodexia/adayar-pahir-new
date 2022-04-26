@@ -7,6 +7,7 @@ import 'package:ACI/Screen/Homepage/dash3.dart';
 import 'package:ACI/Screen/otp_verify_form.dart';
 import 'package:ACI/Screen/surveymenu.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -82,13 +83,13 @@ class _MydashboardState extends State<Mydashboard> {
 
   void onTabTapped(int index) {
     if (index == 0)
-      appBloc.updateTitle('Home');
+      appBloc.updateTitle(tr("home"));
     else if (index == 1)
-      appBloc.updateTitle('Care Team');
+      appBloc.updateTitle(tr("careteam"));
     else if (index == 2)
-      appBloc.updateTitle('Messages');
+      appBloc.updateTitle(tr("messages"));
     else if (index == 3)
-      appBloc.updateTitle('Reports');
+      appBloc.updateTitle(tr("reports"));
     else if (index == 4) appBloc.updateTitle('Favourites');
     setState(() {
       _currentIndex = index;
@@ -440,7 +441,7 @@ class _MydashboardState extends State<Mydashboard> {
           backgroundColor: AppColors.APP_BLUE1,
           title: StreamBuilder<Object>(
               stream: appBloc.titleStream,
-              initialData: "Home",
+              initialData: tr("home"),
               builder: (context, snapshot) {
                 return Text(snapshot.data.toString());
               }),
@@ -500,7 +501,7 @@ class _MydashboardState extends State<Mydashboard> {
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(
-                'Home',
+                tr("home"),
                 style: TextStyle(color: AppColors.APP_BLUE),
               ),
             ),
@@ -514,7 +515,7 @@ class _MydashboardState extends State<Mydashboard> {
                 color: AppColors.APP_BLUE,
               ),
               title: new Text(
-                'Care Team',
+                tr("careteam"),
                 style: TextStyle(color: AppColors.APP_BLUE),
               ),
             ),
@@ -551,7 +552,7 @@ class _MydashboardState extends State<Mydashboard> {
                       color: AppColors.APP_BLUE,
                     ),
               title:
-                  new Text('Messages', style: TextStyle(color: AppColors.APP_BLUE)),
+                  new Text(tr('messages'), style: TextStyle(color: AppColors.APP_BLUE)),
             ),
             BottomNavigationBarItem(
               icon: new Icon(
@@ -562,7 +563,7 @@ class _MydashboardState extends State<Mydashboard> {
                 Icons.list_alt_rounded,
                 color: AppColors.APP_BLUE,
               ),
-              title: new Text('Reports',
+              title: new Text(tr("reports"),
                   style: TextStyle(color: AppColors.APP_BLUE)),
             ),
             // BottomNavigationBarItem(

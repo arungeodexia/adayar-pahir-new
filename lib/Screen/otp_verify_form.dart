@@ -112,7 +112,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Phone Number Verification',
+                  tr("phverify"),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
@@ -122,7 +122,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: "Enter the code sent to ",
+                      text: tr("etcode"),
                       children: [
                         TextSpan(
                             text: "${widget.phoneNumber}",
@@ -509,7 +509,7 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
                                         padding: EdgeInsets.fromLTRB(
                                             25.0, 8.0, 25.0, 8.0),
                                         child: Text(
-                                          AppStrings.SIGNUP_OTP_ENTER_OTP_DESC +
+                                          tr("otptxt") +
                                               widget.countryCode +
                                               "  " +
                                               widget.mobileNo,
@@ -661,8 +661,7 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
                                       Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: Text(
-                                          AppStrings
-                                              .SIGNUP_OTP_ENTER_OTP_CHARACTERS,
+                                        tr("digits"),
                                           style: TextStyle(
                                               color:
                                                   AppColors.APP_LIGHT_GREY_20,
@@ -693,15 +692,15 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
                                                     ),
                                                     SizedBox(width: 15),
                                                     Text(
-                                                      AppStrings
-                                                          .SIGNUP_OTP_ENTER_RESEND,
+
+                                                    tr("resendsms"),
                                                       style: TextStyle(
                                                           color: isResendOtpAllowed
                                                               ? AppColors
                                                                   .APP_LIGHT_BLUE
                                                               : AppColors
                                                                   .APP_LIGHT_GREY_10,
-                                                          fontSize: 16),
+                                                          fontSize: 12),
                                                     )
                                                   ],
                                                 ),
@@ -762,8 +761,7 @@ class _OTPVerifyFormState extends State<OTPVerifyForm> {
                                           child: Padding(
                                             padding: EdgeInsets.all(8.0),
                                             child: Text(
-                                              AppStrings
-                                                  .SIGNUP_OTP_ENTER_WRONG_NUMBER,
+                                            tr("wrongnumber"),
                                               style: TextStyle(
                                                   color: AppColors.APP_BLUE,
                                                   decoration:

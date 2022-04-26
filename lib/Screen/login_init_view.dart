@@ -167,7 +167,7 @@ final Column slider1 = Column(
 
                         child:
                         Text(
-                          AppStrings.APP_NAME,
+                          tr("appname"),
                           style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.bold,
@@ -207,7 +207,7 @@ final Column slider1 = Column(
                     Padding(
                       padding: EdgeInsets.all(7),
                       child: Text(
-                        AppStrings.CONTACT_ACCESS_SCREEN_SUB_TITLE,
+                        tr("signuptext"),
                         style:
                         TextStyle(color: AppColors.APP_WHITE, fontSize: 17),
                         softWrap: true,
@@ -295,7 +295,7 @@ final Column slider1 = Column(
                     child: Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: Text(
-                          AppStrings.LOGIN_INIT_SIGNUP,
+                          tr("signup"),
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         )),

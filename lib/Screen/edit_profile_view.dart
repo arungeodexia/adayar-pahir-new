@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cool_alert/cool_alert.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -383,7 +384,7 @@ class EditProfileState extends State<EditProfileView> {
 
             title: StreamBuilder<Object>(
                 stream: appBloc.titleStream,
-                initialData: AppStrings.EDIT_PROFILE_TITLE,
+                initialData: tr("profilesettings"),
                 builder: (context, snapshot) {
                   return Text(snapshot.data.toString(),
                       style: TextStyle(fontWeight: FontWeight.bold));
@@ -404,8 +405,8 @@ class EditProfileState extends State<EditProfileView> {
                 CoolAlert.show(
                   context: context,
                   type: CoolAlertType.success,
-                  text: "Your Profile was Updated successfully!",
-                  title: "Success",
+                  text: tr("prsuccess"),
+                  title: tr("success"),
                   loopAnimation: true,
                   onConfirmBtnTap: (){
                     Navigator.of(context).pop();
@@ -421,8 +422,8 @@ class EditProfileState extends State<EditProfileView> {
                 CoolAlert.show(
                     context: context,
                     type: CoolAlertType.error,
-                    text: "Your Profile was not Updated successfully!",
-                    title: "Failure",
+                    text: tr("prfailure"),
+                    title: tr("failure"),
                     loopAnimation: true,
                     onConfirmBtnTap: (){
                       Navigator.of(context).pop();
@@ -536,7 +537,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_FULLNAME_LABEL,
+                            tr("fullname"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -668,7 +669,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_MOBILENUMBER_LABEL,
+                            tr("mobile"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -701,7 +702,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_CITY_LABEL,
+                            tr("city"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -730,7 +731,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_STATE_LABEL,
+                            tr("state"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -760,7 +761,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_ALTERNATE_NUMBER_LABEL,
+                            tr("alternatenumber"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -795,7 +796,7 @@ class EditProfileState extends State<EditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            AppStrings.CREATE_PROFILE_EMAIL_LABEL,
+                            tr("email"),
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(
@@ -962,9 +963,8 @@ class EditProfileState extends State<EditProfileView> {
                                           isEmailChangeBtnState ||
                                           isNotesChangeBtnState ||
                                           isSkillChangeBtnState))
-                                      ? AppStrings.UPDATE_MOBILE_SUBMIT_BT_LBL
-                                      : AppStrings
-                                          .UPDATE_MOBILE_CONTINUE_BT_LBL,
+                                      ? tr("submit")
+                                      : tr("submit"),
                                   //  AppStrings.UPDATE_MOBILE_CONTINUE_BT_LBL,
                                   style: TextStyle(
                                       fontSize: 17,

@@ -15,6 +15,7 @@ import 'package:ACI/data/sp/shared_keys.dart';
 import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:ACI/utils/constants.dart';
 import 'package:ACI/utils/values/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -235,7 +236,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                 //         bottomRight: Radius.circular(16.0),
                 //         topRight: Radius.circular(16.0))),
                 child: Text(
-                  "Programs",
+                  tr("programs"),
                   style:
                   TextStyle(fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -290,7 +291,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
           Center(
                 child: Container(
                   margin: EdgeInsets.only(top: 50),
-            child: Text("You have No Programs",style: kSubtitleTextSyule1.copyWith(
+            child: Text(tr("noprograms"),style: kSubtitleTextSyule1.copyWith(
                   fontWeight: FontWeight.w600,
                   height: 1.5,
                   color: AppColors.APP_GREY
@@ -619,7 +620,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   padding: const EdgeInsets.all(3),
                   child: Center(
                     child: Text(
-                      "No Appointments Scheduled",
+                      tr("noappo"),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 3,
