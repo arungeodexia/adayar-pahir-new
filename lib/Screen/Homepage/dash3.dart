@@ -291,7 +291,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
           Center(
                 child: Container(
                   margin: EdgeInsets.only(top: 50),
-            child: Text(tr("noprograms"),style: kSubtitleTextSyule1.copyWith(
+            child: Text(tr("nopprograms"),style: kSubtitleTextSyule1.copyWith(
                   fontWeight: FontWeight.w600,
                   height: 1.5,
                   color: AppColors.APP_GREY

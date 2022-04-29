@@ -115,5 +115,6 @@
   "reports":"Reports",
   "docdet":"Doctor details",
   "nomsg":"There are no pending messages to read",
+  "noappo":"No Appointments",
   "email":"Email"
 }

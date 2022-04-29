@@ -449,6 +449,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                               itemBuilder: (BuildContext context,
                                                   int index) {
                                                 return GestureDetector(
+
                                                   onTap: () {
                                                     isFullNameChangeBtnState = true;
                                                     for (int j = 0;
@@ -466,7 +467,12 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                     setState(() {});
                                                   },
                                                   child: Container(
+                                                    width: MediaQuery.of(context).size.width,
+                                                    height: 80,
                                                     padding: EdgeInsets.all(5),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColors.APP_LIGHT_BLUE_50,
+                                                        borderRadius: BorderRadius.circular(5.0)),
                                                     child: Row(
                                                       children: [
                                                         CachedNetworkImage(
@@ -863,8 +869,11 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                         context,
                                                                     int i) {
                                                               return Container(
-                                                                padding: EdgeInsets.all(5),
-                                                                child: GestureDetector(
+                                                                width: MediaQuery.of(context).size.width,
+                                                                padding: EdgeInsets.all(10),
+                                                                decoration: BoxDecoration(
+                                                                    color: AppColors.APP_LIGHT_BLUE_50,
+                                                                    borderRadius: BorderRadius.circular(5.0)),                                                                child: GestureDetector(
                                                                   onTap: () {
                                                                     setState(() {
                                                                       for (int j = 0; j < surveyDetailsModel.question!.choices![index].options!.length; j++) {
@@ -919,6 +928,7 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       ),
                                                                       Flexible(
                                                                         child: Container(
+                                                                          width: MediaQuery.of(context).size.width,
                                                                           padding: const EdgeInsets.only(left: 10.0,right: 10,bottom: 0,top: 3),
                                                                           child: Text(
                                                                             surveyDetailsModel.question!.choices![index].options![i].option!,
@@ -961,6 +971,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                         context,
                                                                     int i) {
                                                               return Container(
+                                                                padding: EdgeInsets.all(10),
+                                                                decoration: BoxDecoration(
+                                                                    color: AppColors.APP_LIGHT_BLUE_50,
+                                                                    borderRadius: BorderRadius.circular(5.0)),
                                                                 child: GestureDetector(
                                                                   onTap: () {
                                                                     setState(() {
@@ -1021,9 +1035,10 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                       ),
                                                                       Flexible(
                                                                         child: Container(
+                                                                          width: MediaQuery.of(context).size.width,
                                                                           // width: 70,
                                                                           // height: 50,
-                                                                          padding: const EdgeInsets.only(left: 10.0,right: 20,top: 0,bottom: 10),
+                                                                          padding: const EdgeInsets.only(left: 10.0,right: 20,top: 5,bottom: 10),
                                                                           child: Text(
                                                                             surveyDetailsModel.question!.choices![index].options![i].option!,
                                                                             style: TextStyle(
