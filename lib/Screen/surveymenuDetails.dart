@@ -601,6 +601,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                                                         width:40,
                                                                         height:40,
                                                                         child: TextField(
+
+
                                                                         keyboardType: surveyDetailsModel.question!.optionGroup![index].optionGroups![index1].optionPrefix.toString() ==
                                                                               "Others"
                                                                           ? TextInputType.name
