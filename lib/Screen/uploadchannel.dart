@@ -633,7 +633,7 @@ class _UploadchannelState extends State<Uploadchannel> {
     //---Create http package multipart request object
     final request = http.MultipartRequest(
       "POST",
-      Uri.parse("${AppStrings.BASE_URL}/api/v1/user/content/$contentid/file"),
+      Uri.parse("${AppStrings.BASE_URL}api/v1/user/content/$contentid/file"),
     );
     //-----add selected file with request
 try{
@@ -648,7 +648,7 @@ try{
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     //-------Send request

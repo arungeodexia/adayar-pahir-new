@@ -7,24 +7,27 @@
 
 class TaskDetails {
   TaskDetails({
-      int? taskId, 
-      String? taskTitle, 
-      String? description, 
-      String? expiry, 
-      String? completionPercentage, 
-      int? nextQuestionId,}){
+    int? taskId,
+    String? taskTitle,
+    String? description,
+    String? alternateDescription,
+    String? expiry,
+    String? completionPercentage,
+    int? nextQuestionId,
+  }) {
     _taskId = taskId;
     _taskTitle = taskTitle;
     _description = description;
     _expiry = expiry;
     _completionPercentage = completionPercentage;
     _nextQuestionId = nextQuestionId;
-}
+  }
 
   TaskDetails.fromJson(dynamic json) {
     _taskId = json['taskId'];
     _taskTitle = json['taskTitle'];
     _description = json['description'];
+    _alternateDescription = json['alternateDescription'];
     _expiry = json['expiry'];
     _completionPercentage = json['completionPercentage'];
     _nextQuestionId = json['nextQuestionId'];
@@ -32,6 +35,7 @@ class TaskDetails {
   int? _taskId;
   String? _taskTitle;
   String? _description;
+  String? _alternateDescription;
   String? _expiry;
   String? _completionPercentage;
   int? _nextQuestionId;
@@ -39,6 +43,7 @@ class TaskDetails {
   int? get taskId => _taskId;
   String? get taskTitle => _taskTitle;
   String? get description => _description;
+  String? get alternateDescription => _alternateDescription;
   String? get expiry => _expiry;
   String? get completionPercentage => _completionPercentage;
   int? get nextQuestionId => _nextQuestionId;
@@ -48,10 +53,10 @@ class TaskDetails {
     map['taskId'] = _taskId;
     map['taskTitle'] = _taskTitle;
     map['description'] = _description;
+    map['alternateDescription'] = _alternateDescription;
     map['expiry'] = _expiry;
     map['completionPercentage'] = _completionPercentage;
     map['nextQuestionId'] = _nextQuestionId;
     return map;
   }
-
 }

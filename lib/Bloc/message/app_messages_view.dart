@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,7 @@ import 'package:ACI/utils/PdfViewer.dart';
 import 'package:ACI/utils/VideoApp.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:ACI/utils/values/app_strings.dart';
+import 'package:lottie/lottie.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -118,7 +120,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
 //                 Navigator.pop(context);
 //               },
 //             )),
-        backgroundColor: AppColors.APP_LIGHT_BLUE_30,
+        backgroundColor: AppColors.APP_WHITE,
         body: BlocListener<AppMessagesBloc, AppMessagesState>(
           listener: (context, state) {},
           child: BlocBuilder<AppMessagesBloc, AppMessagesState>(
@@ -161,9 +163,19 @@ class AppMessagesViewState extends State<AppMessagesView> {
             return _buildMessageCard(index, messageResponse);
           })
           : Center(
-        child: Text(
-          tr("nomsg"),
-          textAlign: TextAlign.center,
+        child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Lottie.asset('assets/nodata.json'),
+            SizedBox(height: 50,),
+            Text(
+              tr("nomsg"),
+              textAlign: TextAlign.center,
+              style: ktextstyle,
+            ),
+          ],
         ),
       ),
     );

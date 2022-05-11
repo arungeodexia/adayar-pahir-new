@@ -211,7 +211,7 @@ class ResourceRepo {
         if (at != null) {
           request.headers["Authorization"] = "Bearer " + at;
           request.headers["userFingerprintHash"] = uph!;
-          request.headers["appcode"] = "700000";
+          request.headers["appcode"] = "100000";
           request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
         }
         var response = await request.send();
@@ -327,7 +327,7 @@ class ResourceRepo {
     ChannelModel channelmodel=ChannelModel();
     try {
       final response = await client.get(
-          Uri.parse("${AppStrings.BASE_URL}/api/v1/user/channels/org/$orgid"));
+          Uri.parse("${AppStrings.BASE_URL}api/v1/user/channels/org/$orgid"));
       print(" fetchResourceData Request Url :==>" +
           response.request!.url.toString());
       print(" fetchResourceData Response data :==>" + response.body.toString());
@@ -349,7 +349,7 @@ class ResourceRepo {
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
 
-    var uri = Uri.parse("${AppStrings.BASE_URL}/api/v1/user/content/$contentid/file");
+    var uri = Uri.parse("${AppStrings.BASE_URL}api/v1/user/content/$contentid/file");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
@@ -360,7 +360,7 @@ class ResourceRepo {
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     request.files.add(multipartFile);
@@ -378,7 +378,7 @@ class ResourceRepo {
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.readStream!));
     var length = await imageFile.size;
 
-    var uri = Uri.parse("${AppStrings.BASE_URL}/api/v1/user/content/$contentid/file");
+    var uri = Uri.parse("${AppStrings.BASE_URL}api/v1/user/content/$contentid/file");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('file', stream, length,
@@ -390,7 +390,7 @@ class ResourceRepo {
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
       request.headers["pahiruserauth"] = pahirAuthHeader!;
     }

@@ -486,7 +486,8 @@ class _MydashboardState extends State<Mydashboard> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          fixedColor: Colors.white,
+          selectedLabelStyle: TextStyle(color: AppColors.APP_BLUE),
+          fixedColor: AppColors.APP_BLUE,
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           // this will be set when a new tab is tapped
@@ -500,10 +501,11 @@ class _MydashboardState extends State<Mydashboard> {
                 Icons.home,
                 color: AppColors.APP_BLUE,
               ),
-              title: new Text(
-                tr("home"),
-                style: TextStyle(color: AppColors.APP_BLUE),
-              ),
+              label:  tr("home"),
+              // title: new Text(
+              //   tr("home"),
+              //   style: TextStyle(color: AppColors.APP_BLUE),
+              // ),
             ),
             BottomNavigationBarItem(
               icon: new Icon(
@@ -514,10 +516,11 @@ class _MydashboardState extends State<Mydashboard> {
                 Icons.group,
                 color: AppColors.APP_BLUE,
               ),
-              title: new Text(
-                tr("careteam"),
-                style: TextStyle(color: AppColors.APP_BLUE),
-              ),
+              label:                 tr("careteam"),
+              // title: new Text(
+              //   tr("careteam"),
+              //   style: TextStyle(color: AppColors.APP_BLUE),
+              // ),
             ),
 
             BottomNavigationBarItem(
@@ -551,8 +554,8 @@ class _MydashboardState extends State<Mydashboard> {
                       Icons.message,
                       color: AppColors.APP_BLUE,
                     ),
-              title:
-                  new Text(tr('messages'), style: TextStyle(color: AppColors.APP_BLUE)),
+                label:tr('messages')
+              // title: new Text(tr('messages'), style: TextStyle(color: AppColors.APP_BLUE)),
             ),
             BottomNavigationBarItem(
               icon: new Icon(
@@ -563,8 +566,9 @@ class _MydashboardState extends State<Mydashboard> {
                 Icons.list_alt_rounded,
                 color: AppColors.APP_BLUE,
               ),
-              title: new Text(tr("reports"),
-                  style: TextStyle(color: AppColors.APP_BLUE)),
+              label: tr("reports")
+              // title: new Text(tr("reports"),
+              //     style: TextStyle(color: AppColors.APP_BLUE)),
             ),
             // BottomNavigationBarItem(
             //   icon: new Icon(

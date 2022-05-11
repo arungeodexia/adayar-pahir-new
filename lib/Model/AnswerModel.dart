@@ -20,7 +20,7 @@ class AnswerModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "answers": List<dynamic>.from(answers!.map((x) => x.toJson())),
+    "answers": List<dynamic>.from(answers.map((x) => x.toJson())),
   };
 }
 

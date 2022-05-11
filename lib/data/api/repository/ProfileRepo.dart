@@ -31,6 +31,16 @@ class ProfileRepo {
       log(createEditProfileModel.toJson().toString());
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
+
+      http.Response response1 = await client.put(
+          Uri.parse('${AppStrings.BASE_URL}api/v1/user'),
+
+          body: jsonEncode(createEditProfileModel));
+      log(response1.body);
+      if (response1.statusCode == 200) await prefs.setBool(IS_LOGGED_IN, true);
+      await prefs.setString("name", createEditProfileModel.firstName!);
+      prefs.setString(MOBILE_NO_VERIFIED_JSON_DATA, utf8.decode(response1.bodyBytes));
+
       if (filePath != "") {
         var postUri = Uri.parse(
             '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}/picture');
@@ -38,7 +48,7 @@ class ProfileRepo {
         File imageFile = File(filePath);
         print(await imageFile.length());
         var stream =
-            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         // get file length
         var length = await imageFile.length();
         // create multipart request
@@ -59,9 +69,9 @@ class ProfileRepo {
         if (at != null) {
           request.headers["Authorization"] = "Bearer " + at;
           request.headers["userFingerprintHash"] = uph!;
-          request.headers["appcode"] = "700000";
+          request.headers["appcode"] = "100000";
           request.headers["licensekey"] =
-              "33783ui7-hepf-3698-tbk9-so69eq185173";
+          "33783ui7-hepf-3698-tbk9-so69eq185173";
         }
         var response = await request.send();
 
@@ -76,9 +86,9 @@ class ProfileRepo {
         }
         try {
           http.Response responseold = await client.get(
-              Uri.parse(
-                  '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}'),
-               );
+            Uri.parse(
+                '${AppStrings.BASE_URL}api/v1/user/${globalCountryCode}/${globalPhoneNo}'),
+          );
           log(responseold.body);
           CreateEditProfileModel profileModel = CreateEditProfileModel.fromJson(
               json.decode(utf8.decode(responseold.bodyBytes)));
@@ -89,14 +99,6 @@ class ProfileRepo {
         }
       }
 
-      http.Response response1 = await client.put(
-          Uri.parse('${AppStrings.BASE_URL}api/v1/user'),
-
-          body: jsonEncode(createEditProfileModel));
-      log(response1.body);
-      if (response1.statusCode == 200) await prefs.setBool(IS_LOGGED_IN, true);
-      await prefs.setString("name", createEditProfileModel.firstName!);
-      prefs.setString(MOBILE_NO_VERIFIED_JSON_DATA, utf8.decode(response1.bodyBytes));
       await getProfile();
       return response1;
     } on SocketException {

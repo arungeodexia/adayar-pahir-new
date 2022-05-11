@@ -10,6 +10,7 @@ String UNIVERSITYLOGO = "unilogo";
 String USER_PROFILE_IMAGE_64 = "userprofileimage64";
 String USER_COUNTRY_CODE = "userCountryCode";
 String USER_MOBILE_NUMBER = "userMobileNumber";
+String IS_FIRST_TIME = "isFirstTime";
 
 String FCM_KEY = "fcmKey";
 

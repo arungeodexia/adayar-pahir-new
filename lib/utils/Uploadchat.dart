@@ -80,7 +80,7 @@ Future<String> fileuploadchat({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
@@ -133,7 +133,7 @@ Future<String> fileimageupload({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
@@ -189,7 +189,7 @@ Future<String> fileuploadgroup(
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();
@@ -246,7 +246,7 @@ Future<String> fileuploadresource({
     if (at != null) {
       request.headers["Authorization"] = "Bearer " + at;
       request.headers["userFingerprintHash"] = uph!;
-      request.headers["appcode"] = "700000";
+      request.headers["appcode"] = "100000";
       request.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     }
     var response = await request.send();

@@ -2,10 +2,9 @@
  * Author: Damodar Lohani
  * profile: https://github.com/lohanidamodar
   */
-
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:ACI/Model/TrailInfoModel.dart';
 import 'package:ACI/Model/appointment_details.dart';
 import 'package:ACI/Model/taksmodel.dart';
 import 'package:ACI/Screen/ScreenCheck.dart';
@@ -15,14 +14,14 @@ import 'package:ACI/data/sp/shared_keys.dart';
 import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:ACI/utils/constants.dart';
 import 'package:ACI/utils/values/app_colors.dart';
+import 'package:chewie/chewie.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
 
 class DashboardThreePage extends StatefulWidget {
   static final String path = "lib/src/pages/dashboard/dash3.dart";
@@ -32,16 +31,24 @@ class DashboardThreePage extends StatefulWidget {
 }
 
 class _DashboardThreePageState extends State<DashboardThreePage> {
-  final String avatar = "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F1.jpg?alt=media";
+  final String avatar =
+      "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F1.jpg?alt=media";
 
   final TextStyle whiteText = TextStyle(color: Colors.white);
   String username = "";
 
   String userImage = "";
+  String isFirstTime = "";
   bool isload = false;
   static final SurveyRepo resourceRepository = new SurveyRepo();
-  Taksmodel taskmodel=Taksmodel();
-  AppointmentDetails appointmentDetails=AppointmentDetails();
+  Taksmodel taskmodel = Taksmodel();
+  TrailInfoModel trailInfoModel = TrailInfoModel();
+  AppointmentDetails appointmentDetails = AppointmentDetails();
+  late VideoPlayerController videoPlayerController;
+  late ChewieController chewieController;
+  late Duration videoLength;
+  late Duration videoPosition;
+  double volume = 0.5;
 
   @override
   void initState() {
@@ -51,47 +58,182 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     getsurvey(true);
   }
 
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.APP_WHITE,
-      body: isload?buildLoading():_buildBody(context),
-    );
+  void dispose() {
+    super.dispose();
+    videoPlayerController.dispose();
+    chewieController.dispose();
   }
+
+  void gettrailvideo() async {
+    http.Response? response = await resourceRepository.getTrailInfo();
+    if (response!.statusCode == 200) {
+      trailInfoModel =
+          TrailInfoModel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+
+      if (trailInfoModel.infoMediaUrLs!.length != 0) {
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          videoPlayerController = VideoPlayerController.network(
+              // "https://d18rftssnmtmbz.cloudfront.net/trail1.mp4")
+              trailInfoModel.infoMediaUrLs![0].toString())
+            ..addListener(() => setState(() {
+                  videoPosition = videoPlayerController.value.position;
+                }))
+            ..initialize().then((_) => setState(() {
+                  videoPlayerController.play();
+                  videoPlayerController.setLooping(false);
+                  videoLength = videoPlayerController.value.duration;
+                }));
+
+          chewieController = ChewieController(
+            videoPlayerController: videoPlayerController,
+            autoInitialize: true,
+            allowMuting: true,
+            showControlsOnInitialize: true,
+            looping: false,
+            autoPlay: true,
+          );
+
+          new Future.delayed(const Duration(seconds: 1), () {
+            showGeneralDialog(
+              context: context,
+              barrierColor: Colors.black12.withOpacity(0.6), // Background color
+              barrierDismissible: false,
+              barrierLabel: 'Trail Videos',
+              transitionDuration: Duration(milliseconds: 400),
+              pageBuilder: (_, __, ___) {
+                new Future.delayed(const Duration(seconds: 4), () {
+                  setState(() {});
+                });
+                return WillPopScope(
+                  onWillPop: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString(IS_FIRST_TIME, "1st");
+                    Navigator.pop(context);
+                    videoPlayerController.pause();
+                    return false;
+                  },
+                  child: SafeArea(
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox.expand(
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        AppColors.APP_BLUE),
+                              ),
+                              onPressed: () {},
+                              child: Center(child: Text('Trail')),
+                            ),
+                          ),
+                        ),
+
+                        Expanded(
+                          flex: 12,
+                          child: SizedBox.expand(
+                            child: videoPlayerController.value.isInitialized
+                                ? AspectRatio(
+                                    aspectRatio: 16 / 9,
+                                    child: Chewie(
+                                      controller: chewieController,
+                                    ),
+                                  )
+                                : Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                          ),
+                        ),
+
+                        // Expanded(
+                        //   flex: 12,
+                        //   child: SizedBox.expand(child:  videoPlayerController.value.isInitialized
+                        //       ? AspectRatio(
+                        //     aspectRatio: 16 / 9,
+                        //     child: VideoPlayer(
+                        //       videoPlayerController,
+                        //     ),
+                        //   )
+                        //       : Center(
+                        //     child: CircularProgressIndicator(),
+                        //   ),),
+                        // ),
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox.expand(
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        AppColors.APP_BLUE),
+                              ),
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString(IS_FIRST_TIME, "1st");
+                                Navigator.pop(context);
+                                videoPlayerController.pause();
+                              },
+                              child: Text('Dismiss'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          });
+        });
+
+        // EasyLoading.showSuccess('Successful');
+      }
+    }
+  }
+
   void getsurvey(bool load) async {
-    if(load){
+    if (load) {
       isload = load;
-      setState(() {
-      });
+      setState(() {});
     }
 
     // await EasyLoading.show(status: 'Loading...',maskType: EasyLoadingMaskType.black);
-    http.Response? response =
-    await resourceRepository.getTasks();
-    if(response!.statusCode==200){
-      taskmodel = Taksmodel.fromJson(
-          json.decode(utf8.decode(response.bodyBytes)));
+    http.Response? response = await resourceRepository.getTasks();
+    if (response!.statusCode == 200) {
+      taskmodel =
+          Taksmodel.fromJson(json.decode(utf8.decode(response.bodyBytes)));
       // EasyLoading.showSuccess('Successful');
-    }else{
+    } else {
       // EasyLoading.showError('API Exception');
     }
 
     http.Response? response1 = await resourceRepository.getAppointments();
-    if(response1!.statusCode==200){
+    if (response1!.statusCode == 200) {
       appointmentDetails = AppointmentDetails.fromJson(
           json.decode(utf8.decode(response1.bodyBytes)));
     }
-
-    log("tasks"+taskmodel.tasks.toString()+"tasks");
 
     setState(() {
       isload = false;
     });
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.APP_WHITE,
+      body: isload ? buildLoading() : _buildBody(context),
+    );
+  }
+
   Widget buildLoading() {
     return Container(
-      height: MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
+      height:
+          MediaQuery.of(context).size.height - (AppBar().preferredSize.height),
       child: Center(
         child: CircularProgressIndicator(),
       ),
@@ -101,6 +243,11 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
   getuserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String res = prefs.getString(MOBILE_NO_VERIFIED_JSON_DATA).toString();
+    isFirstTime = prefs.getString(IS_FIRST_TIME).toString();
+    print(isFirstTime);
+    if (isFirstTime.length == 4) {
+      gettrailvideo();
+    }
     var encoded = utf8.encode(res);
     final resourceDetailsResponse = json.decode(utf8.decode(encoded));
     //debugPrint("resourceDetailsResponse:==>" + resourceDetailsResponse.toString());
@@ -113,13 +260,14 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
     });
   }
 
-
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          appointmentDetails.name.toString()!="null"?_buildHeaderNewUi():_buildHeaderNoAppointment(),
+          appointmentDetails.name.toString() != "null"
+              ? _buildHeaderNewUi()
+              : _buildHeaderNoAppointment(),
           // const SizedBox(height: 20.0),
 
           // Row(
@@ -214,13 +362,16 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
           //     ),
           //   ],
           // ),
-          appointmentDetails.name.toString()=="null"?Container():Padding(
-            padding: EdgeInsets.only(top: 7, bottom: 7,left: 40,right: 40),
-            child: Divider(
-              height: 5,
-              thickness: 1,
-            ),
-          ),
+          appointmentDetails.name.toString() == "null"
+              ? Container()
+              : Padding(
+                  padding:
+                      EdgeInsets.only(top: 7, bottom: 7, left: 40, right: 40),
+                  child: Divider(
+                    height: 5,
+                    thickness: 1,
+                  ),
+                ),
           Padding(
             padding: EdgeInsets.only(top: 7, bottom: 7),
             child: Container(
@@ -237,68 +388,90 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                 //         topRight: Radius.circular(16.0))),
                 child: Text(
                   tr("programs"),
-                  style:
-                  TextStyle(fontWeight: FontWeight.bold,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 16,
                       color: AppColors.APP_BLUE1),
                 )),
           ),
-          taskmodel.tasks != null || taskmodel.tasks.toString()!="null" ?ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
-              // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              itemCount: taskmodel.tasks!.length,
-              itemBuilder: (BuildContext context,
-                  int index) {
-                return Hero(
-                  tag: taskmodel.tasks![index].taskId.toString(),
-                  child: Card(
-                    color: AppColors.APP_BLUE1,
-                    child: ListTile(
-
-                      onTap: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new ScreenCheck(
-                          title: taskmodel.tasks![index].taskTitle.toString(),
-                          id: taskmodel.tasks![index].taskId.toString(),
-                          page: "0",
-                        )),)
-                            .then((val)=>getsurvey(false));
-                        globalTaskID=taskmodel.tasks![index].taskId!;
-                      },
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text(taskmodel.tasks![index].taskTitle.toString(), style:
-                        kSubtitleTextSyule1.copyWith(
-                            fontWeight: FontWeight.w600,
-                            height: 1.5,
-                            color: Colors.white
+          taskmodel.tasks != null || taskmodel.tasks.toString() != "null"
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  // physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  itemCount: taskmodel.tasks!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Hero(
+                      tag: taskmodel.tasks![index].taskId.toString(),
+                      child: Card(
+                        color: AppColors.APP_BLUE1,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(
+                                  new MaterialPageRoute(
+                                      builder: (_) => new ScreenCheck(
+                                            title: taskmodel
+                                                .tasks![index].taskTitle
+                                                .toString(),
+                                            id: taskmodel.tasks![index].taskId
+                                                .toString(),
+                                            page: "0",
+                                          )),
+                                )
+                                .then((val) => getsurvey(false));
+                            globalTaskID = taskmodel.tasks![index].taskId!;
+                          },
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              taskmodel.tasks![index].taskTitle.toString(),
+                              style: kSubtitleTextSyule1.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.5,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          trailing: Text(
+                            taskmodel.tasks![index].completionPercentage
+                                .toString(),
+                            style: kSubtitleTextSyule1.copyWith(
+                                fontWeight: FontWeight.w600,
+                                height: 1.5,
+                                color: Colors.white),
+                          ),
                         ),
+                      ),
+                    );
+                  })
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                          child:
+                              Lottie.asset('assets/nodata.json', height: 250)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          tr("nopprograms"),
+                          style: kSubtitleTextSyule1.copyWith(
+                              fontWeight: FontWeight.w600,
+                              height: 1.5,
+                              color: AppColors.APP_GREY),
                         ),
                       ),
-                      trailing:
-                      Text(taskmodel.tasks![index].completionPercentage.toString(), style:
-                      kSubtitleTextSyule1.copyWith(
-                          fontWeight: FontWeight.w600,
-                          height: 1.5,
-                          color: Colors.white
-                      ),
-                      ),
-                    ),
+                    ],
                   ),
-                );
-              }):
-          Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: 50),
-            child: Text(tr("nopprograms"),style: kSubtitleTextSyule1.copyWith(
-                  fontWeight: FontWeight.w600,
-                  height: 1.5,
-                  color: AppColors.APP_GREY
-            ),),
-
-          ),
-              )
+                )
         ],
       ),
     );
@@ -318,7 +491,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
-            title:  Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -334,8 +507,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.bold,
                           height: 1.5,
                           color: Colors.white,
-                        fontSize: 22
-                      ),
+                          fontSize: 22),
                     ),
                   ),
                 ),
@@ -351,9 +523,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.w600,
                           height: 1.5,
                           color: Colors.white,
-                          fontSize: 18
-
-                      ),
+                          fontSize: 18),
                     ),
                   ),
                 ),
@@ -369,8 +539,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.w600,
                           height: 1.5,
                           color: Colors.white,
-                          fontSize: 18
-                      ),
+                          fontSize: 18),
                     ),
                   ),
                 ),
@@ -385,8 +554,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       style: kSubtitleTextSyule1.copyWith(
                           fontWeight: FontWeight.w600,
                           height: 1.5,
-                          color: Colors.white
-                      ),
+                          color: Colors.white),
                     ),
                   ),
                 ),
@@ -397,16 +565,17 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
             //   backgroundImage: NetworkImage(avatar),
             // ),
           ),
-
-
         ],
       ),
     );
   }
+
   Container _buildHeaderNewUi() {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 10.0, 10, 10.0),
-      margin: const EdgeInsets.all(10, ),
+      margin: const EdgeInsets.all(
+        10,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: AppColors.APP_BLUE1,
@@ -414,21 +583,21 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
       child: Column(
         children: <Widget>[
           ListTile(
-            leading:               GestureDetector(
-          child: Container(
-      child: CircleAvatar(
-          radius: 30.0,
-          backgroundColor: AppColors.APP_LIGHT_BLUE,
-          backgroundImage:  appointmentDetails.picture.toString()!="null"&&appointmentDetails.picture != ""
-              ? NetworkImage(appointmentDetails.picture.toString())
-              : AssetImage("images/photo_avatar.png") as ImageProvider),
-    ),
-
-    onTap: () {
-
-    },
-    ),
-            title:Text(
+            leading: GestureDetector(
+              child: Container(
+                child: CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: AppColors.APP_LIGHT_BLUE,
+                    backgroundImage: appointmentDetails.picture.toString() !=
+                                "null" &&
+                            appointmentDetails.picture != ""
+                        ? NetworkImage(appointmentDetails.picture.toString())
+                        : AssetImage("images/photo_avatar.png")
+                            as ImageProvider),
+              ),
+              onTap: () {},
+            ),
+            title: Text(
               appointmentDetails.name.toString(),
               overflow: TextOverflow.ellipsis,
               softWrap: false,
@@ -437,10 +606,9 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                   fontWeight: FontWeight.bold,
                   height: 1.5,
                   color: Colors.white,
-                  fontSize: 22
-              ),
+                  fontSize: 22),
             ),
-            subtitle:Row(
+            subtitle: Row(
               children: [
                 Text(
                   appointmentDetails.address.toString(),
@@ -451,17 +619,50 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                       fontWeight: FontWeight.w500,
                       height: 1.5,
                       color: Colors.white,
-                      fontSize: 16
-                  ),
+                      fontSize: 16),
                 ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    CallsAndMessagesService.call(appointmentDetails.phone1.toString().replaceAll(' ', ''));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: CircleAvatar(backgroundColor: AppColors.APP_WHITE,radius: 10,child: Icon(FontAwesomeIcons.phoneAlt,color: AppColors.APP_BLUE,size: 12,)),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      CallsAndMessagesService.call(appointmentDetails.phone1
+                          .toString()
+                          .replaceAll(' ', ''));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: IconButton(
+                          onPressed: () {
+                            CallsAndMessagesService.call(appointmentDetails
+                                .phone1
+                                .toString()
+                                .replaceAll(' ', ''));
+                          },
+                          icon: Row(
+                            children: [
+                              CircleAvatar(
+                                  backgroundColor: AppColors.APP_WHITE,
+                                  radius: 10,
+                                  child: Icon(
+                                    FontAwesomeIcons.phoneAlt,
+                                    color: AppColors.APP_BLUE,
+                                    size: 12,
+                                  )),
+                              Text(
+                                '  Call',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: kSubtitleTextSyule1.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.5,
+                                    color: Colors.white,
+                                    fontSize: 14),
+                              ),
+                            ],
+                          )),
+                    ),
                   ),
                 ),
               ],
@@ -472,12 +673,10 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
             // ),
           ),
           Container(
-
             padding: EdgeInsets.all(10),
             margin: EdgeInsets.all(15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-
               color: AppColors.APP_WHITE.withOpacity(0.2),
             ),
             child: Row(
@@ -486,10 +685,17 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
               children: [
                 Row(
                   children: [
-                    SizedBox(width: 5,),
-                    Icon(Icons.timer_outlined,color: Colors.white,),
-                     SizedBox(width: 10,),
-                     Text(
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.timer_outlined,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
                       appointmentDetails.appointmentTime.toString(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -498,20 +704,19 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.bold,
                           height: 1.5,
                           color: Colors.white,
-                          fontSize: 15
-                      ),
+                          fontSize: 15),
                     ),
-                    SizedBox(width: 20,),
-
-
-
+                    SizedBox(
+                      width: 20,
+                    ),
                   ],
                 ),
                 Row(
                   children: [
-                    Icon(Icons.date_range,color: Colors.white),
-                    SizedBox(width: 10,),
-
+                    Icon(Icons.date_range, color: Colors.white),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text(
                       appointmentDetails.appointmentDateFormatted.toString(),
                       overflow: TextOverflow.ellipsis,
@@ -521,10 +726,11 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.bold,
                           height: 1.5,
                           color: Colors.white,
-                          fontSize: 15
-                      ),
+                          fontSize: 15),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                   ],
                 )
               ],
@@ -595,15 +801,17 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
           //     ],
           //   ),
           // ),
-
         ],
       ),
     );
   }
+
   Container _buildHeaderNoAppointment() {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 10.0, 10, 10.0),
-      margin: const EdgeInsets.all(10, ),
+      margin: const EdgeInsets.all(
+        10,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: AppColors.APP_BLUE1,
@@ -612,7 +820,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
-            title:  Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -628,8 +836,7 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
                           fontWeight: FontWeight.bold,
                           height: 1.5,
                           color: Colors.white,
-                        fontSize: 20
-                      ),
+                          fontSize: 20),
                     ),
                   ),
                 ),
@@ -640,11 +847,8 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
             //   backgroundImage: NetworkImage(avatar),
             // ),
           ),
-
-
         ],
       ),
     );
   }
-
 }

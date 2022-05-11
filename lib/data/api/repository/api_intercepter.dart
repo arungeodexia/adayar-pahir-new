@@ -15,7 +15,7 @@ class ApiInterceptor implements InterceptorContract {
 
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
-    data.headers["appcode"] = "700000";
+    data.headers["appcode"] = "100000";
     data.headers["licensekey"] = "33783ui7-hepf-3698-tbk9-so69eq185173";
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

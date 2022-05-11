@@ -138,7 +138,7 @@ class _SurveymenuState extends State<Surveymenu> {
                                 horizontal: 10.0, vertical: 6.0),
                             child: ListTile(
                               onTap: (){
-                                Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new SurveymenuDetails(
+                                Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (_)=> SurveymenuDetails(
                                   questionId: surveyModel.questions![index].questionId!.toString(),
                                 )),)
                                     .then((val)=>getsurvey());

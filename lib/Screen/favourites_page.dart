@@ -12,6 +12,7 @@ import 'package:ACI/data/globals.dart';
 import 'package:ACI/data/sp/shared_keys.dart';
 import 'package:ACI/utils/values/app_colors.dart';
 import 'package:ACI/utils/values/app_strings.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavouritesPage extends StatefulWidget {
@@ -103,7 +104,18 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   Container _buildHomePageData(
       List<Resources> resources, BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Lottie.asset('assets/comingsoon.json'),
+          ],
+        ),
+      ),
+    );
     return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height -

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// userId : 57
 /// userName : "Sam"
 /// topText : "Your tumor surgery is scheduled for January 8th 2:00 PM"
@@ -69,6 +71,7 @@ class Question {
   String? _expiryDate;
   List<Options>? _options;
   List<Choices>? _choices;
+  List<OptionGroup>? _optionGroup;
   bool? _consolidateOptions;
   bool? _hasNext;
   bool? _hasPrevious;
@@ -85,6 +88,7 @@ class Question {
   String? get expiryDate => _expiryDate;
   List<Choices>? get choices => _choices;
   List<Options>? get options => _options;
+  List<OptionGroup>? get optionGroup => _optionGroup;
   bool? get consolidateOptions => _consolidateOptions;
   bool? get hasNext => _hasNext;
   bool? get hasPrevious => _hasPrevious;
@@ -115,6 +119,7 @@ class Question {
     _expiryDate = expiryDate;
     _choices = choices;
     _options = options;
+    _optionGroup = optionGroup;
     _consolidateOptions = consolidateOptions;
     _hasNext = hasNext;
     _hasPrevious = hasPrevious;
@@ -143,6 +148,12 @@ class Question {
         _options?.add(Options.fromJson(v));
       });
     }
+    if (json['optionGroups'] != null) {
+      _optionGroup = [];
+      json['optionGroups'].forEach((v) {
+        _optionGroup?.add(OptionGroup.fromJson(v));
+      });
+    }
 
     _consolidateOptions = json['consolidateOptions'];
     _hasNext = json['hasNext'];
@@ -166,6 +177,9 @@ class Question {
     }
     if (_options != null) {
       map['options'] = _options?.map((v) => v.toJson()).toList();
+    }
+    if (_options != null) {
+      map['optionGroups'] = _optionGroup?.map((v) => v.toJson()).toList();
     }
 
     map['consolidateOptions'] = _consolidateOptions;
@@ -298,4 +312,64 @@ class Options {
     return map;
   }
 
+
+
+}
+class OptionGroup {
+  OptionGroup({
+    this.optionGroup,
+    this.optionGroups,
+  });
+
+  String? optionGroup;
+  List<OptionText>? optionGroups;
+
+  factory OptionGroup.fromJson(Map<String, dynamic> json) => OptionGroup(
+    optionGroup: json["optionGroup"],
+    optionGroups: List<OptionText>.from(json["optionGroups"].map((x) => OptionText.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "optionGroup": optionGroup,
+    "optionGroups": List<dynamic>.from(optionGroups!.map((x) => x.toJson())),
+  };
+}
+
+class OptionText {
+  OptionText({
+    this.optionId,
+    this.option,
+    this.optionPrefix,
+    this.optionSuffix,
+    this.optionGroup,
+    this.url,
+    this.textEditingController,
+  });
+
+  int? optionId;
+  dynamic? option;
+  String? optionPrefix;
+  String? optionSuffix;
+  String? optionGroup;
+  dynamic? url;
+  TextEditingController? textEditingController;
+
+  factory OptionText.fromJson(Map<String, dynamic> json) => OptionText(
+    optionId: json["optionId"],
+    option: json["option"],
+    optionPrefix: json["optionPrefix"],
+    optionSuffix: json["optionSuffix"],
+    optionGroup: json["optionGroup"],
+    url: json["url"],
+    textEditingController: TextEditingController(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "optionId": optionId,
+    "option": option,
+    "optionPrefix": optionPrefix,
+    "optionSuffix": optionSuffix,
+    "optionGroup": optionGroup,
+    "url": url,
+  };
 }

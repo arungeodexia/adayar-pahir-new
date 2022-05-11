@@ -141,8 +141,10 @@ final Column slider1 = Column(
 
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Theme.of(context)
-          .primaryColorDark, //or set color with: Color(0xFF0000FF)
+      statusBarColor: AppColors.APP_BLUE //or set color with: Color(0xFF0000FF)
+    ));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: AppColors.APP_BLUE, //or set color with: Color(0xFF0000FF)
     ));
     return Scaffold(
       appBar: AppBar(

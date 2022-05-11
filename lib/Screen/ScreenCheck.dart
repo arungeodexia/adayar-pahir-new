@@ -7,15 +7,12 @@ import 'package:ACI/data/api/repository/SurveyRepo.dart';
 import 'package:ACI/utils/calls_messages_services.dart';
 import 'package:ACI/utils/constants.dart';
 import 'package:ACI/utils/values/app_colors.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:pie_chart/pie_chart.dart';
-import 'package:http/http.dart' as http;
 
 import 'mydashboard.dart';
 
@@ -93,11 +90,12 @@ class _ScreenCheckState extends State<ScreenCheck> {
     isload = true;
     http.Response? response =
         await resourceRepository.getTasksDetails(widget.id);
-    if(response!.statusCode==200){
+    if (response!.statusCode == 200) {
       taskDetails =
           TaskDetails.fromJson(json.decode(utf8.decode(response.bodyBytes)));
-      if (int.parse(
-          taskDetails.completionPercentage.toString().replaceAll("%", "")) >=
+      if (int.parse(taskDetails.completionPercentage
+              .toString()
+              .replaceAll("%", "")) >=
           100) {
         taskpercentage = "0.99999";
         isFullNameChangeBtnState = false;
@@ -105,7 +103,6 @@ class _ScreenCheckState extends State<ScreenCheck> {
         taskpercentage = "0." +
             taskDetails.completionPercentage.toString().replaceAll("%", "");
       }
-
     }
 
     // DateTime date1 = DateTime.parse("2020-01-09 23:00:00.299871");
@@ -156,13 +153,16 @@ class _ScreenCheckState extends State<ScreenCheck> {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () =>                       Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => Mydashboard()),(Route<dynamic> route) => false,)
-            ,
+            onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Mydashboard()),
+              (Route<dynamic> route) => false,
+            ),
           ),
           centerTitle: true, // this is all you need
           title: Text(
-            widget.title=="null"?taskDetails.taskTitle.toString():widget.title.toString(),
+            widget.title == "null"
+                ? taskDetails.taskTitle.toString()
+                : widget.title.toString(),
             style: kSubheadingextStyle.copyWith(color: AppColors.APP_WHITE),
           ),
           // leading: Icon(FontAwesomeIcons.solidArrowAltCircleLeft,color: AppColors.APP_BLUE,),
@@ -171,10 +171,10 @@ class _ScreenCheckState extends State<ScreenCheck> {
             ? buildLoading()
             : taskDetails.description == null
                 ? Center(
-         child: Text("Something went wrong",style:ktextstyle.copyWith(
-             fontSize: 15
-         ),)
-        )
+                    child: Text(
+                    "Something went wrong",
+                    style: ktextstyle.copyWith(fontSize: 15),
+                  ))
                 : Container(
                     child: SingleChildScrollView(
                       child: Column(
@@ -209,7 +209,8 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                       lineWidth: 15.0,
                                       percent: double.parse(taskpercentage),
                                       center: new Text(
-                                        taskDetails.completionPercentage.toString(),
+                                        taskDetails.completionPercentage
+                                            .toString(),
                                         style: kSubtitleTextSyule.copyWith(
                                             fontWeight: FontWeight.bold,
                                             height: 1.5,
@@ -279,7 +280,14 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                 //         bottomRight: Radius.circular(16.0),
                                 //         topRight: Radius.circular(16.0))),
                                 child: Text(
-                                  "About ${widget.title=="null"?taskDetails.taskTitle.toString():widget.title.toString()}",
+                                  widget.page == "1"
+                                      ? taskDetails.alternateDescription
+                                                  .toString() ==
+                                              "null"
+                                          ? taskDetails.taskTitle.toString()
+                                          : taskDetails.alternateDescription
+                                              .toString()
+                                      : "About ${widget.title == "null" ? taskDetails.taskTitle.toString() : widget.title.toString()}",
                                   style: kTitleTextStyle.copyWith(
                                       fontWeight: FontWeight.bold,
                                       height: 1.5,
@@ -334,35 +342,37 @@ class _ScreenCheckState extends State<ScreenCheck> {
                                             textColor: AppColors.APP_WHITE,
                                             padding: EdgeInsets.all(8.0),
                                             onPressed: () async {
+                                              if (widget.page == "1") {
+                                                // Navigator.of(context).pop();
+                                                Navigator.of(context)
+                                                    .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Mydashboard()),
+                                                  (Route<dynamic> route) =>
+                                                      false,
+                                                );
+                                              } else {
+                                                if (isFullNameChangeBtnState) {
+                                                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                                                  //     builder: (context) => SurveymenuDetails(questionId: taskDetails
+                                                  //         .nextQuestionId
+                                                  //         .toString())), (Route<dynamic> route) => false,);
 
-                                                if (widget.page == "1") {
-                                                  // Navigator.of(context).pop();
                                                   Navigator.of(context)
-                                                      .pushAndRemoveUntil(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Mydashboard()),
-                                                    (Route<dynamic> route) =>
-                                                        false,
-                                                  );
-                                                } else {
-                                                  if (isFullNameChangeBtnState) {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                          new MaterialPageRoute(
-
-                                                              builder: (_) =>
-                                                                  new SurveymenuDetails(
-                                                                    questionId: taskDetails
-                                                                        .nextQuestionId
-                                                                        .toString(),
-                                                                  )),
-                                                        )
-                                                        .then(
-                                                            (val) => getsurvey());
-                                                  }
+                                                      .pushReplacement(
+                                                        new MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                SurveymenuDetails(
+                                                                  questionId: taskDetails
+                                                                      .nextQuestionId
+                                                                      .toString(),
+                                                                )),
+                                                      )
+                                                      .then(
+                                                          (val) => getsurvey());
                                                 }
-
+                                              }
                                             },
                                             child: Padding(
                                                 padding: const EdgeInsets.only(
