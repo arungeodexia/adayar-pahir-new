@@ -134,7 +134,8 @@ class _DashboardThreePageState extends State<DashboardThreePage> {
 
                         Expanded(
                           flex: 12,
-                          child: SizedBox.expand(
+                          child:
+                          SizedBox.expand(
                             child: videoPlayerController.value.isInitialized
                                 ? AspectRatio(
                                     aspectRatio: 16 / 9,

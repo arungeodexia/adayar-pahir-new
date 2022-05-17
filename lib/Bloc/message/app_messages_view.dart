@@ -28,6 +28,7 @@ import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../utils/VideoAppChewie.dart';
 import 'message_model_class.dart';
 
 class AppMessagesView extends StatefulWidget {
@@ -152,7 +153,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
 
   Widget showForm() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+      padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
       child: messageResponse != null && messageResponse.messages!.length > 0
           ? ListView.builder(
           shrinkWrap: true,
@@ -239,22 +240,24 @@ class AppMessagesViewState extends State<AppMessagesView> {
                       children: <Widget>[
                         Row(
                           children: [
-                            Text(
-                              ((messageResponse.messages![index].messageBody!
-                                  .contentType! ==
-                                  "plain")
-                                  ? messageResponse.messages![index]
-                                  .messageBody!.messageTitle ??
-                                  ""
-                                  : messageResponse.messages![index]
-                                  .messageBody!.contentTitle ??
-                                  ""),
-                              //(messageList.messages[index].messageBody.messageTitle != null) ?messageList.messages[index].messageBody.messageTitle : "",
-                              maxLines: 2,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                  fontSize: 18),
+                            Expanded(
+                              child: Text(
+                                ((messageResponse.messages![index].messageBody!
+                                    .contentType! ==
+                                    "plain")
+                                    ? messageResponse.messages![index]
+                                    .messageBody!.messageTitle ??
+                                    ""
+                                    : messageResponse.messages![index]
+                                    .messageBody!.contentTitle ??
+                                    ""),
+                                //(messageList.messages[index].messageBody.messageTitle != null) ?messageList.messages[index].messageBody.messageTitle : "",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.APP_BLUE,
+                                    fontSize: 18),
+                              ),
                             ),
                             SizedBox(
                               width: 5.0,
@@ -272,7 +275,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                                 "video"
                                 ? Icon(
                               Icons.videocam,
-                              color: Colors.blue,
+                              color: AppColors.APP_BLUE,
                               size: 20,
                             )
                                 : messageList.messages![index].messageBody!
@@ -288,7 +291,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                                 "txt"
                                 ? Icon(
                               Icons.event_note,
-                              color: Colors.blue,
+                              color: AppColors.APP_BLUE,
                               size: 20,
                             )
                                 : Container()
@@ -303,7 +306,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                               "Received : " + date,
                               // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
                               style:
-                              TextStyle(color: Colors.blue, fontSize: 12),
+                              TextStyle(color: AppColors.APP_BLUE, fontSize: 12),
                             ),
                           ],
                         ),
@@ -313,7 +316,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                         Text(
                           messageList.messages![index].orgChannelName!,
                           // '${(messageList.messages[index].messageBody.messageSent != null) ? messageList.messages[index].messageBody.messageSent : ""} From: ${(messageList.messages[index].messageBody.orgName != null) ? messageList.messages[index].messageBody.orgName.toUpperCase() : ""}',
-                          style: TextStyle(color: Colors.blue, fontSize: 12),
+                          style: TextStyle(color: AppColors.APP_BLUE, fontSize: 12),
                         ),
                         SizedBox(
                           height: 10.0,
@@ -395,7 +398,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                                           .messageReactionCount
                                           .toString(),
                                       style:
-                                      TextStyle(color: Colors.blue),
+                                      TextStyle(color: AppColors.APP_BLUE),
                                     )
                                   ],
                                 ),
@@ -465,7 +468,7 @@ class AppMessagesViewState extends State<AppMessagesView> {
                                           .messageReactionCount
                                           .toString(),
                                       style:
-                                      TextStyle(color: Colors.blue),
+                                      TextStyle(color: AppColors.APP_BLUE),
                                     )
                                   ],
                                 ),
@@ -508,7 +511,7 @@ ${messageList.messages![index].messageBody!.contentUri!.toString()}
                                   children: [
                                     Icon(
                                       Icons.share,
-                                      color: Colors.blue,
+                                      color: AppColors.APP_BLUE,
                                       size: 20,
                                     ),
                                     SizedBox(
@@ -517,7 +520,7 @@ ${messageList.messages![index].messageBody!.contentUri!.toString()}
                                     Text(
                                       'Share',
                                       style: TextStyle(
-                                          color: Colors.blue, fontSize: 15),
+                                          color: AppColors.APP_BLUE, fontSize: 15),
                                     ),
                                   ],
                                 ),
@@ -576,7 +579,7 @@ ${messageList.messages![index].messageBody!.contentUri!.toString()}
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => VideoApp( videoUrl: messageList.messages![index].messageBody!.contentUri!.toString(),
+                builder: (context) => VideoAppChewie( videoUrl: messageList.messages![index].messageBody!.contentUri!.toString(),
                   title: messageList.messages![index].messageBody!.contentTitle!.toString(),)));
         // Navigator.push(
         //     context,

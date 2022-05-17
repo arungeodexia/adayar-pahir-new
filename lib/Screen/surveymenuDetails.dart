@@ -425,7 +425,8 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                             ),
                           ),
                         )
-                      : surveyDetailsModel.question!.questionType.toString() ==
+                      :
+                  surveyDetailsModel.question!.questionType.toString() ==
                               "video"
                           ? Container(
                               padding: EdgeInsets.all(4),
@@ -1825,6 +1826,30 @@ class _SurveymenuDetailsState extends State<SurveymenuDetails> {
                                 } else if (surveyDetailsModel
                                         .question!.answerType ==
                                     "radio") {
+                                  answers.questionId =
+                                      surveyDetailsModel.question!.questionId!;
+                                  for (int j = 0;
+                                      j <
+                                          surveyDetailsModel
+                                              .question!.options!.length;
+                                      j++) {
+                                    if (surveyDetailsModel
+                                            .question!.options![j].select ==
+                                        0) {
+                                      answermodel.answers.add(Answer(
+                                          optionId: int.parse(surveyDetailsModel
+                                              .question!.options![j].optionId
+                                              .toString()),
+                                          optionNotes: "",
+                                          questionId: int.parse(
+                                              surveyDetailsModel
+                                                  .question!.questionId
+                                                  .toString())));
+                                    }
+                                  }
+                                } else if (surveyDetailsModel
+                                        .question!.answerType ==
+                                    "checkbox") {
                                   answers.questionId =
                                       surveyDetailsModel.question!.questionId!;
                                   for (int j = 0;
